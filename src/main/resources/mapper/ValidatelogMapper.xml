@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.linkknown.iwork.dao.ValidatelogMapper">
+
+    <!-- mybatis 的 resultType 接收一个内部类,由之前 '.' 变成了 '$' -->
+    <select id="queryLastValidatelogDetail" resultType="com.linkknown.iwork.entity.Validatelog$ValidatelogDetail">
+        select * from validatelog_detail
+        where tracking_id = (select tracking_id from validatelog_record order by last_updated_time desc limit 1)
+        order by success_flag asc, work_id desc, work_step_id asc
+    </select>
+
+    <insert id="insertValidatelogRecord">
+        insert into validatelog_record (
+        tracking_id,
+        work_id,
+        created_by,
+        created_time,
+        last_updated_by,
+        last_updated_time
+        )
+        values (
+            #{record.trackingId},
+            #{record.workId},
+            #{record.createdBy},
+            #{record.createdTime},
+            #{record.lastUpdatedBy},
+            #{record.lastUpdatedTime}
+            )
+    </insert>
+
+    <insert id="insertMultiValidatelogDetail">
+        insert into validatelog_detail (
+            tracking_id,
+            work_id,
+            work_step_id,
+            work_name,
+            work_step_name,
+            param_name,
+            success_flag,
+            detail,
+            created_by,
+            created_time,
+            last_updated_by,
+            last_updated_time
+        )
+        values
+        <foreach collection="list" item="detail" index="index" separator=",">
+            (
+                #{detail.trackingId},
+                #{detail.workId},
+                #{detail.workStepId},
+                #{detail.workName},
+                #{detail.workStepName},
+                #{detail.paramName},
+                #{detail.successFlag},
+                #{detail.detail},
+                #{detail.createdBy},
+                #{detail.createdTime},
+                #{detail.lastUpdatedBy},
+                #{detail.lastUpdatedTime}
+            )
+        </foreach>
+    </insert>
+
+</mapper>

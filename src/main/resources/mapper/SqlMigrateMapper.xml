@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.linkknown.iwork.dao.SqlMigrateMapper">
+    <select id="queryPageSqlMigrates" resultType="com.linkknown.iwork.entity.SqlMigrate">
+        select * from sql_migrate where app_id = #{appId} order by migrate_name desc
+    </select>
+
+    <select id="queryMigrateById" resultType="com.linkknown.iwork.entity.SqlMigrate">
+        select * from sql_migrate where app_id = #{appId} and id = #{id}
+    </select>
+
+    <select id="queryAllMigrates" resultType="com.linkknown.iwork.entity.SqlMigrate">
+        select * from sql_migrate where app_id = #{appId}
+    </select>
+
+    <insert id="insertOrUpdateSqlMigrate" parameterType="com.linkknown.iwork.entity.SqlMigrate">
+        <choose>
+            <when test="migrate.id > 0">
+                update sql_migrate
+                set app_id=#{migrate.appId},
+                migrate_name=#{migrate.migrateName},
+                migrate_sql=#{migrate.migrateSql},
+                migrate_hash=#{migrate.migrateHash},
+                effective=#{migrate.effective},
+                created_by=#{migrate.createdBy},
+                created_time=#{migrate.createdTime},
+                last_updated_by=#{migrate.lastUpdatedBy},
+                last_updated_time=#{migrate.lastUpdatedTime}
+                where id = #{migrate.id}
+            </when>
+            <otherwise>
+                insert into sql_migrate (
+                    app_id,
+                    migrate_name,
+                    migrate_sql,
+                    migrate_hash,
+                    effective,
+                    created_by,
+                    created_time,
+                    last_updated_by,
+                    last_updated_time
+                ) values(
+                    #{migrate.appId},
+                    #{migrate.migrateName},
+                    #{migrate.migrateSql},
+                    #{migrate.migrateHash},
+                    #{migrate.effective},
+                    #{migrate.createdBy},
+                    #{migrate.createdTime},
+                    #{migrate.lastUpdatedBy},
+                    #{migrate.lastUpdatedTime}
+                )
+            </otherwise>
+        </choose>
+    </insert>
+
+    <select id="queryMigrateLogsByTrackingId" resultType="com.linkknown.iwork.entity.SqlMigrate$SqlMigrateLog">
+        select * from sql_migrate_log where tracking_id = #{trackingId} order by id asc
+    </select>
+
+    <insert id="insertSqlMigrateLogs" parameterType="list">
+      insert into sql_migrate_log(
+          tracking_id,
+          status,
+          migrate_name,
+          tracking_detail
+      ) values
+      <foreach collection="logs" item="log" index="index" separator=",">
+        (
+            #{log.trackingId},
+            #{log.status},
+            #{log.migrateName},
+            #{log.trackingDetail}
+        )
+      </foreach>
+
+    </insert>
+
+</mapper>

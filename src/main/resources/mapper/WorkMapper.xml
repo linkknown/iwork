@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.linkknown.iwork.dao.WorkMapper">
+
+    <select id="queryWork" parameterType="map" resultType="com.linkknown.iwork.entity.Work">
+        select distinct a.* from work a left join work_step b on a.id = b.work_id where a.app_id = #{map.app_id}
+        <if test="map.search != ''">
+            and (
+            a.work_name like concat('%',#{map.search},'%')
+            or a.module_name like concat('%',#{map.search},'%')
+            or b.work_step_input like concat('%',#{map.search},'%')
+            or b.work_step_output like concat('%',#{map.search},'%')
+            or b.work_step_type like concat('%',#{map.search},'%')
+            )
+        </if>
+        <if test="map.search_work_type != '' and map.search_work_type != 'all'">
+            and a.work_type like concat('%',#{map.search_work_type},'%')
+        </if>
+        <if test="map.search_module != '' and map.search_module != 'all'">
+            and a.module_name like concat('%',#{map.search_module},'%')
+        </if>
+        order by a.last_updated_time desc
+    </select>
+
+    <select id="queryWorkById" resultType="com.linkknown.iwork.entity.Work">
+        select * from work where app_id = #{appId} and id = #{workId}
+    </select>
+
+    <select id="queryWorkByName" resultType="com.linkknown.iwork.entity.Work">
+        select * from work where app_id = #{appId} and work_name = #{workName}
+    </select>
+
+    <insert id="insertOrUpdateWork" parameterType="com.linkknown.iwork.entity.Work" useGeneratedKeys="true" keyProperty="work.id">
+        <choose>
+            <when test="work.id > 0">
+                update work
+                set app_id = #{work.appId},
+                work_name = #{work.workName},
+                work_desc = #{work.WorkDesc},
+                work_type = #{work.WorkType},
+                module_name = #{work.ModuleName},
+                cache_result = #{work.CacheResult},
+                created_by = #{work.createdBy}, created_time = #{work.createdTime},
+                last_updated_by = #{work.lastUpdatedBy}, last_updated_time = #{work.lastUpdatedTime}
+                where id = #{work.id}
+            </when>
+            <otherwise>
+                insert into work (
+                app_id,
+                work_name,
+                work_desc,
+                work_type,
+                module_name,
+                cache_result,
+                created_by,
+                created_time,
+                last_updated_by,
+                last_updated_time
+                ) values(
+                #{work.appId},
+                #{work.workName},
+                #{work.WorkDesc},
+                #{work.WorkType},
+                #{work.ModuleName},
+                #{work.CacheResult},
+                #{work.createdBy},
+                #{work.createdTime},
+                #{work.lastUpdatedBy},
+                #{work.lastUpdatedTime}
+                )
+            </otherwise>
+        </choose>
+    </insert>
+
+    <delete id="deleteWorkById">
+        delete from work where id = #{workId}
+    </delete>
+
+    <select id="queryWorksByWorkType" resultType="com.linkknown.iwork.entity.Work">
+        select * from work where app_id = #{appId} and work_type = #{workType}
+    </select>
+
+    <select id="queryAllWorks" resultType="com.linkknown.iwork.entity.Work">
+        select * from work where app_id = #{appId}
+    </select>
+
+</mapper>

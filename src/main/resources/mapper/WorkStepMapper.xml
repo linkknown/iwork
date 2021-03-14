@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.linkknown.iwork.dao.WorkStepMapper">
+
+    <select id="queryWorkSteps" resultType="com.linkknown.iwork.entity.WorkStep">
+        select * from work_step where work_id = #{workId}
+        order by work_step_id asc
+    </select>
+
+    <select id="queryWorkStepInfo" resultType="com.linkknown.iwork.entity.WorkStep">
+        select * from work_step where work_id = #{workId} and work_step_id = #{workStepId}
+    </select>
+
+    <select id="queryAllWorkStepByWorkName" resultType="com.linkknown.iwork.entity.WorkStep">
+        SELECT ws.* FROM work_step ws LEFT JOIN WORK w ON ws.work_id = w.id WHERE w.app_id = #{appId} AND w.work_name = #{workName}
+    </select>
+
+    <insert id="insertOrUpdateWorkStep" parameterType="com.linkknown.iwork.entity.WorkStep">
+        <choose>
+            <when test="workStep.id > 0">
+                update work_step
+                set work_id = #{workStep.workId},
+                work_step_id = #{workStep.workStepId},
+                work_sub_id = #{workStep.workSubId},
+                work_step_name = #{workStep.workStepName},
+                work_step_desc = #{workStep.workStepDesc},
+                work_step_type = #{workStep.workStepType},
+                work_step_indent = #{workStep.workStepIndent},
+                work_step_input = #{workStep.workStepInput},
+                work_step_output = #{workStep.workStepOutput},
+                is_defer = #{workStep.isDefer},
+                work_step_param_mapping = #{workStep.workStepParamMapping},
+                created_by = #{workStep.createdBy}, created_time = #{workStep.createdTime},
+                last_updated_by = #{workStep.lastUpdatedBy}, last_updated_time = #{workStep.lastUpdatedTime}
+                where id = #{workStep.id}
+            </when>
+            <otherwise>
+                insert into work_step (
+                work_id,
+                work_step_id,
+                work_sub_id,
+                work_step_name,
+                work_step_desc,
+                work_step_type,
+                work_step_indent,
+                work_step_input,
+                work_step_output,
+                is_defer,
+                work_step_param_mapping,
+                created_by,
+                created_time,
+                last_updated_by,
+                last_updated_time
+                ) values(
+                #{workStep.workId},
+                #{workStep.workStepId},
+                #{workStep.workSubId},
+                #{workStep.workStepName},
+                #{workStep.workStepDesc},
+                #{workStep.workStepType},
+                #{workStep.workStepIndent},
+                #{workStep.workStepInput},
+                #{workStep.workStepOutput},
+                #{workStep.isDefer},
+                #{workStep.workStepParamMapping},
+                #{workStep.createdBy},
+                #{workStep.createdTime},
+                #{workStep.lastUpdatedBy},
+                #{workStep.lastUpdatedTime}
+                )
+            </otherwise>
+        </choose>
+    </insert>
+
+    <delete id="deleteAllWorkStep">
+        delete from work_step where work_id = #{workId}
+    </delete>
+
+    <delete id="deleteWorkStepByWorkStepId">
+        delete from work_step where work_id = #{workId} and work_step_id = #{workStepId}
+    </delete>
+
+    <update id="batchChangeWorkStepIdOrder">
+        <choose>
+            <when test="operate == 'add'">
+                update work_step set work_step_id = work_step_id + 1 WHERE work_id = #{workId} and work_step_id > #{workStepId}
+            </when>
+            <otherwise>
+                update work_step set work_step_id = work_step_id - 1 WHERE work_id = #{workId} and work_step_id > #{workStepId}
+            </otherwise>
+        </choose>
+    </update>
+</mapper>

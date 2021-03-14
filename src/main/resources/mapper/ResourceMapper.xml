@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.linkknown.iwork.dao.ResourceMapper">
+
+    <select id="queryPageResourceList" parameterType="map" resultType="com.linkknown.iwork.entity.Resource">
+        select * from resource
+        <if test="map.search != ''">
+            where resource_name like concat('%',#{map.search},'%')
+            or resource_type like concat('%',#{map.search},'%')
+            or resource_url like concat('%',#{map.search},'%')
+        </if>
+    </select>
+
+    <select id="queryAllResources" resultType="com.linkknown.iwork.entity.Resource">
+        select * from resource
+        <where>
+            <if test="appId != null and appId > 0">
+                and app_id = #{appId}
+            </if>
+            <if test="resourceType != null and resourceType != ''">
+                and resource_type = #{resourceType}
+            </if>
+        </where>
+
+    </select>
+
+    <select id="queryResourceById" resultType="com.linkknown.iwork.entity.Resource">
+        select * from resource where app_id = #{appId} and id = #{id}
+    </select>
+
+    <select id="queryResourceByName" resultType="com.linkknown.iwork.entity.Resource">
+        select * from resource where app_id = #{appId} and resource_name = #{resourceName}
+    </select>
+
+    <delete id="deleteResource">
+        delete from resource where id = #{id}
+    </delete>
+
+    <insert id="insertOrUpdateResource" parameterType="com.linkknown.iwork.entity.Resource">
+        <selectKey keyProperty="count" resultType="int" order="BEFORE">
+            select count(*) as count from resource where id = #{resource.id}
+        </selectKey>
+        <if test="count > 0">
+            update resource
+            set app_id = #{resource.appId},
+            resource_name = #{resource.resourceName},
+            resource_type = #{resource.resourceType},
+            resource_url = #{resource.resourceUrl},
+            resource_dsn = #{resource.resourceDsn},
+            resource_username = #{resource.resourceUsername},
+            resource_password = #{resource.resourcePassword},
+            created_by = #{resource.createdBy}, created_time = #{resource.createdTime},
+            last_updated_by = #{resource.lastUpdatedBy}, last_updated_time = #{resource.lastUpdatedTime}
+            where id = #{resource.id}
+        </if>
+        <if test="count==0">
+            insert into resource (
+            app_id,
+            resource_name,
+            resource_type,
+            resource_url,
+            resource_dsn,
+            resource_username,
+            resource_password,
+            created_by,
+            created_time,
+            last_updated_by,
+            last_updated_time
+            ) values(
+            #{resource.appId},
+            #{resource.resourceName},
+            #{resource.resourceType},
+            #{resource.resourceUrl},
+            #{resource.resourceDsn},
+            #{resource.resourceUsername},
+            #{resource.resourcePassword},
+            #{resource.createdBy},
+            #{resource.createdTime},
+            #{resource.lastUpdatedBy},
+            #{resource.lastUpdatedTime}
+            )
+        </if>
+    </insert>
+</mapper>

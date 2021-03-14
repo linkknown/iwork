@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.linkknown.iwork.dao.AppIdMapper">
+    <select id="getAllAppIds" resultType="com.linkknown.iwork.entity.AppId">
+        select * from app_id
+    </select>
+
+    <select id="queryPageAppIdList" resultType="com.linkknown.iwork.entity.AppId">
+        select * from app_id
+    </select>
+
+    <select id="getAppId" resultType="com.linkknown.iwork.entity.AppId">
+        select * from app_id
+        <where>
+            <if test="appId.id > 0">
+                id = #{appId.id}
+            </if>
+            <if test="appId.id > 0">
+                app_name = #{appId.appName}
+            </if>
+        </where>
+        limit 1
+    </select>
+
+    <insert id="insertOrUpdateAppId" parameterType="com.linkknown.iwork.entity.AppId">
+        <selectKey keyProperty="count" resultType="int" order="BEFORE">
+            select count(*) as count from app_id where id = #{appId.id}
+        </selectKey>
+        <if test="count > 0">
+            update app_id
+            set app_name = #{appId.appName}, app_desc = #{appId.appDesc},
+            created_by = #{appId.createdBy}, created_time = #{appId.createdTime},
+            last_updated_by = #{appId.lastUpdatedBy}, last_updated_time = #{appId.lastUpdatedTime}
+            where id = #{appId.id}
+        </if>
+        <if test="count==0">
+            insert into app_id (
+                app_name,
+                app_desc,
+                created_by,
+                created_time,
+                last_updated_by,
+                last_updated_time
+            ) values(
+                #{appId.appName},
+                #{appId.appDesc},
+                #{appId.createdBy},
+                #{appId.createdTime},
+                #{appId.lastUpdatedBy},
+                #{appId.lastUpdatedTime}
+            )
+        </if>
+    </insert>
+
+    <delete id="deleteAppById">
+        delete from app_id where id = #{id}
+    </delete>
+</mapper>

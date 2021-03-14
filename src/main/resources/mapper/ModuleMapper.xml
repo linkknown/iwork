@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.linkknown.iwork.dao.ModuleMapper">
+
+    <select id="queryPageModuleList" parameterType="map" resultType="com.linkknown.iwork.entity.Module">
+        select * from module
+        where app_id = #{map.app_id}
+        <if test="map.search != ''">
+            and module_name like concat('%',#{map.search},'%')
+        </if>
+        order by last_updated_time desc
+    </select>
+
+    <select id="queryAllModules" resultType="com.linkknown.iwork.entity.Module">
+        select * from module
+        where app_id = #{map.app_id}
+        order by module_name desc
+    </select>
+
+    <delete id="deleteModuleById">
+        delete from module where id = #{id}
+    </delete>
+
+    <insert id="insertOrUpdateModule" parameterType="com.linkknown.iwork.entity.Module">
+        <selectKey keyProperty="count" resultType="int" order="BEFORE">
+            select count(*) as count from module where id = #{module.id}
+        </selectKey>
+        <if test="count > 0">
+            update module
+            set app_id = #{module.appId},
+            module_name = #{module.moduleName},
+            module_desc = #{module.moduleDesc},
+            created_by = #{module.createdBy}, created_time = #{module.createdTime},
+            last_updated_by = #{module.lastUpdatedBy}, last_updated_time = #{module.lastUpdatedTime}
+            where id = #{module.id}
+        </if>
+        <if test="count==0">
+            insert into module (
+            app_id,
+            module_name,
+            module_desc,
+            created_by,
+            created_time,
+            last_updated_by,
+            last_updated_time
+            ) values(
+            #{module.appId},
+            #{module.moduleName},
+            #{module.moduleDesc},
+            #{module.createdBy},
+            #{module.createdTime},
+            #{module.lastUpdatedBy},
+            #{module.lastUpdatedTime}
+            )
+        </if>
+    </insert>
+
+</mapper>

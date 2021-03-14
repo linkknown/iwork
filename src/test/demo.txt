@@ -1,0 +1,9 @@
+#{migrate.appId},
+#{migrate.migrateName},
+#{migrate.migrateSql},
+#{migrate.migrateHash},
+#{migrate.effective},
+#{migrate.createdBy},
+#{migrate.createdTime},
+#{migrate.lastUpdatedBy},
+#{migrate.lastUpdatedTime}

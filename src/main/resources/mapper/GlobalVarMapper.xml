@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.linkknown.iwork.dao.GlobalVarMapper">
+
+    <select id="getAllGlobalVars" resultType="com.linkknown.iwork.entity.GlobalVar">
+        select * from global_var
+    </select>
+
+    <select id="queryAllGlobalVars" resultType="com.linkknown.iwork.entity.GlobalVar">
+        select * from global_var
+        <where>
+            <if test="appId != null and appId > 0">
+                and app_id = #{appId}
+            </if>
+        </where>
+    </select>
+
+    <select id="queryGlobalVar" parameterType="map" resultType="com.linkknown.iwork.entity.GlobalVar">
+        select * from global_var
+        <where>
+            <if test="map.search != null and map.search != ''">
+                and name like concat('%', #{map.search} ,'%')
+            </if>
+            <if test="map.app_id > 0">
+                and app_id = #{map.app_id}
+            </if>
+        </where>
+        order by name asc,env_name asc
+    </select>
+
+    <select id="queryGlobalVarByName" resultType="com.linkknown.iwork.entity.GlobalVar">
+        select * from global_var where app_id = #{appId} and name = #{name} and env_name = #{envName}
+    </select>
+
+    <delete id="deleteGlobalVarById">
+        delete from global_var where id = #{id}
+    </delete>
+
+    <insert id="insertOrUpdateGlobalVar" parameterType="com.linkknown.iwork.entity.GlobalVar">
+        <selectKey keyProperty="count" resultType="int" order="BEFORE">
+            select count(*) as count from global_var where id = #{globalVar.id}
+        </selectKey>
+        <if test="count > 0">
+            update global_var
+            set app_id = #{globalVar.appId},
+            env_name = #{globalVar.envName},
+            name = #{globalVar.name},
+            value = #{globalVar.value},
+            encrypt_flag = #{globalVar.encryptFlag},
+            type = #{globalVar.type},
+            `desc` = #{globalVar.desc},
+            created_by = #{globalVar.createdBy}, created_time = #{globalVar.createdTime},
+            last_updated_by = #{globalVar.lastUpdatedBy}, last_updated_time = #{globalVar.lastUpdatedTime}
+            where id = #{globalVar.id}
+        </if>
+        <if test="count==0">
+            insert into global_var (
+            app_id,
+            env_name,
+            name,
+            value,
+            encrypt_flag,
+            type,
+            `desc`,
+            created_by,
+            created_time,
+            last_updated_by,
+            last_updated_time
+            ) values(
+            #{globalVar.appId},
+            #{globalVar.envName},
+            #{globalVar.name},
+            #{globalVar.value},
+            #{globalVar.encryptFlag},
+            #{globalVar.type},
+            #{globalVar.desc},
+            #{globalVar.createdBy},
+            #{globalVar.createdTime},
+            #{globalVar.lastUpdatedBy},
+            #{globalVar.lastUpdatedTime}
+            )
+        </if>
+    </insert>
+
+</mapper>

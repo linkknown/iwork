@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.linkknown.iwork.dao.RunLogMapper">
+
+    <select id="queryRunlogRecordWithTracking" resultType="com.linkknown.iwork.entity.Runlog$RunlogRecord">
+        select * from runlog_record where tracking_id = #{trackingId}
+    </select>
+
+    <select id="queryLastRunlogDetail" resultType="com.linkknown.iwork.entity.Runlog$RunlogDetail">
+        select * from runlog_detail where tracking_id like concat(#{trackingId},'%')
+        order by log_order asc
+    </select>
+
+    <select id="queryRunlogRecord" parameterType="map" resultType="com.linkknown.iwork.entity.Runlog$RunlogRecord">
+        select * from runlog_record where app_id = #{map.appId}
+        <if test="map.workId > 0">
+            and work_id = #{map.workId}
+        </if>
+        <if test="map.logLevel != ''">
+            and log_level #{map.logLevel}
+        </if>
+        order by last_updated_time desc
+    </select>
+
+    <select id="queryRunlogRecordCount" resultType="int">
+        select count(*) as count from runlog_record where work_id = #{workId}
+        <if test="logLevel != ''">
+            and log_level = #{logLevel}
+        </if>
+    </select>
+
+    <insert id="insertRunlogRecord" parameterType="com.linkknown.iwork.entity.Runlog$RunlogRecord">
+        insert into runlog_record (
+            app_id,
+            tracking_id,
+            work_id,
+            work_name,
+            log_level,
+            created_by,
+            created_time,
+            last_updated_by,
+            last_updated_time
+        ) values(
+            #{runlogRecord.appId},
+            #{runlogRecord.trackingId},
+            #{runlogRecord.workId},
+            #{runlogRecord.workName},
+            #{runlogRecord.logLevel},
+            #{runlogRecord.createdBy},
+            #{runlogRecord.createdTime},
+            #{runlogRecord.lastUpdatedBy},
+            #{runlogRecord.lastUpdatedTime}
+        )
+    </insert>
+
+    <insert id="insertMultiRunlogDetail" parameterType="com.linkknown.iwork.entity.Runlog$RunlogDetail">
+        insert into runlog_detail (
+            tracking_id,
+            work_step_name,
+            log_level,
+            detail,
+            log_order
+        )
+        values
+        <foreach collection="list" item="detail" index="index" separator=",">
+            (
+            #{detail.trackingId},
+            #{detail.workStepName},
+            #{detail.logLevel},
+            #{detail.detail},
+            #{detail.logOrder}
+            )
+        </foreach>
+    </insert>
+</mapper>
