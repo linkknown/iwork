@@ -1,15 +1,11 @@
 package com.linkknown.iwork.core.node.framework;
 
-import com.linkknown.iwork.Constants;
-import com.linkknown.iwork.core.Param;
 import com.linkknown.iwork.core.exception.IWorkException;
 import com.linkknown.iwork.core.node.BaseNode;
 import com.linkknown.iwork.core.run.BlockStepOrdersRunner;
 import com.linkknown.iwork.util.StringUtil;
 
 import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
 import java.util.Map;
 
 public class ElseNode extends BaseNode {
