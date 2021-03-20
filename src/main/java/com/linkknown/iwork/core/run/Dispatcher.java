@@ -11,5 +11,5 @@ public class Dispatcher {
 
     private String trackingId;
     private Map<String, Object> tmpDataMap;     // 调度者发送过来的临时数据
-    private Boolean existParentWork;            // 是否存在父流程
+    private boolean existParentWork;            // 是否存在父流程
 }

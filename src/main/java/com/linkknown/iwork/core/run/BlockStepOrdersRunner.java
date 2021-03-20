@@ -50,7 +50,7 @@ public class BlockStepOrdersRunner {
             if (catchBlockStep != null) {
                 receiver = this.runDetail(catchBlockStep);
             } else {
-                if (this.getDispatcher().getExistParentWork()) {
+                if (this.getDispatcher() != null && this.getDispatcher().isExistParentWork()) {
                     // 继续抛出异常到父级流程
                     throw e;
                 } else {

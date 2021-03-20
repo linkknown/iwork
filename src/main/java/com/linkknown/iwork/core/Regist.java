@@ -1,6 +1,9 @@
 package com.linkknown.iwork.core;
 
+import com.linkknown.iwork.core.node.chiper.CreateJwtNode;
+import com.linkknown.iwork.core.node.chiper.ParseJwtNode;
 import com.linkknown.iwork.core.node.framework.*;
+import com.linkknown.iwork.core.node.http.HttpRequestParserNode;
 import com.linkknown.iwork.core.node.mail.SendMailNode;
 import com.linkknown.iwork.core.node.sql.SQLExecuteNode;
 import com.linkknown.iwork.core.node.sql.SQLQueryNode;
@@ -32,6 +35,9 @@ public class Regist {
         registTypeMap.put("PanicErrorNode".toUpperCase(), PanicErrorNode.class);
         registTypeMap.put("CatchErrorNode".toUpperCase(), CatchErrorNode.class);
         registTypeMap.put("SendMailNode".toUpperCase(), SendMailNode.class);
+        registTypeMap.put("HttpRequestParserNode".toUpperCase(), HttpRequestParserNode.class);
+        registTypeMap.put("CreateJwtNode".toUpperCase(), CreateJwtNode.class);
+        registTypeMap.put("ParseJwtNode".toUpperCase(), ParseJwtNode.class);
     }
 
     public static Parser.IWorkStep getIworkStep (String workStepType) throws IllegalAccessException, InstantiationException {

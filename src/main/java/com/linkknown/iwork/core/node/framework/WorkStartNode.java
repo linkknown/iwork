@@ -2,6 +2,7 @@ package com.linkknown.iwork.core.node.framework;
 
 import com.linkknown.iwork.Constants;
 import com.linkknown.iwork.core.Param;
+import com.linkknown.iwork.core.exception.IWorkException;
 import com.linkknown.iwork.core.node.BaseNode;
 import com.linkknown.iwork.entity.WorkStep;
 import org.apache.commons.lang3.StringUtils;
@@ -23,7 +24,7 @@ public class WorkStartNode extends BaseNode {
     }
 
     @Override
-    public void execute(String trackingId) {
+    public void execute(String trackingId) throws IWorkException {
         List<String> fillInfo = new ArrayList<>();
         Iterator<Map.Entry<String, Object>> iterator = this.getTmpDataMap().entrySet().iterator();
         while (iterator.hasNext()) {

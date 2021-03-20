@@ -2,6 +2,7 @@ package com.linkknown.iwork.core;
 
 import com.linkknown.iwork.core.exception.IWorkException;
 import com.linkknown.iwork.util.DatatypeUtil;
+import com.linkknown.iwork.util.EncryptDecryptUtil;
 import org.apache.commons.lang3.StringUtils;
 
 import java.io.File;
@@ -64,14 +65,22 @@ public class IWorkFuncProxy {
         return map;
     }
 
-//    func (t *IWorkFuncProxy) AesEncrypt(args []interface{}) interface{} {
-//        return chiperutil.AesEncryptToStr(args[0].(string), args[1].(string))
-//    }
-//
-//    func (t *IWorkFuncProxy) AesDecrypt(args []interface{}) interface{} {
-//        return chiperutil.AesDecryptToStr(args[0].(string), args[1].(string))
-//    }
-//
+    public Object aesEncrypt(Object... args) throws IWorkException {
+        String encryptStr = EncryptDecryptUtil.aesEncryptToStr((String) args[0], (String) args[1]);
+        if (StringUtils.isNotEmpty(encryptStr)) {
+            return encryptStr;
+        }
+        throw new IWorkException("加密失败!");
+    }
+
+    public Object aesDecrypt(Object... args) throws IWorkException {
+        String decryptStr = EncryptDecryptUtil.aesDecryptToStr((String) args[0], (String) args[1]);
+        if (StringUtils.isNotEmpty(decryptStr)) {
+            return decryptStr;
+        }
+        throw new IWorkException("解密失败!");
+    }
+
 //    func (t *IWorkFuncProxy) BcryptGenerateFromPassword(args []interface{}) interface{} {
 //        hashedPassword, err := chiperutil.BcryptGenerateFromPassword(args[0].(string))
 //        errorutil.CheckError(err)

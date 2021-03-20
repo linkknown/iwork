@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.linkknown.iwork.core.exception.IWorkException;
 import com.linkknown.iwork.entity.WorkStep;
 import lombok.Data;
 import lombok.experimental.Accessors;
@@ -193,7 +194,7 @@ public class Param {
     }
 
     // 获取出参 schema
-    public static ParamOutputSchema getCacheParamOutputSchema (WorkStep workStep) {
+    public static ParamOutputSchema getCacheParamOutputSchema (WorkStep workStep) throws IWorkException {
         WorkStepFactory factory = new WorkStepFactory();
         factory.setWorkStep(workStep);
         Parser.ParamSchemaParser parser = new Parser.ParamSchemaParser(workStep, factory);

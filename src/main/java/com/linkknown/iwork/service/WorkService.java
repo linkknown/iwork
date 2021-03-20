@@ -24,4 +24,6 @@ public interface WorkService {
     List<Work> queryWorksByWorkType(int appId, String workType);
 
     List<Work> queryAllWorks(int appId);
+
+    Map<String, List<Work>> getRelativeWorkService(int appId, int workId);
 }

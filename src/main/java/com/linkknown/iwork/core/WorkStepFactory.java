@@ -134,13 +134,13 @@ public class WorkStepFactory implements Parser.IParamSchemaParser {
     }
 
     @Override
-    public Param.ParamInputSchema getRuntimeParamInputSchema() {
+    public Param.ParamInputSchema getRuntimeParamInputSchema() throws IWorkException {
         Param.ParamInputSchema paramInputSchema = this.getProxy().getRuntimeParamInputSchema();
         return paramInputSchema != null ? paramInputSchema : new Param.ParamInputSchema();
     }
 
     @Override
-    public Param.ParamOutputSchema getDefaultParamOutputSchema() {
+    public Param.ParamOutputSchema getDefaultParamOutputSchema() throws IWorkException {
         Param.ParamOutputSchema paramOutputSchema = this.getProxy().getDefaultParamOutputSchema();
         return paramOutputSchema != null ? paramOutputSchema : new Param.ParamOutputSchema();
     }
@@ -157,7 +157,7 @@ public class WorkStepFactory implements Parser.IParamSchemaParser {
     }
 
 
-    public static Param.ParamOutputSchema getCacheParamOutputSchema(WorkStep step) {
+    public static Param.ParamOutputSchema getCacheParamOutputSchema(WorkStep step) throws IWorkException {
         Parser.ParamSchemaParser parser = new Parser.ParamSchemaParser();
         parser.setWorkStep(step);
         WorkStepFactory _parser = new WorkStepFactory();

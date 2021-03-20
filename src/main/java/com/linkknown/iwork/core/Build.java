@@ -39,7 +39,7 @@ public class Build {
     }
 
     // 构建动态输入值
-    public static void buildDynamicInput(WorkStep workStep, Consumer<WorkStep> saveOrUpdate) {
+    public static void buildDynamicInput(WorkStep workStep, Consumer<WorkStep> saveOrUpdate) throws IWorkException {
         // TODO
         WorkStepFactory _parser = new WorkStepFactory();
         _parser.setWorkStep(workStep);

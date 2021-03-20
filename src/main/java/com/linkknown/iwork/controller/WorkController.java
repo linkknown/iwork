@@ -144,6 +144,19 @@ public class WorkController {
         return resultMap;
     }
 
+    @RequestMapping("/getRelativeWork")
+    public Object getRelativeWork(@RequestParam(defaultValue = "-1") int app_id,
+                                  @RequestParam(defaultValue = "-1") int work_id) {
+        Map<String, Object> resultMap = new HashMap<>();
+
+        Map<String, List<Work>> relativeWorks = workService.getRelativeWorkService(app_id, work_id);
+
+        resultMap.put("status", "SUCCESS");
+        resultMap.put("parentWorks", relativeWorks.get("parentWorks"));
+        resultMap.put("subworks", relativeWorks.get("subworks"));
+        return resultMap;
+    }
+
     @RequestMapping("/getAllFiltersAndWorks")
     public Object getAllFiltersAndWorks(@RequestParam(defaultValue = "-1") int app_id) {
         Map<String, Object> resultMap = new HashMap<>();

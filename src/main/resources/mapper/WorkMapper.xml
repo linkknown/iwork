@@ -87,4 +87,10 @@
         select * from work where app_id = #{appId}
     </select>
 
+    <select id="queryParentWorks" resultType="com.linkknown.iwork.entity.Work">
+        select * from work where id in (
+            select distinct work_id from work_step ws where ws.work_sub_id = #{workId}
+        )
+    </select>
+
 </mapper>

@@ -15,15 +15,15 @@ public class Parser {
     public static interface IParamSchemaParser {
 
         Param.ParamInputSchema getDefaultParamInputSchema();
-        Param.ParamInputSchema getRuntimeParamInputSchema();
-        Param.ParamOutputSchema getDefaultParamOutputSchema();
+        Param.ParamInputSchema getRuntimeParamInputSchema() throws IWorkException;
+        Param.ParamOutputSchema getDefaultParamOutputSchema() throws IWorkException;
         Param.ParamOutputSchema getRuntimeParamOutputSchema() throws IWorkException;
         void buildParamNamingRelation(List<Param.ParamInputSchemaItem> items);
     }
 
     public static interface IParamSchemaCacheParser extends IParamSchemaParser {
         Param.ParamInputSchema getCacheParamInputSchema(WorkStep... replaceStep);
-        Param.ParamOutputSchema getCacheParamOutputSchema(WorkStep... replaceStep);
+        Param.ParamOutputSchema getCacheParamOutputSchema(WorkStep... replaceStep) throws IWorkException;
     }
 
     public static interface IWorkStep extends IParamSchemaParser {
@@ -56,12 +56,12 @@ public class Parser {
         }
 
         @Override
-        public Param.ParamInputSchema getRuntimeParamInputSchema() {
+        public Param.ParamInputSchema getRuntimeParamInputSchema() throws IWorkException {
             return this.paramSchemaParser.getRuntimeParamInputSchema();
         }
 
         @Override
-        public Param.ParamOutputSchema getDefaultParamOutputSchema() {
+        public Param.ParamOutputSchema getDefaultParamOutputSchema() throws IWorkException {
             return this.paramSchemaParser.getDefaultParamOutputSchema();
         }
 
@@ -98,7 +98,7 @@ public class Parser {
 
         // 获取缓存的出参 schema,即从 DB 中读取
         @Override
-        public Param.ParamOutputSchema getCacheParamOutputSchema(WorkStep... replaceStep) {
+        public Param.ParamOutputSchema getCacheParamOutputSchema(WorkStep... replaceStep) throws IWorkException {
             if (replaceStep != null && replaceStep.length > 0) {
                 this.workStep = replaceStep[0];
             }

@@ -10,6 +10,8 @@ import com.linkknown.iwork.service.WorkStepService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -90,5 +92,24 @@ public class WorkServiceImpl implements WorkService {
     @Override
     public List<Work> queryAllWorks(int appId) {
         return workMapper.queryAllWorks(appId);
+    }
+
+    @Override
+    public Map<String, List<Work>> getRelativeWorkService(int appId, int workId) {
+        Map<String, List<Work>> result = new HashMap<>();
+        List<Work> parentWorks = new ArrayList<>();
+        List<Work> subworks = new ArrayList<>();
+
+        parentWorks = workMapper.queryParentWorks(workId);
+        List<WorkStep> workSteps = workStepService.queryWorkSteps(workId);
+        for (WorkStep workStep : workSteps) {
+            if (workStep.getWorkSubId() > 0) {
+                Work work = workMapper.queryWorkById(appId, workStep.getWorkSubId());
+                subworks.add(work);
+            }
+        }
+        result.put("parentWorks", parentWorks);
+        result.put("subworks", subworks);
+        return result;
     }
 }

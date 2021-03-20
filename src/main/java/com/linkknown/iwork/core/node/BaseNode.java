@@ -35,12 +35,19 @@ public abstract class BaseNode implements Parser.IWorkStep {
     public static class ParamMeta {
         private String paramMetaName;
         private String paramMetaDesc;
+        private String[] paramChoices;
 
         public ParamMeta() {}
 
         public ParamMeta(String paramMetaName, String paramMetaDesc) {
             this.paramMetaName = paramMetaName;
             this.paramMetaDesc = paramMetaDesc;
+        }
+
+        public ParamMeta(String paramMetaName, String paramMetaDesc, String[] paramChoices) {
+            this.paramMetaName = paramMetaName;
+            this.paramMetaDesc = paramMetaDesc;
+            this.paramChoices = paramChoices;
         }
     }
 
@@ -57,6 +64,7 @@ public abstract class BaseNode implements Parser.IWorkStep {
             Param.ParamInputSchemaItem item = new Param.ParamInputSchemaItem();
             item.setParamName(paramMetaList.get(i).getParamMetaName());
             item.setParamDesc(paramMetaList.get(i).getParamMetaDesc());
+            item.setParamChoices(paramMetaList.get(i).getParamChoices());
             items.add(item);
         }
 
@@ -86,13 +94,13 @@ public abstract class BaseNode implements Parser.IWorkStep {
     }
 
     @Override
-    public Param.ParamInputSchema getRuntimeParamInputSchema() {
+    public Param.ParamInputSchema getRuntimeParamInputSchema() throws IWorkException {
         System.out.println("execute default getRuntimeParamInputSchema method...");
         return new Param.ParamInputSchema();
     }
 
     @Override
-    public Param.ParamOutputSchema getDefaultParamOutputSchema() {
+    public Param.ParamOutputSchema getDefaultParamOutputSchema() throws IWorkException {
         System.out.println("execute default getDefaultParamOutputSchema method...");
         return new Param.ParamOutputSchema();
     }
@@ -241,7 +249,7 @@ public abstract class BaseNode implements Parser.IWorkStep {
         return paramOutputSchema;
     }
 
-    public void submitParamOutputSchemaDataToDataStore(WorkStep workStep, Map<String,Object> tmpDataMap) {
+    public void submitParamOutputSchemaDataToDataStore(WorkStep workStep, Map<String,Object> tmpDataMap) throws IWorkException {
         Map<String, Object> paramMap = new HashMap<>();
 
         Param.ParamOutputSchema paramOutputSchema = this.getParamSchemaCacheParser().getCacheParamOutputSchema();

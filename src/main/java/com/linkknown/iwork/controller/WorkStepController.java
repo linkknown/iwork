@@ -169,7 +169,7 @@ public class WorkStepController {
     @RequestMapping("/loadWorkStepInfo")
     public Object loadWorkStepInfo(@RequestParam(defaultValue = "-1") int app_id,
                                        @RequestParam(defaultValue = "-1") int work_id,
-                                       @RequestParam(defaultValue = "-1") int work_step_id) throws JsonProcessingException {
+                                       @RequestParam(defaultValue = "-1") int work_step_id) throws JsonProcessingException, IWorkException {
         Map<String, Object> resultMap = new HashMap<>();
 
         WorkStep workStep = workStepService.queryWorkStepInfo(work_id, work_step_id);
@@ -280,7 +280,7 @@ public class WorkStepController {
     @RequestMapping("/loadPreNodeOutput")
     public Object loadPreNodeOutput(@RequestParam(defaultValue = "-1") int app_id,
                                              @RequestParam(defaultValue = "-1") int work_id,
-                                             @RequestParam(defaultValue = "-1") int work_step_id) {
+                                             @RequestParam(defaultValue = "-1") int work_step_id) throws IWorkException {
         Map<String, Object> resultMap = new HashMap<>();
 
         List<Param.TreeNode> prePosTreeNodeArr = new LinkedList<>();

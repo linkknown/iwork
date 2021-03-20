@@ -21,4 +21,6 @@ public interface WorkMapper {
     List<Work> queryWorksByWorkType(@Param("appId") int appId, @Param("workType") String workType);
 
     List<Work> queryAllWorks(int appId);
+
+    List<Work> queryParentWorks(@Param("workId") int workId);
 }

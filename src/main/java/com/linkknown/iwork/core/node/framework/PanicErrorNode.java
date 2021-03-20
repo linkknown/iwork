@@ -7,6 +7,7 @@ import com.linkknown.iwork.core.node.BaseNode;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Optional;
 
 public class PanicErrorNode extends BaseNode {
 
@@ -20,7 +21,8 @@ public class PanicErrorNode extends BaseNode {
 
     @Override
     public void execute(String trackingId) throws IWorkException {
-        Boolean expression = (Boolean) this.getTmpDataMap().get(Constants.BOOL_PREFIX + "panic_expression");
+        boolean expression = Optional.ofNullable((Boolean)this.getTmpDataMap().get(Constants.BOOL_PREFIX + "panic_expression"))
+                .orElse(false);
         if (expression) {
             String errorMsg = ((String) this.getTmpDataMap().get(Constants.STRING_PREFIX + "panic_errorMsg?"));
             throw new IWorkException(errorMsg);
