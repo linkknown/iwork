@@ -1,12 +1,14 @@
 package com.linkknown.iwork.core;
 
 import com.linkknown.iwork.Constants;
+import com.linkknown.iwork.config.IworkConfig;
 import com.linkknown.iwork.core.exception.IWorkException;
 import com.linkknown.iwork.core.node.FuncForRunOneStep;
 import com.linkknown.iwork.core.node.FuncForRunWorkSub;
 import com.linkknown.iwork.core.run.*;
 import com.linkknown.iwork.entity.Work;
 import com.linkknown.iwork.entity.WorkStep;
+import com.linkknown.iwork.util.ApplicationContextUtil;
 import com.linkknown.iwork.util.IworkUtil;
 import lombok.Data;
 import lombok.experimental.Accessors;
@@ -38,7 +40,7 @@ public class WorkStepFactory implements Parser.IParamSchemaParser {
     CacheLoggerWriter loggerWriter;
     WorkCache workCache;
 
-    public void execute(String trackingId) {
+    public void execute(String trackingId) throws IWorkException {
         try {
             Parser.IWorkStep proxy = this.getProxy();
             if (proxy == null) {
@@ -57,11 +59,24 @@ public class WorkStepFactory implements Parser.IParamSchemaParser {
                 this.setReceiver(_receiver);
             }
         } catch (Exception e) {
-            // 将捕获到的 err 继续抛出,但是做了一层脱敏处理
-            e.printStackTrace();
-
             String html = IworkUtil.printStackTraceToHtml(e);
             this.loggerWriter.write(trackingId, "", Constants.LOG_LEVEL_ERROR, html);
+
+            IworkConfig iworkConfig = ApplicationContextUtil.getBean(IworkConfig.class);
+            // 代理子流程的返回 receiver 和异常信息 error
+            // 将错误写入 Error 中去
+            Map<String, Object> errorMap = new HashMap<>();
+            errorMap.put("isError", true);
+            errorMap.put("isNoError", false);
+            errorMap.put("errorMsg", e.getMessage());
+            // TODO 此处 insensitiveErrorMsg 异常信息需要从子流程中获取，而不是写死
+            errorMap.put("insensitiveErrorMsg", iworkConfig.getInsensitiveErrorMsg());
+            this.getDataStore().cacheDatas("Error", errorMap);
+
+            // 将捕获到的 err 继续抛出,但是做了一层脱敏处理
+            e.printStackTrace();
+            throw new IWorkException(e.getMessage())
+                    .setWorkStepName(this.getWorkStep().getWorkStepName());
         }
     }
 

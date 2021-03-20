@@ -3,6 +3,7 @@ package com.linkknown.iwork.core.run;
 import com.linkknown.iwork.Constants;
 import com.linkknown.iwork.core.WorkCache;
 import com.linkknown.iwork.core.WorkStepFactory;
+import com.linkknown.iwork.core.exception.IWorkException;
 import com.linkknown.iwork.entity.Runlog;
 import com.linkknown.iwork.entity.Work;
 import lombok.Data;
@@ -55,6 +56,8 @@ public class Runner {
                     .setDispatcher(dispatcher)            // dispatcher 是全流程共享的
                     .setRunOneStep(this::runOneStep)
                     .run();
+        } catch (IWorkException e) {
+            e.printStackTrace();
         } finally {
             this.recordStartAndEndWorkLog(trackingId, loggerWriter, workCache,"end");
             long endTime = System.currentTimeMillis();
@@ -65,11 +68,26 @@ public class Runner {
     }
 
     // 执行单个 BlockStep
-    private Receiver runOneStep(BlockStepOrdersRunner.RunOneStepArgs args) {
+    private Receiver runOneStep(BlockStepOrdersRunner.RunOneStepArgs args) throws IWorkException {
         Receiver receiver = null;
         long startTime = System.currentTimeMillis();
         try {
             this.recordStartAndEndStepLog(args, "start");
+
+            // 由工厂代为执行步骤
+            WorkStepFactory factory = new WorkStepFactory();
+            factory.setWorkStep(args.getBlockStep().getStep())
+                    .setDispatcher(args.getDispatcher())
+                    .setReceiver(receiver)
+                    .setBlockStep(args.getBlockStep())
+                    .setDataStore(args.getDataStore())
+                    .setLoggerWriter(args.getLoggerWriter())
+                    .setRunOneStep(this::runOneStep)
+    //                    WorkSubRunFunc:   RunOneWork,
+                    .setWorkCache(args.getWorkCache());
+            factory.execute(args.getTrackingId());
+            // factory 节点如果代理的是 work_end 节点,则传递 Receiver 出去
+            return factory.getReceiver();
         } finally {
             long endTime = System.currentTimeMillis();
             // 统计耗费时间
@@ -77,21 +95,6 @@ public class Runner {
             // 记录步骤开始执行和结束执行日志
             this.recordStartAndEndStepLog(args, "end");
         }
-
-        // 由工厂代为执行步骤
-        WorkStepFactory factory = new WorkStepFactory();
-        factory.setWorkStep(args.getBlockStep().getStep())
-                .setDispatcher(args.getDispatcher())
-                .setReceiver(receiver)
-                .setBlockStep(args.getBlockStep())
-                .setDataStore(args.getDataStore())
-                .setLoggerWriter(args.getLoggerWriter())
-                .setRunOneStep(this::runOneStep)
-//                    WorkSubRunFunc:   RunOneWork,
-                .setWorkCache(args.getWorkCache());
-        factory.execute(args.getTrackingId());
-        // factory 节点如果代理的是 work_end 节点,则传递 Receiver 出去
-        return factory.getReceiver();
     }
 
     // 记录步骤开始执行和结束执行日志

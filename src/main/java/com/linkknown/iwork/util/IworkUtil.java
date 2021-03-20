@@ -62,4 +62,8 @@ public class IworkUtil {
         return StringUtils.replace(sw.toString(), "\n", "<br/>");
     }
 
+    public static String formatInternalError(Exception e) {
+        return String.format("<span style='color:red;'>internal error:%s</span>", e.getMessage());
+    }
+
 }
