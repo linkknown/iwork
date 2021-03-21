@@ -61,7 +61,7 @@ public class WorkStepFactory implements Parser.IParamSchemaParser {
         } catch (IWorkException e) {
             String html = IworkUtil.printStackTraceToHtml(e);
             if (!e.isRecordedFlag()) {
-                this.loggerWriter.write(trackingId, "Error", Constants.LOG_LEVEL_ERROR, html);
+                this.loggerWriter.write(trackingId, "$ErrorStackTrace", Constants.LOG_LEVEL_ERROR, html);
 
                 IworkConfig iworkConfig = ApplicationContextUtil.getBean(IworkConfig.class);
                 // 代理子流程的返回 receiver 和异常信息 error

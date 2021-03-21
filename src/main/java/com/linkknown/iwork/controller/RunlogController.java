@@ -5,6 +5,7 @@ import com.linkknown.iwork.adapter.PageAdapter;
 import com.linkknown.iwork.entity.Resource;
 import com.linkknown.iwork.entity.Runlog;
 import com.linkknown.iwork.service.RunLogService;
+import com.linkknown.iwork.util.HightLightUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Consumer;
 
 @RestController
 @RequestMapping("/api/iwork")
@@ -48,6 +50,7 @@ public class RunlogController {
 
         Runlog.RunlogRecord runLogRecord = runLogService.queryRunlogRecordWithTracking(tracking_id);
         List<Runlog.RunlogDetail> runLogDetails = runLogService.queryLastRunlogDetail(tracking_id);
+        runLogDetails.stream().forEach(runlogDetail -> runlogDetail.setDetail(HightLightUtil.hightLight(runlogDetail.getDetail())));
 
         resultMap.put("status", "SUCCESS");
         resultMap.put("runLogRecord", runLogRecord);
