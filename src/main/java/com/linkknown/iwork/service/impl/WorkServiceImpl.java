@@ -112,4 +112,9 @@ public class WorkServiceImpl implements WorkService {
         result.put("subworks", subworks);
         return result;
     }
+
+    @Override
+    public List<Work> queryParentWorks(int workId) {
+        return workMapper.queryParentWorks(workId);
+    }
 }

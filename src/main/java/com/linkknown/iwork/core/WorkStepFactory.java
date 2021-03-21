@@ -5,7 +5,10 @@ import com.linkknown.iwork.config.IworkConfig;
 import com.linkknown.iwork.core.exception.IWorkException;
 import com.linkknown.iwork.core.node.FuncForRunOneStep;
 import com.linkknown.iwork.core.node.FuncForRunWorkSub;
-import com.linkknown.iwork.core.run.*;
+import com.linkknown.iwork.core.run.CacheLoggerWriter;
+import com.linkknown.iwork.core.run.DataStore;
+import com.linkknown.iwork.core.run.Dispatcher;
+import com.linkknown.iwork.core.run.Receiver;
 import com.linkknown.iwork.entity.Work;
 import com.linkknown.iwork.entity.WorkStep;
 import com.linkknown.iwork.util.ApplicationContextUtil;
@@ -14,13 +17,10 @@ import lombok.Data;
 import lombok.experimental.Accessors;
 import org.apache.commons.lang3.reflect.FieldUtils;
 
-import java.io.PrintWriter;
-import java.io.StringWriter;
 import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.function.Function;
 
 
 @Data
@@ -96,6 +96,7 @@ public class WorkStepFactory implements Parser.IParamSchemaParser {
         fieldMap.put("loggerWriter", this.getLoggerWriter());
         fieldMap.put("blockStep", this.getBlockStep());
         fieldMap.put("runOneStep", this.getRunOneStep());
+        fieldMap.put("runWorkSub", this.getRunWorkSub());
         fieldMap.put("dispatcher", this.getDispatcher());
 
         // TODO extras...

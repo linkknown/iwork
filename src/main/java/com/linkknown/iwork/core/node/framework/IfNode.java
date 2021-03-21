@@ -33,8 +33,13 @@ public class IfNode extends BaseNode {
 
         boolean expression = (boolean) this.getTmpDataMap().get(Constants.BOOL_PREFIX + "expression");
 
+        paramMap.put(Constants.BOOL_PREFIX + "expression", expression);
+        // 将数据数据存储到数据中心
+        this.getDataStore().cacheDatas(this.getWorkStep().getWorkStepName(), paramMap);
+
         if (expression && this.getBlockStep().isHasChildren()) {
             this.getBlockStep().setAfterJudgeInterrupt(true); // if 条件满足, AfterJudgeInterrupt 属性变为 true
+
             new BlockStepOrdersRunner()
                     .setParentStepId(this.getWorkStep().getWorkStepId())
                     .setTrackingId(trackingId)
@@ -44,10 +49,12 @@ public class IfNode extends BaseNode {
                     .setDispatcher(this.getDispatcher())            // dispatcher 是全流程共享的
                     .setRunOneStep(this.getRunOneStep())
                     .run();
+        } else {
+            this.getBlockStep().setAfterJudgeInterrupt(false);
+            this.getLoggerWriter().write(trackingId, "",
+                    Constants.LOG_LEVEL_INFO, String.format("The blockStep for %s was skipped!", this.getWorkStep().getWorkStepName()));
         }
 
-        paramMap.put(Constants.BOOL_PREFIX + "expression", expression);
-        // 将数据数据存储到数据中心
-        this.getDataStore().cacheDatas(this.getWorkStep().getWorkStepName(), paramMap);
+
     }
 }

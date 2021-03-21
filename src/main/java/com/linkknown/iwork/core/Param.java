@@ -135,9 +135,11 @@ public class Param {
             topTreeNode.setNodeName(rootName);
             topTreeNode.setNodeLink(rootName);
 
-            for (ParamOutputSchemaItem item : paramOutputSchemaItems) {
-                // 元素追加到树上面
-                this.appendToTreeNodes(topTreeNode, item);
+            if (paramOutputSchemaItems != null) {
+                for (ParamOutputSchemaItem item : paramOutputSchemaItems) {
+                    // 元素追加到树上面
+                    this.appendToTreeNodes(topTreeNode, item);
+                }
             }
             return topTreeNode;
         }

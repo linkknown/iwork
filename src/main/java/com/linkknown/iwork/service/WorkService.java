@@ -3,6 +3,7 @@ package com.linkknown.iwork.service;
 
 import com.github.pagehelper.PageInfo;
 import com.linkknown.iwork.entity.Work;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 import java.util.Map;
@@ -26,4 +27,6 @@ public interface WorkService {
     List<Work> queryAllWorks(int appId);
 
     Map<String, List<Work>> getRelativeWorkService(int appId, int workId);
+
+    List<Work> queryParentWorks(int workId);
 }

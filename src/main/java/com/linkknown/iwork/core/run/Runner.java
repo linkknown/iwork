@@ -28,7 +28,8 @@ public class Runner {
         Receiver receiver = null;
 
         // 缓冲日志写入对象
-        CacheLoggerWriter loggerWriter = new CacheLoggerWriter().setRunlogDetailConsumer(this.runlogDetailConsumer);
+        CacheLoggerWriter loggerWriter = this.initCacheLoggerWriter(dispatcher);
+
         WorkCache workCache = CacheManager.getInstance().getWorkCache(Integer.parseInt(work.getAppId()), work.getId());
         String trackingId = "";
         long startTime = System.currentTimeMillis();
@@ -67,6 +68,15 @@ public class Runner {
         return receiver;
     }
 
+    private CacheLoggerWriter initCacheLoggerWriter(Dispatcher dispatcher) {
+        CacheLoggerWriter loggerWriter = new CacheLoggerWriter().setRunlogDetailConsumer(this.runlogDetailConsumer);
+        // 调度者不为空时代表有父级流程
+        if (dispatcher != null && dispatcher.getTmpDataMap() != null && dispatcher.getTmpDataMap().get("logwriter") != null) {
+            loggerWriter = (CacheLoggerWriter) dispatcher.getTmpDataMap().get("logwriter");
+        }
+        return loggerWriter;
+    }
+
     // 执行单个 BlockStep
     private Receiver runOneStep(BlockStepOrdersRunner.RunOneStepArgs args) throws IWorkException {
         Receiver receiver = null;
@@ -79,10 +89,12 @@ public class Runner {
             factory.setWorkStep(args.getBlockStep().getStep())
                     .setDispatcher(args.getDispatcher())
                     .setReceiver(receiver)
+                    .setAppId(args.getAppId())
                     .setBlockStep(args.getBlockStep())
                     .setDataStore(args.getDataStore())
                     .setLoggerWriter(args.getLoggerWriter())
                     .setRunOneStep(this::runOneStep)
+                    .setRunWorkSub(this::runWork)
     //                    WorkSubRunFunc:   RunOneWork,
                     .setWorkCache(args.getWorkCache());
             factory.execute(args.getTrackingId());

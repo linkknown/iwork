@@ -36,6 +36,7 @@ public class WorkSubNode extends BaseNode {
         if (StringUtils.isNotEmpty(StringUtils.trim(workSubName))) {
             // 获取子流程所有步骤
             WorkStepService workStepService = ApplicationContextUtil.getBean(WorkStepService.class);
+
             List<WorkStep> subSteps = workStepService.queryAllWorkStepByWorkName(this.getAppId(), workSubName);
             for (WorkStep subStep : subSteps) {
                 // 找到子流程起始节点
@@ -91,7 +92,7 @@ public class WorkSubNode extends BaseNode {
             // 获取子流程流程名称
             String subWorkName = this.getWorkCache().getSubWorkNameMap().get(this.getWorkStep().getWorkStepId());
             // 运行子流程
-            WorkCache workCache = CacheManager.getInstance().getWorkCache(this.getAppId(), this.getWorkSubName());
+            WorkCache workCache = CacheManager.getInstance().getWorkCache(this.getAppId(), subWorkName);
             if (workCache == null) {
                 throw new IWorkException(String.format("Load subWork failed for %s", subWorkName));
             }
@@ -103,10 +104,12 @@ public class WorkSubNode extends BaseNode {
                     .setTrackingId(trackingId)
                     .setTmpDataMap(this.getTmpDataMap())
                     .setExistParentWork(true);
-            Receiver receiver = this.getRunWorkSub().execute(trackingId, dispatcher);
+            Receiver receiver = this.getRunWorkSub().execute(workCache.getWork(), dispatcher);
             // 接收子流程数据存入 dataStore
             this.getDataStore().cacheDatas(this.getWorkStep().getWorkStepName(), receiver.getTmpDataMap());
         } catch (Exception e) {
+            e.printStackTrace();
+
             IworkConfig iworkConfig = ApplicationContextUtil.getBean(IworkConfig.class);
             // 代理子流程的返回 receiver 和异常信息 error
             // 将错误写入 Error 中去

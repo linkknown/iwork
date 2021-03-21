@@ -20,6 +20,7 @@ public class BlockStepOrdersRunner {
     @Data
     @Accessors(chain = true)
     public static class RunOneStepArgs {
+        private int appId;
         private String trackingId;
         private CacheLoggerWriter loggerWriter;
         private DataStore dataStore;
@@ -105,6 +106,7 @@ public class BlockStepOrdersRunner {
                     .setTrackingId(this.getTrackingId())
                     .setLoggerWriter(this.getLoggerWriter())
                     .setBlockStep(blockStep)
+                    .setAppId(this.getWorkCache().getAppId())
                     .setDataStore(this.getStore())
                     .setDispatcher(this.getDispatcher())
                     .setWorkCache(this.getWorkCache());

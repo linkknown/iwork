@@ -1,9 +1,16 @@
 package com.linkknown.iwork.core;
 
+import com.linkknown.iwork.Constants;
 import com.linkknown.iwork.core.exception.IWorkException;
+import com.linkknown.iwork.dao.WorkMapper;
+import com.linkknown.iwork.entity.Work;
 import com.linkknown.iwork.entity.WorkStep;
+import com.linkknown.iwork.service.WorkService;
+import com.linkknown.iwork.service.WorkStepService;
+import com.linkknown.iwork.util.ApplicationContextUtil;
 import org.apache.commons.lang3.StringUtils;
 
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
@@ -39,10 +46,11 @@ public class Build {
     }
 
     // 构建动态输入值
-    public static void buildDynamicInput(WorkStep workStep, Consumer<WorkStep> saveOrUpdate) throws IWorkException {
+    public static void buildDynamicInput(int appId, WorkStep workStep, Consumer<WorkStep> saveOrUpdate) throws IWorkException {
         // TODO
         WorkStepFactory _parser = new WorkStepFactory();
         _parser.setWorkStep(workStep);
+        _parser.setAppId(appId);
 //        _parser.setWorkCache(workCache);
         Parser.ParamSchemaParser parser = new Parser.ParamSchemaParser(workStep, _parser);
 
@@ -79,5 +87,69 @@ public class Build {
 
         // 存储或者更新 WorkStep
         saveOrUpdate.accept(workStep);
+    }
+
+    public static void buildAutoCreateSubWork(int appId, WorkStep workStep) {
+        if (!StringUtils.equals(workStep.getWorkStepType(), Constants.NODE_TYPE_WORK_START)) {
+            return;
+        }
+
+        WorkService workService = ApplicationContextUtil.getBean(WorkService.class);
+        WorkStepService workStepService = ApplicationContextUtil.getBean(WorkStepService.class);
+
+        WorkStepFactory _parser = new WorkStepFactory();
+        _parser.setWorkStep(workStep);
+        Parser.ParamSchemaParser parser = new Parser.ParamSchemaParser(workStep, _parser);
+        Param.ParamInputSchema paramInputSchema = parser.getCacheParamInputSchema();
+        List<Param.ParamInputSchemaItem> paramInputSchemaItems = paramInputSchema.getParamInputSchemaItems();
+        for (Param.ParamInputSchemaItem item : paramInputSchemaItems) {
+            // 参数名称代表 work_sub
+            if (StringUtils.equals(item.getParamName(), Constants.STRING_PREFIX + Constants.NODE_TYPE_WORK_SUB)) {
+                // work_sub 名称支持纯文本和 $WORK.xxx 两种格式,统一转换成 $WORK.xxx 格式
+                String workSubNameRef = StringUtils.trim(item.getParamValue());
+                if (!StringUtils.startsWith(workSubNameRef, "$WORK.")) {
+                    // 修改值并同步到数据库
+                    item.setParamValue(String.format("$WORK.%s", workSubNameRef));
+                    workStep.setWorkStepInput(paramInputSchema.renderToJson());
+                } else {
+                    workSubNameRef = StringUtils.removeStart(workSubNameRef, "$WORK.");
+                    workSubNameRef = StringUtils.trim(workSubNameRef);
+                    workSubNameRef = StringUtils.removeEnd(workSubNameRef, ";");
+                }
+                // 自动创建子流程
+                createOrUpdateSubWork(appId, workSubNameRef);
+
+//                workSubNameRef = IworkUtil.getSingleRelativeValueWithReg(workSubNameRef); // 去除多余的 ; 等字符
+//                workSubName := strings.Replace(workSubNameRef, "$WORK.", "", -1)         // 去除前缀和多余的其它字符
+
+                // 维护 work 的 WorkSubId 属性
+                Work subWork = workService.queryWorkByName(appId, workSubNameRef);
+                workStep.setWorkSubId(subWork.getId());
+                break;
+            }
+        }
+        workStepService.insertOrUpdateWorkStep(workStep);
+    }
+
+    private static void createOrUpdateSubWork(int appId, String workName) {
+        WorkService workService = ApplicationContextUtil.getBean(WorkService.class);
+        WorkMapper workMapper = ApplicationContextUtil.getBean(WorkMapper.class);
+        WorkStepService workStepService = ApplicationContextUtil.getBean(WorkStepService.class);
+        Work work = workService.queryWorkByName(appId, workName);
+        if (work == null) {
+            // 不存在 work 则直接创建
+            work = new Work()
+                    .setAppId(String.valueOf(appId))
+                    .setWorkName(workName)
+                    .setWorkDesc(String.format("自动创建子流程:%s", workName))
+                    .setCreatedBy("SYSTEM")
+                    .setCreatedTime(new Date())
+                    .setLastUpdatedBy("SYSTEM")
+                    .setLastUpdatedTime(new Date());
+            // 插入或者更新 work 信息
+            workMapper.insertOrUpdateWork(work);
+                // 新增 work 场景,自动添加开始和结束节点
+            workStepService.insertStartEndWorkStepNode(work.getId());
+        }
     }
 }

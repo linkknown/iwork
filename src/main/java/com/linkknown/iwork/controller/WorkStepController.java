@@ -25,6 +25,8 @@ import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
+import static java.lang.System.err;
+
 @RestController
 @RequestMapping("/api/iwork")
 public class WorkStepController {
@@ -248,7 +250,7 @@ public class WorkStepController {
 
         // 编辑开始或结束节点时需要通知调度流程重新 BuildDynamic
         if (StringUtils.equals(workStep.getWorkStepType(), "work_start") || StringUtils.equals(workStep.getWorkStepType(), "work_end")) {
-            buildParentWork(work_id, workStep);
+            buildParentWork(app_id, work_id);
         }
 
         // TODO
@@ -257,19 +259,30 @@ public class WorkStepController {
         return resultMap;
     }
 
-    private void buildParentWork(int workId, WorkStep workStep) {
-
+    private void buildParentWork(int appId, int workId) throws IWorkException {
+        List<Work> works = workService.queryParentWorks(workId);
+        if (works != null) {
+            for (Work work : works) {
+                List<WorkStep> workSteps = workStepService.queryWorkSteps(work.getId());
+                List<WorkStep> workStepList = workSteps.stream().filter(workStep1 -> workStep1.getWorkSubId() == workId).collect(Collectors.toList());
+                if (workStepList != null) {
+                    for (WorkStep workStep : workStepList) {
+                        this.buildDynamic(appId, work.getId(), workStep.getWorkStepId());
+                    }
+                }
+            }
+        }
     }
 
     // 构建动态值,每次 build 之前需要重读 step 信息
     private void buildDynamic(int appId, int workId, int workStepId) throws IWorkException {
         WorkStep workStep = workStepService.queryWorkStepInfo(workId, workStepId);
         // 自动创建子流程
-//        BuildAutoCreateSubWork
+        Build.buildAutoCreateSubWork(appId, workStep);
         workStep = workStepService.queryWorkStepInfo(workId, workStepId);
 
         // 构建动态输入值
-        Build.buildDynamicInput(workStep, workStep1 -> workStepService.insertOrUpdateWorkStep(workStep1));
+        Build.buildDynamicInput(appId, workStep, workStep1 -> workStepService.insertOrUpdateWorkStep(workStep1));
 
         workStep = workStepService.queryWorkStepInfo(workId, workStepId);
         // 构建动态输出值
