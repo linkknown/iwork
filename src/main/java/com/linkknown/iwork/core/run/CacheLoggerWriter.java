@@ -4,6 +4,7 @@ import com.linkknown.iwork.Constants;
 import com.linkknown.iwork.entity.Runlog;
 import lombok.Data;
 import lombok.experimental.Accessors;
+import org.apache.commons.lang3.StringUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,18 +20,20 @@ public class CacheLoggerWriter {
     public static int CACHELEN = 5;
 
     public void write (String trackingId, String workStepName, String logLevel, String detail) {
-        this.logOrder++;
-        Runlog.RunlogDetail runlogDetail = new Runlog.RunlogDetail();
-        runlogDetail.setTrackingId(trackingId);
-        runlogDetail.setWorkStepName(workStepName);
-        runlogDetail.setLogLevel(logLevel);
-        runlogDetail.setDetail(detail);
-        runlogDetail.setLogOrder(this.logOrder);
+        if (StringUtils.isNotEmpty(detail)) {
+            this.logOrder++;
+            Runlog.RunlogDetail runlogDetail = new Runlog.RunlogDetail();
+            runlogDetail.setTrackingId(trackingId);
+            runlogDetail.setWorkStepName(workStepName);
+            runlogDetail.setLogLevel(logLevel);
+            runlogDetail.setDetail(detail);
+            runlogDetail.setLogOrder(this.logOrder);
 
-        this.caches.add(runlogDetail);
-        if (this.caches.size() >= CACHELEN) {
-            this.flush();
-            this.cleanCaches();
+            this.caches.add(runlogDetail);
+            if (this.caches.size() >= CACHELEN) {
+                this.flush();
+                this.cleanCaches();
+            }
         }
     }
 

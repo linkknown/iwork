@@ -109,7 +109,7 @@ public class WorkSubNode extends BaseNode {
                 // 接收子流程数据存入 dataStore
                 this.getDataStore().cacheDatas(this.getWorkStep().getWorkStepName(), receiver.getTmpDataMap());
             }
-        } catch (Exception e) {
+        } catch (IWorkException e) {
             e.printStackTrace();
 
             IworkConfig iworkConfig = ApplicationContextUtil.getBean(IworkConfig.class);
@@ -122,6 +122,8 @@ public class WorkSubNode extends BaseNode {
             // TODO 此处 insensitiveErrorMsg 异常信息需要从子流程中获取，而不是写死
             errorMap.put("insensitiveErrorMsg", iworkConfig.getInsensitiveErrorMsg());
             this.getDataStore().cacheDatas("Error", errorMap);
+
+            throw e;
         }
     }
 }

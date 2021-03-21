@@ -9,9 +9,11 @@ public class IWorkException extends Exception {
 
     private String workStepName;        // 记录步骤名称
     private boolean recordedFlag;       // 是否已记录日志
+    private String msg;
 
     public IWorkException(String msg) {
         super(msg);
+        this.msg = msg;
     }
 
     public static IWorkException wrapException (String msg, String workStepName, Exception cause) {
