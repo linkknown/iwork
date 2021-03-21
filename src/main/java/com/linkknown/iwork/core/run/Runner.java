@@ -111,7 +111,7 @@ public class Runner {
 
     // 记录步骤开始执行和结束执行日志
     private void recordStartAndEndStepLog(BlockStepOrdersRunner.RunOneStepArgs args, String pattern) {
-        String logStr = String.format("%s execute blockStep: >>>>>>>>>> [[<span style='color:blue;'>%s<span>]] <<<<<<<<<<",
+        String logStr = String.format("%s execute blockStep: >>>>>>>>>> <span style='color:blue;font-weight:bold;'> [[ %s ]] </span> <<<<<<<<<<",
                 pattern, args.getBlockStep().getStep().getWorkStepName());
         args.getLoggerWriter().write(args.getTrackingId(), args.getBlockStep().getStep().getWorkStepName(), Constants.LOG_LEVEL_INFO, logStr);
     }

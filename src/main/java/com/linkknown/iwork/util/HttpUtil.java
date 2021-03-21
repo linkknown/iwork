@@ -1,5 +1,6 @@
 package com.linkknown.iwork.util;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 
 public class HttpUtil {
@@ -29,5 +30,19 @@ public class HttpUtil {
             ip = request.getRemoteAddr();
         }
         return ip;
+    }
+
+    public static String getCookieFromRequest (HttpServletRequest request, String key) {
+        Cookie[] cookies = request.getCookies();
+        String value = null;
+        if (null != cookies && cookies.length > 0) {
+            for (Cookie c : cookies) {
+                if (key.equals(c.getName())) {
+                    value = c.getValue();
+                    break;
+                }
+            }
+        }
+        return value;
     }
 }

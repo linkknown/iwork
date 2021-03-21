@@ -10,6 +10,7 @@ import com.linkknown.iwork.util.HttpUtil;
 import com.linkknown.iwork.util.StringUtil;
 import org.apache.commons.lang3.StringUtils;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -68,7 +69,7 @@ public class HttpRequestParserNode extends BaseNode {
             paramMap.put("header_" + header, request.getHeader(header));
         }
         for (String cookie : cookieArr) {
-            paramMap.put("cookie_" + cookie, request.getHeader(cookie));
+            paramMap.put("cookie_" + cookie, HttpUtil.getCookieFromRequest(request, cookie));
         }
         paramMap.put("ip", HttpUtil.getIpAddress(request));
         // 将数据数据存储到数据中心
