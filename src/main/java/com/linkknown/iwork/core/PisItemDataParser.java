@@ -122,7 +122,7 @@ public class PisItemDataParser {
         } catch (IWorkException e) {
             String errorMsg = String.format("<span style='color:red;'>execute func with expression is %s, error msg is :%s</span>",
                     paramValue, e.getMessage());
-            throw new IWorkException(errorMsg);
+            throw IWorkException.wrapException(errorMsg, "", e);
         }
 
 

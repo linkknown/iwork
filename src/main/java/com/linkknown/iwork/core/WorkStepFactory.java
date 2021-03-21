@@ -58,9 +58,11 @@ public class WorkStepFactory implements Parser.IParamSchemaParser {
             if (_receiver != null) {
                 this.setReceiver(_receiver);
             }
-        } catch (Exception e) {
+        } catch (IWorkException e) {
             String html = IworkUtil.printStackTraceToHtml(e);
-            this.loggerWriter.write(trackingId, "", Constants.LOG_LEVEL_ERROR, html);
+            if (!e.isRecordedFlag()) {
+                this.loggerWriter.write(trackingId, "$Error", Constants.LOG_LEVEL_ERROR, html);
+            }
 
             IworkConfig iworkConfig = ApplicationContextUtil.getBean(IworkConfig.class);
             // 代理子流程的返回 receiver 和异常信息 error
@@ -68,15 +70,14 @@ public class WorkStepFactory implements Parser.IParamSchemaParser {
             Map<String, Object> errorMap = new HashMap<>();
             errorMap.put("isError", true);
             errorMap.put("isNoError", false);
-            errorMap.put("errorMsg", e.getMessage());
+            errorMap.put("errorMsg", e.getMessage() + (e.getCause() != null ? "|| cause : " + e.getCause().toString(): ""));
             // TODO 此处 insensitiveErrorMsg 异常信息需要从子流程中获取，而不是写死
             errorMap.put("insensitiveErrorMsg", iworkConfig.getInsensitiveErrorMsg());
             this.getDataStore().cacheDatas("Error", errorMap);
 
             // 将捕获到的 err 继续抛出,但是做了一层脱敏处理
             e.printStackTrace();
-            throw new IWorkException(e.getMessage())
-                    .setWorkStepName(this.getWorkStep().getWorkStepName());
+            throw IWorkException.wrapException(e.getMessage(), this.getWorkStep().getWorkStepName(), e).setRecordedFlag(true);
         }
     }
 

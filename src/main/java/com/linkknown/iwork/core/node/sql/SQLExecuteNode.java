@@ -61,10 +61,8 @@ public class SQLExecuteNode extends BaseNode {
         Connection conn = null;
         try {
             conn = DBUtil.getConnection(resource.getResourceUrl(), resource.getResourceUsername(), resource.getResourcePassword());
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        } catch (SQLException e) {
-            e.printStackTrace();
+        } catch (ClassNotFoundException|SQLException e) {
+           throw IWorkException.wrapException("执行 sql 失败!", this.getWorkStep().getWorkStepName(), e);
         }
         int lastInsertId = -1;
         int affected = -1;
@@ -73,7 +71,7 @@ public class SQLExecuteNode extends BaseNode {
             lastInsertId = result.getLastInsertId();
             affected = result.getAffected();
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw IWorkException.wrapException("执行 sql 失败!", this.getWorkStep().getWorkStepName(), e);
         }
 
         // 将数据数据存储到数据中心

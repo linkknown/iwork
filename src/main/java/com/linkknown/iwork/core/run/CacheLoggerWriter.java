@@ -49,7 +49,7 @@ public class CacheLoggerWriter {
     }
 
     // 统计操作所花费的时间方法
-    public void recordCostTimeLog(String operateName, String trackingId, long costTime) {
-        this.write(trackingId, "", Constants.LOG_LEVEL_INFO, String.format("%s total cost time :%d ms", operateName, costTime));
+    public void recordCostTimeLog(String operateName, String workStepName, String trackingId, long costTime) {
+        this.write(trackingId, workStepName, Constants.LOG_LEVEL_INFO, String.format("%s total cost time :%d ms", operateName, costTime));
     }
 }

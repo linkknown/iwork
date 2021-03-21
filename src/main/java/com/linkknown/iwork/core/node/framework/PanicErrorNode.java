@@ -25,7 +25,8 @@ public class PanicErrorNode extends BaseNode {
                 .orElse(false);
         if (expression) {
             String errorMsg = ((String) this.getTmpDataMap().get(Constants.STRING_PREFIX + "panic_errorMsg?"));
-            throw new IWorkException(errorMsg);
+            throw new IWorkException(errorMsg)
+                    .setWorkStepName(this.getWorkStep().getWorkStepName());
         }
     }
 }

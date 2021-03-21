@@ -12,16 +12,16 @@ public class ElseNode extends BaseNode {
 
     @Override
     public void execute(String trackingId) throws IWorkException {
-        Map<String, Object> paramMap = new HashMap<>();
 
-        if (this.getBlockStep().getParentBlockStep().getStep() == null ||
-                StringUtil.contains(new String[] {"if", "elif"}, this.getBlockStep().getParentBlockStep().getStep().getWorkStepType())) {
+        if (this.getBlockStep().getPreviousBlockStep().getStep() == null ||
+                !StringUtil.contains(new String[] {"if", "elif"}, this.getBlockStep().getPreviousBlockStep().getStep().getWorkStepType())) {
             throw new IWorkException(String.format("previous step is not if or elif node for %s", this.getBlockStep().getStep().getWorkStepName()));
         }
 
         if (this.getBlockStep().isHasChildren()) {
             new BlockStepOrdersRunner()
                     .setTrackingId(trackingId)
+                    .setParentStepId(this.getWorkStep().getWorkStepId())
                     .setWorkCache(this.getWorkCache())
                     .setLoggerWriter(this.getLoggerWriter())
                     .setStore(this.getDataStore())

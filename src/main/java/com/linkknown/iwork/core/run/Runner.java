@@ -62,7 +62,7 @@ public class Runner {
         } finally {
             this.recordStartAndEndWorkLog(trackingId, loggerWriter, workCache,"end");
             long endTime = System.currentTimeMillis();
-            loggerWriter.recordCostTimeLog("execute work", trackingId, endTime - startTime);
+            loggerWriter.recordCostTimeLog("execute work", "####", trackingId, endTime - startTime);
             loggerWriter.close();
         }
         return receiver;
@@ -103,7 +103,7 @@ public class Runner {
         } finally {
             long endTime = System.currentTimeMillis();
             // 统计耗费时间
-            args.getLoggerWriter().recordCostTimeLog(args.getBlockStep().getStep().getWorkStepName(), args.getTrackingId(), endTime - startTime);
+            args.getLoggerWriter().recordCostTimeLog(args.getBlockStep().getStep().getWorkStepName(), args.getBlockStep().getStep().getWorkStepName(), args.getTrackingId(), endTime - startTime);
             // 记录步骤开始执行和结束执行日志
             this.recordStartAndEndStepLog(args, "end");
         }
@@ -111,13 +111,14 @@ public class Runner {
 
     // 记录步骤开始执行和结束执行日志
     private void recordStartAndEndStepLog(BlockStepOrdersRunner.RunOneStepArgs args, String pattern) {
-        String logStr = String.format("%s execute blockStep: >>>>>>>>>> [[<span style='color:blue;'>%s<span>]]", pattern, args.getBlockStep().getStep().getWorkStepName());
-        args.getLoggerWriter().write(args.getTrackingId(), "", Constants.LOG_LEVEL_INFO, logStr);
+        String logStr = String.format("%s execute blockStep: >>>>>>>>>> [[<span style='color:blue;'>%s<span>]] <<<<<<<<<<",
+                pattern, args.getBlockStep().getStep().getWorkStepName());
+        args.getLoggerWriter().write(args.getTrackingId(), args.getBlockStep().getStep().getWorkStepName(), Constants.LOG_LEVEL_INFO, logStr);
     }
 
     private void recordStartAndEndWorkLog(String trackingId, CacheLoggerWriter loggerWriter, WorkCache workCache, String pattern) {
         String msg = String.format("~~~~~~~~~~%s execute work:%s~~~~~~~~~~", pattern, workCache.getWork().getWorkName());
-        loggerWriter.write(trackingId, "", Constants.LOG_LEVEL_INFO, msg);
+        loggerWriter.write(trackingId, "#####", Constants.LOG_LEVEL_INFO, msg);
     }
 
     // 记录前置 filterTrackingIds 信息

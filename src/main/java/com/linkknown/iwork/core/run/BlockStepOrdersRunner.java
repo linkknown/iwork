@@ -55,7 +55,9 @@ public class BlockStepOrdersRunner {
                     // 继续抛出异常到父级流程
                     throw e;
                 } else {
-                    this.recordLog(e);
+                    if (!e.isRecordedFlag()) {
+                        this.recordLog(e);
+                    }
 
                     BlockParser.BlockStep workEndStep = this.getBlockStepByWorkStepType(this.getParentStepId(), "work_end");
                     if (workEndStep != null) {

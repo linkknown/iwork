@@ -34,11 +34,11 @@ public class IWorkFuncProxy {
         throw new IWorkException(String.format("[url=%s] 未找到有效的文件名", ((String) args[0])));
     }
 
-    public Object True(Object... args) {
+    public Object _true(Object... args) {
         return true;
     }
 
-    public Object False(Object... args) {
+    public Object _false(Object... args) {
         return false;
     }
 

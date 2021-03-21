@@ -9,11 +9,11 @@ import java.util.regex.Pattern;
 public class StringUtil {
 
     public static boolean contains(String[] strArr, String str) {
-        return Arrays.asList(strArr).parallelStream().filter(s -> s.equals(str)).count() > 1;
+        return Arrays.asList(strArr).parallelStream().filter(s -> s.equals(str)).count() > 0;
     }
 
     public static boolean containsIgnoreCase(String[] strArr, String str) {
-        return Arrays.asList(strArr).parallelStream().filter(s -> s.equalsIgnoreCase(str)).count() > 1;
+        return Arrays.asList(strArr).parallelStream().filter(s -> s.equalsIgnoreCase(str)).count() > 0;
     }
 
     public static Set<String> getNoRepeatSubStringWithRegexp(String str, String regex) {

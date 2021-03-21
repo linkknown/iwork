@@ -51,7 +51,7 @@ public class IfNode extends BaseNode {
                     .run();
         } else {
             this.getBlockStep().setAfterJudgeInterrupt(false);
-            this.getLoggerWriter().write(trackingId, "",
+            this.getLoggerWriter().write(trackingId, this.getWorkStep().getWorkStepName(),
                     Constants.LOG_LEVEL_INFO, String.format("The blockStep for %s was skipped!", this.getWorkStep().getWorkStepName()));
         }
 

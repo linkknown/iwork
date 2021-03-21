@@ -30,8 +30,8 @@ public class ElIfNode extends BaseNode {
     public void execute(String trackingId) throws IWorkException {
         Map<String, Object> paramMap = new HashMap<>();
 
-        if (this.getBlockStep().getParentBlockStep().getStep() == null ||
-                StringUtil.contains(new String[] {"if", "elif"}, this.getBlockStep().getParentBlockStep().getStep().getWorkStepType())) {
+        if (this.getBlockStep().getPreviousBlockStep().getStep() == null ||
+                !StringUtil.contains(new String[] {"if", "elif"}, this.getBlockStep().getPreviousBlockStep().getStep().getWorkStepType())) {
             throw new IWorkException(String.format("previous step is not if or elif node for %s", this.getBlockStep().getStep().getWorkStepName()));
         }
 
@@ -45,6 +45,7 @@ public class ElIfNode extends BaseNode {
             this.getBlockStep().setAfterJudgeInterrupt(true); // if 条件满足, AfterJudgeInterrupt 属性变为 true
             new BlockStepOrdersRunner()
                     .setTrackingId(trackingId)
+                    .setParentStepId(this.getWorkStep().getWorkStepId())
                     .setWorkCache(this.getWorkCache())
                     .setLoggerWriter(this.getLoggerWriter())
                     .setStore(this.getDataStore())
@@ -53,7 +54,7 @@ public class ElIfNode extends BaseNode {
                     .run();
         } else {
             this.getBlockStep().setAfterJudgeInterrupt(false);
-            this.getLoggerWriter().write(trackingId, "", Constants.LOG_LEVEL_INFO, String.format("The blockStep for %s was skipped!", this.getWorkStep().getWorkStepName()));
+            this.getLoggerWriter().write(trackingId, this.getWorkStep().getWorkStepName(), Constants.LOG_LEVEL_INFO, String.format("The blockStep for %s was skipped!", this.getWorkStep().getWorkStepName()));
         }
     }
 }

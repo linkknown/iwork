@@ -105,8 +105,10 @@ public class WorkSubNode extends BaseNode {
                     .setTmpDataMap(this.getTmpDataMap())
                     .setExistParentWork(true);
             Receiver receiver = this.getRunWorkSub().execute(workCache.getWork(), dispatcher);
-            // 接收子流程数据存入 dataStore
-            this.getDataStore().cacheDatas(this.getWorkStep().getWorkStepName(), receiver.getTmpDataMap());
+            if (receiver != null) {
+                // 接收子流程数据存入 dataStore
+                this.getDataStore().cacheDatas(this.getWorkStep().getWorkStepName(), receiver.getTmpDataMap());
+            }
         } catch (Exception e) {
             e.printStackTrace();
 

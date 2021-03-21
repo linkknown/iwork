@@ -7,6 +7,6 @@ public class EncryptDecryptUtil {
     }
 
     public static String aesDecryptToStr(String encryptStr, String key) {
-        return AESUtil.aesEncryptToStr(encryptStr, key);
+        return AESUtil.aesDecryptToStr(encryptStr, key);
     }
 }

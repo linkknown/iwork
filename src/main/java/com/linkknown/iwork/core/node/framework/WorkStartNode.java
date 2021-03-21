@@ -33,7 +33,7 @@ public class WorkStartNode extends BaseNode {
             fillInfo.add(String.format("fill param for %s:%s", entry.getKey(), entry.getValue()));
         }
 
-        this.getLoggerWriter().write(trackingId, "", Constants.LOG_LEVEL_INFO, StringUtils.join(fillInfo, "<br/>"));
+        this.getLoggerWriter().write(trackingId, this.getWorkStep().getWorkStepName(), Constants.LOG_LEVEL_INFO, StringUtils.join(fillInfo, "<br/>"));
 
         // 提交输出数据至数据中心,此类数据能直接从 tmpDataMap 中获取,而不依赖于计算,只适用于 WORK_START、WORK_END、Mapper 等节点
         this.submitParamOutputSchemaDataToDataStore(this.getWorkStep(), this.getTmpDataMap());
