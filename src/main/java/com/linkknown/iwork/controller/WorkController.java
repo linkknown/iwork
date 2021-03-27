@@ -5,8 +5,10 @@ import com.linkknown.iwork.Constants;
 import com.linkknown.iwork.adapter.PageAdapter;
 import com.linkknown.iwork.core.Regist;
 import com.linkknown.iwork.core.run.Runner;
+import com.linkknown.iwork.entity.Filters;
 import com.linkknown.iwork.entity.Module;
 import com.linkknown.iwork.entity.Work;
+import com.linkknown.iwork.service.FilterService;
 import com.linkknown.iwork.service.ModuleService;
 import com.linkknown.iwork.service.RunLogService;
 import com.linkknown.iwork.service.WorkService;
@@ -33,6 +35,8 @@ public class WorkController {
     private RunLogService runLogService;
     @Autowired
     private ModuleService moduleService;
+    @Autowired
+    private FilterService filterService;
 
     @RequestMapping("/filterPageWorks")
     public Object filterPageWorks(@RequestParam(defaultValue = "-1") int app_id,
@@ -164,11 +168,13 @@ public class WorkController {
         List<Work> works = workService.queryWorksByWorkType(app_id, "work");
         List<Work> filterWorks = workService.queryWorksByWorkType(app_id, "filter");
         List<Module> modules = moduleService.queryAllModules(app_id);
+        List<Filters> filters = filterService.queryAllFilters(app_id);
 
         resultMap.put("status", "SUCCESS");
         resultMap.put("works", works);
         resultMap.put("filterWorks", filterWorks);
         resultMap.put("modules", modules);
+        resultMap.put("filters", filters);
         return resultMap;
     }
 

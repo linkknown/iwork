@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.linkknown.iwork.dao.FilterMapper">
+
+    <select id="queryAllFilters" resultType="com.linkknown.iwork.entity.Filters">
+        select * from filters where app_id = #{appId}
+    </select>
+    
+    <insert id="insertOrUpdateFilter" parameterType="com.linkknown.iwork.entity.Filters">
+        <choose>
+            <when test="filter.filterWorkId > 0">
+                update filters
+                set app_id = #{filter.appId},
+                filter_work_name = #{filter.filterWorkName},
+                work_name = #{filter.workName},
+                complex_work_name = #{filter.complexWorkName},
+                created_by = #{filter.createdBy},
+                created_time = #{filter.createdTime},
+                last_updated_by = #{filter.lastUpdatedBy},
+                last_updated_time = #{filter.lastUpdatedTime}
+                where filter_work_id = #{filter.filterWorkId}
+            </when>
+            <otherwise>
+                insert into filters (
+                app_id,
+                filter_work_id,
+                filter_work_name,
+                work_name,
+                complex_work_name,
+                created_by,
+                created_time,
+                last_updated_by,
+                last_updated_time
+                ) values(
+                #{filter.appId},
+                #{filter.filterWorkId},
+                #{filter.filterWorkName},
+                #{filter.workName},
+                #{filter.complexWorkName},
+                #{filter.createdBy},
+                #{filter.createdTime},
+                #{filter.lastUpdatedBy},
+                #{filter.lastUpdatedTime}
+                )
+            </otherwise>
+        </choose>
+    </insert>
+
+</mapper>
