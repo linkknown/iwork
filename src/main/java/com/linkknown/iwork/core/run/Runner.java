@@ -40,8 +40,10 @@ public class Runner {
 
             initRunlogRecord(work, trackingId);
 
-            // 记录继承下来的日志: 如前置 filterTrackingIds 信息
-            this.recordExtendLog(dispatcher, loggerWriter, trackingId);
+            if (dispatcher != null && !dispatcher.isExistParentWork()) {
+                // 记录继承下来的日志: 如前置 filterTrackingIds 信息
+                this.recordExtendLog(dispatcher, loggerWriter, trackingId);
+            }
 
             // 记录日志: 标记流程执行开始和结束
             this.recordStartAndEndWorkLog(trackingId, loggerWriter, workCache,"start");

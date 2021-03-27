@@ -14,7 +14,6 @@ import com.linkknown.iwork.service.RunLogService;
 import com.linkknown.iwork.util.DatatypeUtil;
 import com.linkknown.iwork.util.JsonUtil;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.tomcat.util.bcel.Const;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.annotation.Order;
 import org.springframework.util.Assert;
@@ -99,8 +98,6 @@ public class IworkFilter implements Filter {
 
             if (receiver != null) {
                 response.addHeader(Constants.TRACKING_ID, receiver.getTrackingId());
-
-
                 // 将执行过的所有 filter_trackingId 记录到 ctx 中去
                 recordFilterStackData(filterWorkCache.getWork().getWorkName(), mutableRequest, receiver.getTrackingId());
 
