@@ -5,6 +5,7 @@ import com.linkknown.iwork.util.HttpUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.assertj.core.util.Arrays;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.annotation.Order;
 
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
@@ -16,6 +17,7 @@ import java.util.Set;
 /**
  * 限制 iwork 框架访问 ip
  */
+@Order(1)
 public class IPFilter implements Filter {
 
     private IworkConfig iworkConfig;

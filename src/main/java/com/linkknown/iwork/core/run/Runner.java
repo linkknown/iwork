@@ -10,6 +10,7 @@ import lombok.Data;
 import lombok.experimental.Accessors;
 import org.apache.commons.lang3.StringUtils;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
@@ -64,6 +65,9 @@ public class Runner {
             long endTime = System.currentTimeMillis();
             loggerWriter.recordCostTimeLog("execute work", "####", trackingId, endTime - startTime);
             loggerWriter.close();
+        }
+        if (receiver != null && StringUtils.isNotEmpty(trackingId)) {
+            receiver.setTrackingId(trackingId);
         }
         return receiver;
     }
@@ -125,21 +129,20 @@ public class Runner {
     private void recordExtendLog(Dispatcher dispatcher, CacheLoggerWriter loggerWriter, String trackingId) {
         String filterTrackingIds = this.getFilterTrackingIds(dispatcher);
         if (StringUtils.isNotBlank(filterTrackingIds)) {
-            String msg = String.format("filter stack:%s", filterTrackingIds);
+            String msg = String.format("filter chain:%s", filterTrackingIds);
             loggerWriter.write(trackingId, "", Constants.LOG_LEVEL_INFO, msg);
         }
     }
 
     private String getFilterTrackingIds(Dispatcher dispatcher) {
         if (dispatcher != null) {
-//            if request, ok := dispatcher.TmpDataMap[iworkconst.HTTP_REQUEST_OBJECT].(*http.Request); ok && request != nil {
-//                if filterTrackingIds := request.Header.Get(iworkconst.FILTER_TRACKING_ID_STACK); filterTrackingIds != "" {
-//                    request.Header.Del(iworkconst.FILTER_TRACKING_ID_STACK)
-//                    return filterTrackingIds
-//                }
-//            }
+            HttpServletRequest request = (HttpServletRequest) dispatcher.getTmpDataMap().get(Constants.HTTP_REQUEST_OBJECT);
+            String filterTrackingIds = request.getHeader(Constants.FILTER_TRACKING_ID_STACK);
+            if (StringUtils.isNotEmpty(filterTrackingIds)) {
+                return filterTrackingIds;
+            }
         }
-        return "";
+        return "~~~~~~~~~~~~~~~~~~none~~~~~~~~~~~~~~~~~~";
     }
 
     private void initRunlogRecord(Work work, String trackingId) {

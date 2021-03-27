@@ -6,7 +6,12 @@
 <mapper namespace="com.linkknown.iwork.dao.FilterMapper">
 
     <select id="queryAllFilters" resultType="com.linkknown.iwork.entity.Filters">
-        select * from filters where app_id = #{appId}
+        select * from filters
+        <where>
+            <if test="appId > 0">
+                app_id = #{appId}
+            </if>
+        </where>
     </select>
     
     <insert id="insertOrUpdateFilter" parameterType="com.linkknown.iwork.entity.Filters">

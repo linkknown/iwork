@@ -4,20 +4,26 @@ package com.linkknown.iwork.core;
 import com.linkknown.iwork.core.run.CacheManager;
 import com.linkknown.iwork.core.run.Receiver;
 import com.linkknown.iwork.entity.AppId;
+import com.linkknown.iwork.entity.Filters;
 import com.linkknown.iwork.entity.GlobalVar;
 import com.linkknown.iwork.entity.Resource;
 import com.linkknown.iwork.service.AppIdService;
+import com.linkknown.iwork.service.FilterService;
 import com.linkknown.iwork.service.GlobalVarService;
 import com.linkknown.iwork.service.ResourceService;
 import com.linkknown.iwork.util.ApplicationContextUtil;
 import org.apache.commons.lang3.StringUtils;
 
+import javax.servlet.Filter;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
+import java.util.function.Function;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 public class Memory {
 
@@ -25,7 +31,7 @@ public class Memory {
     public static ConcurrentHashMap<String, Object> appNameCacheMap = new ConcurrentHashMap<>();
     public static ConcurrentHashMap<String, GlobalVar> globalVarMap = new ConcurrentHashMap<>();
     public static ConcurrentHashMap<String, Resource> resourceMap = new ConcurrentHashMap<>();
-    public static ConcurrentHashMap<String, Object> filterMap = new ConcurrentHashMap<>();
+    public static ConcurrentHashMap<String, Filters> filterMap = new ConcurrentHashMap<>();
     public static ConcurrentHashMap<String, Receiver> cacheResultMap = new ConcurrentHashMap<>();
 
     /**
@@ -49,7 +55,9 @@ public class Memory {
     }
 
     private static void flushMemoryFilter(int appId) {
-        // TODO
+        FilterService filterService = ApplicationContextUtil.getBean(FilterService.class);
+        List<Filters> filters = filterService.queryAllFilters(appId);
+        filters.forEach(filter -> filterMap.put(filter.getAppId() + "_" + filter.getFilterWorkId(), filter));
     }
 
 
@@ -122,5 +130,12 @@ public class Memory {
 
     public static WorkCache getWorkCacheByNameFromMemory(int appId, String workName) {
         return CacheManager.getInstance().getWorkCache(appId, workName);
+    }
+
+    public static List<Filters> getAllFilterWithOrder(int appId) {
+        return filterMap.entrySet().stream()
+                .filter(entry -> StringUtils.startsWith(entry.getKey(), String.valueOf(appId)))
+                .map(entry -> entry.getValue())
+                .collect(Collectors.toList());
     }
 }

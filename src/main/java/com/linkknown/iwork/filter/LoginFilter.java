@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.filter.TokenFilter;
 import com.linkknown.iwork.config.IworkConfig;
 import org.apache.commons.lang3.StringUtils;
 import org.assertj.core.util.Arrays;
+import org.springframework.core.annotation.Order;
 
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
@@ -14,6 +15,7 @@ import java.util.Iterator;
 import java.util.Set;
 import java.util.function.Predicate;
 
+@Order(2)
 public class LoginFilter implements Filter {
 
     private IworkConfig iworkConfig;

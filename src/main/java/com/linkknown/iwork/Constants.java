@@ -25,4 +25,7 @@ public class Constants {
 
     public static final String TRACKING_ID = "__trackingId";
 
+    public static final String FILTER_TRACKING_ID_STACK = "filter__trackingId_stack";
+    public static final String DO_ERROR_FILTER = "__doErrorFilter__";
+
 }
