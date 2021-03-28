@@ -40,7 +40,7 @@ public class Runner {
 
             initRunlogRecord(work, trackingId);
 
-            if (dispatcher != null && !dispatcher.isExistParentWork()) {
+            if (dispatcher != null && !dispatcher.isExistParentWork() && !StringUtils.equals(work.getWorkType(), "filters")) {
                 // 记录继承下来的日志: 如前置 filterTrackingIds 信息
                 this.recordExtendLog(dispatcher, loggerWriter, trackingId);
             }
@@ -144,7 +144,7 @@ public class Runner {
                 return filterTrackingIds;
             }
         }
-        return "~~~~~~~~~~~~~~~~~~none~~~~~~~~~~~~~~~~~~";
+        return "";
     }
 
     private void initRunlogRecord(Work work, String trackingId) {

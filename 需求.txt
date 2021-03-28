@@ -2,3 +2,4 @@
 2【未完成】、运行日志 RunLogRecord 表 LogLevel 字段需要写入 ERROR 状态
 3【未完成】、Param.ParamOutputSchema getCacheParamOutputSchema() 支持 WorkStep... replaceStep 参数
 4【已完成】、点击 RunLogDetail 中的日志，支持绑定点击事件，实现链接跳转
+5【未完成】、过滤器配置展示优化，左侧部分以列表形式展示所有过滤器，支持移动排序

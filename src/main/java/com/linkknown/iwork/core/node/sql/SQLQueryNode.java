@@ -170,7 +170,7 @@ public class SQLQueryNode extends BaseNode {
                 ResultSet resultSet = SqlUtil.executeQuery(conn, total_sql, sql_binding, resultSet1 -> resultSet1);
                 try {
                     if (resultSet.next()) {
-                        datacounts = resultSet.getInt(1);
+                        totalcount = resultSet.getInt(1);
                     }
                 } catch (SQLException e) {
                     e.printStackTrace();
@@ -180,7 +180,9 @@ public class SQLQueryNode extends BaseNode {
                 sql_binding.add(_page_size);
                 resultSet = SqlUtil.executeQuery(conn, limit_sql, sql_binding, resultSet1 -> resultSet1);
                 try {
-                    datacounts = resultSet.getRow();
+                    resultSet.last();
+                    datacounts=resultSet.getRow();  // getRow() 返回数据库当前行的行号
+                    resultSet.beforeFirst();
 
                     rowDatas = parseRows(resultSet);
                 } catch (SQLException e) {

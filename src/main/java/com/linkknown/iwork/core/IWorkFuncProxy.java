@@ -93,6 +93,9 @@ public class IWorkFuncProxy {
 //    }
 
     public Object sliceLen(Object... args) {
+        if (args[0] == null) {
+            return 0;
+        }
         if (args[0].getClass().isArray()) {
             return ((Object[]) args[0]).length;
         }
