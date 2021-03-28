@@ -115,7 +115,7 @@ public class IworkFilter implements Filter {
     private void recordFilterStackData(String filterWorkName, MutableHttpServletRequest mutableRequest, String trackingId) {
         String filterTrackingIds = mutableRequest.getHeader(Constants.FILTER_TRACKING_ID_STACK);
         filterTrackingIds = Optional.ofNullable(filterTrackingIds).orElse("");
-        filterTrackingIds = String.format("%s,%s[<span style='color:blue;'>%s</span>]", filterTrackingIds, filterWorkName, trackingId);
+        filterTrackingIds = String.format("%s,%s[<a onclick=\"window.showRunLogDetail('%s')\"><span style='color:blue;'>%s</span></a>]", filterTrackingIds, filterWorkName, trackingId, trackingId);
         filterTrackingIds = StringUtils.removeStart(filterTrackingIds, ",");
 
         mutableRequest.putHeader(Constants.FILTER_TRACKING_ID_STACK, filterTrackingIds);
