@@ -39,7 +39,8 @@ public class CommonController {
         Map<String, Object> resultMap = new HashMap<>();
 
         sql = SqlFormatterUtil.format(sql);
-
+        sql = StringUtils.removeStart(sql, "\n");
+        sql = StringUtils.removeEnd(sql, "\n");
         resultMap.put("status", "SUCCESS");
         resultMap.put("sql", sql);
 
