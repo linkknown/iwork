@@ -10,7 +10,7 @@
         <if test="map.search != ''">
             where resource_name like concat('%',#{map.search},'%')
             or resource_type like concat('%',#{map.search},'%')
-            or resource_url like concat('%',#{map.search},'%')
+            or resource_link like concat('%',#{map.search},'%')
         </if>
     </select>
 
@@ -48,10 +48,6 @@
             set app_id = #{resource.appId},
             resource_name = #{resource.resourceName},
             resource_type = #{resource.resourceType},
-            resource_url = #{resource.resourceUrl},
-            resource_dsn = #{resource.resourceDsn},
-            resource_username = #{resource.resourceUsername},
-            resource_password = #{resource.resourcePassword},
             resource_link = #{resource.resourceLink},
             created_by = #{resource.createdBy}, created_time = #{resource.createdTime},
             last_updated_by = #{resource.lastUpdatedBy}, last_updated_time = #{resource.lastUpdatedTime}
@@ -62,10 +58,6 @@
             app_id,
             resource_name,
             resource_type,
-            resource_url,
-            resource_dsn,
-            resource_username,
-            resource_password,
             resource_link,
             created_by,
             created_time,
@@ -75,10 +67,6 @@
             #{resource.appId},
             #{resource.resourceName},
             #{resource.resourceType},
-            #{resource.resourceUrl},
-            #{resource.resourceDsn},
-            #{resource.resourceUsername},
-            #{resource.resourcePassword},
             #{resource.resourceLink},
             #{resource.createdBy},
             #{resource.createdTime},

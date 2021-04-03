@@ -140,11 +140,8 @@ public class ResourceController {
                 String resourceUrl = resourceLinkArr[0];
                 String resourceUserName = resourceLinkArr[1];
                 String resourcePasswd = resourceLinkArr[2];
-                if (GlobalVar.isGlobalVar(resourceUrl)) {
-                    GlobalVar globalVar =
-                            globalVarService.queryGlobalVarByName(app_id, GlobalVar.getGlobalVarName(resourceUrl), iworkConfig.getEnvOnUse());
-                    resourceUrl = globalVar.getValue();
-                }
+
+                resourceUrl = globalVarService.getGlobalValueForGlobalVariable(app_id, resourceUrl);
 
                 DBUtil.PingResult pingResult = DBUtil.ping(resourceUrl, resourceUserName, resourcePasswd);
                 if (!pingResult.isValid()) {
