@@ -1,15 +1,15 @@
 package com.linkknown.iwork.controller;
 
 import com.linkknown.iwork.Constants;
+import com.linkknown.iwork.annotation.HelpAssistantMethodAnnotation;
+import com.linkknown.iwork.annotation.HelpAssistantMethodEnum;
 import com.linkknown.iwork.core.Memory;
 import com.linkknown.iwork.core.Param;
 import com.linkknown.iwork.core.WorkCache;
-import com.linkknown.iwork.core.WorkStepFactory;
 import com.linkknown.iwork.core.run.Dispatcher;
 import com.linkknown.iwork.core.run.Receiver;
 import com.linkknown.iwork.core.run.Runner;
 import com.linkknown.iwork.entity.AppId;
-import com.linkknown.iwork.entity.GlobalVar;
 import com.linkknown.iwork.entity.WorkStep;
 import com.linkknown.iwork.service.RunLogService;
 import org.apache.commons.lang3.StringUtils;
@@ -19,10 +19,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.*;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.function.Consumer;
-import java.util.stream.Collectors;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/iwork")
@@ -33,6 +32,7 @@ public class HttpServiceController {
 
     // 示例地址: http://localhost:6001/api/iwork/httpservice/isoft_linkknown_api/test_iblog_table_migrate?author0=admin1234567
     @RequestMapping("/httpservice/{app_name}/{work_name}")
+    @HelpAssistantMethodAnnotation(methodName = HelpAssistantMethodEnum.HTTP_SERVICE)
     public Object httpservice(HttpServletRequest request,
                               @PathVariable("app_name") String app_name,
                               @PathVariable("work_name") String work_name) {
@@ -83,9 +83,9 @@ public class HttpServiceController {
         return receiver;
     }
 
-    private Map<String,Object> parseParam(WorkCache workCache, HttpServletRequest request, WorkStep workStep) {
+    private Map<String, Object> parseParam(WorkCache workCache, HttpServletRequest request, WorkStep workStep) {
         // 所有请求参数
-        Map<String,Object> mapData = new HashMap<>();
+        Map<String, Object> mapData = new HashMap<>();
         if (StringUtils.equals(workStep.getWorkStepType(), Constants.NODE_TYPE_WORK_START)) {
             Param.ParamInputSchema inputSchema = Param.getCacheParamInputSchema(workStep);
             List<Param.ParamInputSchemaItem> items = inputSchema.getParamInputSchemaItems();

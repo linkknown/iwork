@@ -1,5 +1,6 @@
 package com.linkknown.iwork.service.impl;
 
+import com.linkknown.iwork.config.IworkConfig;
 import com.linkknown.iwork.dao.GlobalVarMapper;
 import com.linkknown.iwork.entity.GlobalVar;
 import com.linkknown.iwork.service.GlobalVarService;
@@ -14,6 +15,8 @@ public class GlobalVarServiceImpl implements GlobalVarService {
 
     @Autowired
     private GlobalVarMapper globalVarMapper;
+    @Autowired
+    private IworkConfig iworkConfig;
 
     @Override
     public List<GlobalVar> getAllGlobalVars() {
@@ -43,5 +46,15 @@ public class GlobalVarServiceImpl implements GlobalVarService {
     @Override
     public GlobalVar queryGlobalVarByName(int appId, String name, String envName) {
         return globalVarMapper.queryGlobalVarByName(appId, name, envName);
+    }
+
+    @Override
+    public String getGlobalValueForGlobalVariable(int appId, String globalVariableStr) {
+        if (GlobalVar.isGlobalVar(globalVariableStr)) {
+            GlobalVar globalVar =
+                    globalVarMapper.queryGlobalVarByName(appId, GlobalVar.getGlobalVarName(globalVariableStr), iworkConfig.getEnvOnUse());
+            globalVariableStr = globalVar.getValue();
+        }
+        return globalVariableStr;
     }
 }

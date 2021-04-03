@@ -113,16 +113,28 @@ public class SimpleParser {
         Resource resource = Memory.resourceMap.get(appId + "_" + resource_name);
         if (resource != null) {
             if (StringUtils.equals(resource.getResourceType(), "db")) {
-                if (StringUtils.startsWith(resource.getResourceDsn(), "$Global.")) {
+                String[] resourceLinkArr = StringUtils.splitByWholeSeparator(resource.getResourceLink(), "|||");
+                String resourceUrl = resourceLinkArr[0];
+                String resourceUserName = resourceLinkArr[1];
+                String resourcePasswd = resourceLinkArr[2];
+
+                if (StringUtils.startsWith(resourceUrl, "$Global.")) {
                     // 重新去查询全局变量
-                    this.paramVaule = resource.getResourceDsn();
-                    resource.setResourceDsn((String)this.parseParamVauleFromGlobalVar(appId));
-                    resource.setResourceUrl(resource.getResourceDsn());
-                    return resource;
-                } else {
-                    resource.setResourceUrl(resource.getResourceDsn());
-                    return resource;
+                    this.paramVaule = resourceUrl;
+                    resourceUrl = (String)this.parseParamVauleFromGlobalVar(appId);
                 }
+                if (StringUtils.startsWith(resourceUserName, "$Global.")) {
+                    // 重新去查询全局变量
+                    this.paramVaule = resourceUserName;
+                    resourceUserName = (String)this.parseParamVauleFromGlobalVar(appId);
+                }
+                if (StringUtils.startsWith(resourcePasswd, "$Global.")) {
+                    // 重新去查询全局变量
+                    this.paramVaule = resourcePasswd;
+                    resourcePasswd = (String)this.parseParamVauleFromGlobalVar(appId);
+                }
+                resource.setResourceLink(String.format("%s|||%s|||%s", resourceUrl, resourceUserName, resourcePasswd));
+                return resource;
             } else if (StringUtils.equals(resource.getResourceType(), "sftp") || StringUtils.equals(resource.getResourceType(), "ssh")) {
                 return resource;
             }

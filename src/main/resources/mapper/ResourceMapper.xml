@@ -52,6 +52,7 @@
             resource_dsn = #{resource.resourceDsn},
             resource_username = #{resource.resourceUsername},
             resource_password = #{resource.resourcePassword},
+            resource_link = #{resource.resourceLink},
             created_by = #{resource.createdBy}, created_time = #{resource.createdTime},
             last_updated_by = #{resource.lastUpdatedBy}, last_updated_time = #{resource.lastUpdatedTime}
             where id = #{resource.id}
@@ -65,6 +66,7 @@
             resource_dsn,
             resource_username,
             resource_password,
+            resource_link,
             created_by,
             created_time,
             last_updated_by,
@@ -77,6 +79,7 @@
             #{resource.resourceDsn},
             #{resource.resourceUsername},
             #{resource.resourcePassword},
+            #{resource.resourceLink},
             #{resource.createdBy},
             #{resource.createdTime},
             #{resource.lastUpdatedBy},

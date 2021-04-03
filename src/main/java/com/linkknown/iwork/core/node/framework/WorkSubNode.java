@@ -5,6 +5,7 @@ import com.linkknown.iwork.config.IworkConfig;
 import com.linkknown.iwork.core.Param;
 import com.linkknown.iwork.core.WorkCache;
 import com.linkknown.iwork.core.exception.IWorkException;
+import com.linkknown.iwork.core.node.AutoRegistry;
 import com.linkknown.iwork.core.node.BaseNode;
 import com.linkknown.iwork.core.run.CacheManager;
 import com.linkknown.iwork.core.run.Dispatcher;
@@ -18,6 +19,7 @@ import org.apache.commons.lang3.StringUtils;
 import java.util.*;
 import java.util.function.BiConsumer;
 
+@AutoRegistry
 public class WorkSubNode extends BaseNode {
 
     @Override

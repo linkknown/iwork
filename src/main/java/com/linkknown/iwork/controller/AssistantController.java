@@ -6,6 +6,7 @@ import com.linkknown.iwork.entity.Resource;
 import com.linkknown.iwork.service.GlobalVarService;
 import com.linkknown.iwork.service.ResourceService;
 import com.linkknown.iwork.util.SqlUtil;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -33,20 +34,20 @@ public class AssistantController {
 
         Resource resource = resourceService.queryResourceById(app_id, resource_id);
 
-        String resourceDsn = resource.getResourceDsn();
-        if (GlobalVar.isGlobalVar(resourceDsn)) {
-            GlobalVar globalVar =
-                    globalVarService.queryGlobalVarByName(app_id, GlobalVar.getGlobalVarName(resourceDsn), iworkConfig.getEnvOnUse());
-            resourceDsn = globalVar.getValue();
-        }
+        String[] resourceLinkArr = StringUtils.splitByWholeSeparator(resource.getResourceLink(), "|||");
+        String resourceUrl = resourceLinkArr[0];
+        String resourceUserName = resourceLinkArr[1];
+        String resourcePasswd = resourceLinkArr[2];
 
-        List<String> tableNames = SqlUtil.getAllTableNames(resourceDsn, resource.getResourceUsername(), resource.getResourcePassword());
+        resourceUrl = globalVarService.getGlobalValueForGlobalVariable(app_id, resourceUrl);
+
+        List<String> tableNames = SqlUtil.getAllTableNames(resourceUrl, resourceUserName, resourcePasswd);
 
         Map<String, List<String>> tableColumnsMap = new LinkedHashMap<>();
         Map<String, List<String>> tableSqlMap = new LinkedHashMap<>();
 
         for (String tableName : tableNames) {
-            List<String> tableColumns = SqlUtil.getAllColumnNames(resourceDsn, resource.getResourceUsername(), resource.getResourcePassword(), tableName);
+            List<String> tableColumns = SqlUtil.getAllColumnNames(resourceUrl, resourceUserName, resourcePasswd, tableName);
 
             tableColumnsMap.put(tableName, tableColumns);
 

@@ -3,6 +3,7 @@ package com.linkknown.iwork.core.node.sql;
 import com.linkknown.iwork.Constants;
 import com.linkknown.iwork.core.Param;
 import com.linkknown.iwork.core.exception.IWorkException;
+import com.linkknown.iwork.core.node.AutoRegistry;
 import com.linkknown.iwork.core.node.BaseNode;
 import com.linkknown.iwork.entity.Resource;
 import com.linkknown.iwork.util.DBUtil;
@@ -15,6 +16,7 @@ import java.sql.SQLException;
 import java.util.*;
 import java.util.function.Consumer;
 
+@AutoRegistry
 public class SQLExecuteNode extends BaseNode {
 
     @Override
@@ -60,7 +62,12 @@ public class SQLExecuteNode extends BaseNode {
 
         Connection conn = null;
         try {
-            conn = DBUtil.getConnection(resource.getResourceUrl(), resource.getResourceUsername(), resource.getResourcePassword());
+            String[] resourceLinkArr = StringUtils.splitByWholeSeparator(resource.getResourceLink(), "|||");
+            String resourceUrl = resourceLinkArr[0];
+            String resourceUserName = resourceLinkArr[1];
+            String resourcePasswd = resourceLinkArr[2];
+
+            conn = DBUtil.getConnection(resourceUrl, resourceUserName, resourcePasswd);
         } catch (ClassNotFoundException|SQLException e) {
            throw IWorkException.wrapException("执行 sql 失败!", this.getWorkStep().getWorkStepName(), e);
         }

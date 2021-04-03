@@ -17,14 +17,8 @@ public class Resource {
     @JsonProperty("resource_type")
     private String resourceType;
 
-    @JsonProperty("resource_url")
-    private String resourceUrl;
-    @JsonProperty("resource_dsn")
-    private String resourceDsn;
-    @JsonProperty("resource_username")
-    private String resourceUsername;
-    @JsonProperty("resource_password")
-    private String resourcePassword;
+    @JsonProperty("resource_link")
+    private String resourceLink;
 
     @JsonProperty("created_by")
     private String createdBy;

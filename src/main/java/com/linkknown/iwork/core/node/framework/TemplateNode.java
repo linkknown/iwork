@@ -3,6 +3,7 @@ package com.linkknown.iwork.core.node.framework;
 import com.linkknown.iwork.Constants;
 import com.linkknown.iwork.core.Param;
 import com.linkknown.iwork.core.exception.IWorkException;
+import com.linkknown.iwork.core.node.AutoRegistry;
 import com.linkknown.iwork.core.node.BaseNode;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
@@ -15,6 +16,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+@AutoRegistry
 public class TemplateNode extends BaseNode {
 
     @Override

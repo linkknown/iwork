@@ -70,7 +70,12 @@ public class MigrateUtil {
             this.insertOrUpdateMigrateVersion(migrate.getMigrateName(), hash, false);
             Connection connection = null;
             try {
-                connection = DBUtil.getConnection(this.resource.getResourceUrl(), this.resource.getResourceUsername(), this.resource.getResourcePassword());
+                String[] resourceLinkArr = StringUtils.splitByWholeSeparator(resource.getResourceLink(), "|||");
+                String resourceUrl = resourceLinkArr[0];
+                String resourceUserName = resourceLinkArr[1];
+                String resourcePasswd = resourceLinkArr[2];
+
+                connection = DBUtil.getConnection(resourceUrl, resourceUserName, resourcePasswd);
                 connection.setAutoCommit(false);
                 // 插入日志
                 for (String sql : executeSqls) {
@@ -97,12 +102,17 @@ public class MigrateUtil {
         }
 
         private void insertOrUpdateMigrateVersion(String migrateName, String hash, boolean successFlag) throws SQLException, ClassNotFoundException {
+            String[] resourceLinkArr = StringUtils.splitByWholeSeparator(resource.getResourceLink(), "|||");
+            String resourceUrl = resourceLinkArr[0];
+            String resourceUserName = resourceLinkArr[1];
+            String resourcePasswd = resourceLinkArr[2];
+
             if (successFlag) {
                 String sql = "INSERT INTO migrate_version(migrate_name,migrate_hash,created_time, success) VALUES (?,?,NOW(), false);";
-                SqlUtil.execute(this.resource.getResourceUrl(), this.resource.getResourceUsername(), this.resource.getResourcePassword(), sql, migrateName, hash);
+                SqlUtil.execute(resourceUrl, resourceUserName, resourcePasswd, sql, migrateName, hash);
             } else {
                 String sql = "UPDATE migrate_version SET success = true where migrate_name = ?;";
-                SqlUtil.execute(this.resource.getResourceUrl(), this.resource.getResourceUsername(), this.resource.getResourcePassword(), sql, migrateName);
+                SqlUtil.execute(resourceUrl, resourceUserName, resourcePasswd, sql, migrateName);
             }
 
         }
@@ -128,9 +138,13 @@ public class MigrateUtil {
         // 2、文件是否被篡改
         // 3、文件执行顺序是否被更改
         private void checkHistory() throws IWorkException {
+            String[] resourceLinkArr = StringUtils.splitByWholeSeparator(resource.getResourceLink(), "|||");
+            String resourceUrl = resourceLinkArr[0];
+            String resourceUserName = resourceLinkArr[1];
+            String resourcePasswd = resourceLinkArr[2];
+
             String checkSql = "SELECT migrate_name, migrate_hash, success FROM migrate_version order by id asc";
-            List<MigrateHistory> history = SqlUtil.executeQuery(this.resource.getResourceUrl(), this.resource.getResourceUsername(),
-                    this.resource.getResourcePassword(), checkSql,
+            List<MigrateHistory> history = SqlUtil.executeQuery(resourceUrl, resourceUserName, resourcePasswd, checkSql,
                     resultSet -> {
                         List<MigrateHistory> _history = new LinkedList<>();
                         try {
@@ -186,12 +200,17 @@ public class MigrateUtil {
         }
 
         private void executeForceClean() throws IWorkException, SQLException, ClassNotFoundException {
+            String[] resourceLinkArr = StringUtils.splitByWholeSeparator(resource.getResourceLink(), "|||");
+            String resourceUrl = resourceLinkArr[0];
+            String resourceUserName = resourceLinkArr[1];
+            String resourcePasswd = resourceLinkArr[2];
+
             // 去除 url 后面的问号参数 xxx_test?xxx=xxxx
-            String url = StringUtils.substring(resource.getResourceUrl(), 0, StringUtils.lastIndexOf(resource.getResourceUrl(), "?"));
+            String url = StringUtils.substring(resourceUrl, 0, StringUtils.lastIndexOf(resourceUrl, "?"));
             if (!StringUtils.endsWith(url, "_test")) {
                 throw new IWorkException("ForceClean only can used by *_test database!");
             }
-            List<String> tableNames = SqlUtil.getAllTableNames(resource.getResourceUrl(), resource.getResourceUsername(), resource.getResourcePassword());
+            List<String> tableNames = SqlUtil.getAllTableNames(resourceUrl, resourceUserName, resourcePasswd);
             for (String tableName : tableNames) {
                 this.executeSql(String.format("DROP TABLE IF EXISTS %s;", tableName));
                 this.renderLog("", String.format("table %s has clean...", tableName), true);
@@ -199,7 +218,11 @@ public class MigrateUtil {
         }
 
         private void executeSql(String sql) throws SQLException, ClassNotFoundException {
-            SqlUtil.execute(resource.getResourceUrl(), resource.getResourceUsername(), resource.getResourcePassword(), sql);
+            String[] resourceLinkArr = StringUtils.splitByWholeSeparator(resource.getResourceLink(), "|||");
+            String resourceUrl = resourceLinkArr[0];
+            String resourceUserName = resourceLinkArr[1];
+            String resourcePasswd = resourceLinkArr[2];
+            SqlUtil.execute(resourceUrl, resourceUserName, resourcePasswd, sql);
         }
 
         private void renderLog(String migrateName, String detail, boolean status) {

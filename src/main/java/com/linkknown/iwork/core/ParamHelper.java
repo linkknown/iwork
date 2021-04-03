@@ -55,14 +55,20 @@ public class ParamHelper {
                 resourceName = StringUtils.trim(resourceName);
 
                 Resource resource = Memory.resourceMap.get(appId + "_" + resourceName);
+
+                String[] resourceLinkArr = StringUtils.splitByWholeSeparator(resource.getResourceLink(), "|||");
+                String resourceUrl = resourceLinkArr[0];
+                String resourceUserName = resourceLinkArr[1];
+                String resourcePasswd = resourceLinkArr[2];
+
                 if (StringUtils.equals(resource.getResourceType(), "db")) {
-                    if (StringUtils.startsWith(resource.getResourceDsn(), "$Global.")) {
+                    if (StringUtils.startsWith(resourceUrl, "$Global.")) {
                         ParamValueHelper paramValueHelper = new ParamValueHelper()
                                 .setAppId(this.getAppId())
-                                .setParamValue(resource.getResourceDsn());
+                                .setParamValue(resourceUrl);
                         return paramValueHelper.getStaticParamValue();
                     }
-                    return resource.getResourceDsn();
+                    return resource.getResourceLink();
                 } else if (StringUtils.equals(resource.getResourceType(), "sftp") || StringUtils.equals(resource.getResourceType(), "ssh")) {
                     return resource;
                 }

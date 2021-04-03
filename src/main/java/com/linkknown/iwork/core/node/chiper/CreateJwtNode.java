@@ -4,6 +4,7 @@ import com.linkknown.iwork.Constants;
 import com.linkknown.iwork.core.Param;
 import com.linkknown.iwork.core.ParamHelper;
 import com.linkknown.iwork.core.exception.IWorkException;
+import com.linkknown.iwork.core.node.AutoRegistry;
 import com.linkknown.iwork.core.node.BaseNode;
 import com.linkknown.iwork.util.JwtUtil;
 import org.apache.commons.lang3.StringUtils;
@@ -13,6 +14,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+@AutoRegistry
 public class CreateJwtNode extends BaseNode {
 
     @Override

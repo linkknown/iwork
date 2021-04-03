@@ -83,14 +83,17 @@ public class MigrateController {
         Map<String, Object> resultMap = new HashMap<>();
 
         Resource resource = resourceService.queryResourceByName(app_id, resource_name);
-        String resourceDsn = resource.getResourceDsn();
-        if (GlobalVar.isGlobalVar(resourceDsn)) {
-            GlobalVar globalVar =
-                    globalVarService.queryGlobalVarByName(app_id, GlobalVar.getGlobalVarName(resourceDsn), iworkConfig.getEnvOnUse());
-            resourceDsn = globalVar.getValue();
-        }
-        resource.setResourceDsn(resourceDsn);
-        resource.setResourceUrl(resourceDsn);
+
+        String[] resourceLinkArr = StringUtils.splitByWholeSeparator(resource.getResourceLink(), "|||");
+        String resourceUrl = resourceLinkArr[0];
+        String resourceUserName = resourceLinkArr[1];
+        String resourcePasswd = resourceLinkArr[2];
+
+        resourceUrl = globalVarService.getGlobalValueForGlobalVariable(app_id, resourceUrl);
+        resourceUserName = globalVarService.getGlobalValueForGlobalVariable(app_id, resourceUserName);
+        resourcePasswd = globalVarService.getGlobalValueForGlobalVariable(app_id, resourcePasswd);
+
+        resource.setResourceLink(String.format("%s|||%s|||%s", resourceUrl, resourceUserName, resourcePasswd));
         List<SqlMigrate> migrates = sqlMigrateService.queryAllMigrates(app_id);
 
         List<SqlMigrate.SqlMigrateLog> logs = new ArrayList<>();

@@ -5,6 +5,7 @@ import com.linkknown.iwork.adapter.PageAdapter;
 import com.linkknown.iwork.core.Param;
 import com.linkknown.iwork.core.ParamHelper;
 import com.linkknown.iwork.core.exception.IWorkException;
+import com.linkknown.iwork.core.node.AutoRegistry;
 import com.linkknown.iwork.core.node.BaseNode;
 import com.linkknown.iwork.core.run.Receiver;
 import com.linkknown.iwork.entity.Resource;
@@ -22,6 +23,7 @@ import java.util.*;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
+@AutoRegistry
 public class SQLQueryNode extends BaseNode {
     @Override
     public Param.ParamInputSchema getDefaultParamInputSchema() {
@@ -87,7 +89,12 @@ public class SQLQueryNode extends BaseNode {
             SqlUtil.NamingSqlResult namingSqlResult = SqlUtil.parseNamingSql(metadataSql);
 
             Resource resource = this.validateAndGetResourceForDBConn();
-            columnNames = SqlUtil.getMetaDatas(resource.getResourceUrl(), resource.getResourceUsername(), resource.getResourcePassword(), namingSqlResult.getQuestionSql());
+            String[] resourceLinkArr = StringUtils.splitByWholeSeparator(resource.getResourceLink(), "|||");
+            String resourceUrl = resourceLinkArr[0];
+            String resourceUserName = resourceLinkArr[1];
+            String resourcePasswd = resourceLinkArr[2];
+
+            columnNames = SqlUtil.getMetaDatas(resourceUrl, resourceUserName, resourcePasswd, namingSqlResult.getQuestionSql());
         }
         return renderMetaDataToOutputSchema(columnNames);
     }
@@ -152,7 +159,12 @@ public class SQLQueryNode extends BaseNode {
 
         Connection conn = null;
         try {
-            conn = DBUtil.getConnection(resource.getResourceUrl(), resource.getResourceUsername(), resource.getResourcePassword());
+            String[] resourceLinkArr = StringUtils.splitByWholeSeparator(resource.getResourceLink(), "|||");
+            String resourceUrl = resourceLinkArr[0];
+            String resourceUserName = resourceLinkArr[1];
+            String resourcePasswd = resourceLinkArr[2];
+
+            conn = DBUtil.getConnection(resourceUrl, resourceUserName, resourcePasswd);
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         } catch (SQLException e) {

@@ -20,4 +20,6 @@ public interface GlobalVarService {
     List<GlobalVar> queryAllGlobalVars(int appId);
 
     GlobalVar queryGlobalVarByName(int appId, String name, String envName);
+
+    String getGlobalValueForGlobalVariable(int appId, String resourceUrl);
 }

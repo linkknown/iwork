@@ -1,5 +1,7 @@
 package com.linkknown.iwork.core;
 
+import com.linkknown.iwork.annotation.AnnotationUtil;
+import com.linkknown.iwork.core.node.AutoRegistry;
 import com.linkknown.iwork.core.node.chiper.CreateJwtNode;
 import com.linkknown.iwork.core.node.chiper.ParseJwtNode;
 import com.linkknown.iwork.core.node.framework.*;
@@ -11,33 +13,41 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class Regist {
+
+    private final static Logger logger = LoggerFactory.getLogger(Regist.class);
 
     public static Map<String, Class> registTypeMap = new HashMap<>();
 
     static {
-        registTypeMap.put("WorkStartNode".toUpperCase(), WorkStartNode.class);
-        registTypeMap.put("WorkEndNode".toUpperCase(), WorkEndNode.class);
-        registTypeMap.put("SQLQueryNode".toUpperCase(), SQLQueryNode.class);
-        registTypeMap.put("SQLExecuteNode".toUpperCase(), SQLExecuteNode.class);
-        registTypeMap.put("MapperNode".toUpperCase(), MapperNode.class);
-        registTypeMap.put("TemplateNode".toUpperCase(), TemplateNode.class);
-        registTypeMap.put("IfNode".toUpperCase(), IfNode.class);
-        registTypeMap.put("ElIfNode".toUpperCase(), ElIfNode.class);
-        registTypeMap.put("ElseNode".toUpperCase(), ElseNode.class);
-        registTypeMap.put("WorkSubNode".toUpperCase(), WorkSubNode.class);
-        registTypeMap.put("PanicErrorNode".toUpperCase(), PanicErrorNode.class);
-        registTypeMap.put("CatchErrorNode".toUpperCase(), CatchErrorNode.class);
-        registTypeMap.put("SendMailNode".toUpperCase(), SendMailNode.class);
-        registTypeMap.put("HttpRequestParserNode".toUpperCase(), HttpRequestParserNode.class);
-        registTypeMap.put("CreateJwtNode".toUpperCase(), CreateJwtNode.class);
-        registTypeMap.put("ParseJwtNode".toUpperCase(), ParseJwtNode.class);
+//        registTypeMap.put("WorkStartNode".toUpperCase(), WorkStartNode.class);
+//        registTypeMap.put("WorkEndNode".toUpperCase(), WorkEndNode.class);
+//        registTypeMap.put("SQLQueryNode".toUpperCase(), SQLQueryNode.class);
+//        registTypeMap.put("SQLExecuteNode".toUpperCase(), SQLExecuteNode.class);
+//        registTypeMap.put("MapperNode".toUpperCase(), MapperNode.class);
+//        registTypeMap.put("TemplateNode".toUpperCase(), TemplateNode.class);
+//        registTypeMap.put("IfNode".toUpperCase(), IfNode.class);
+//        registTypeMap.put("ElIfNode".toUpperCase(), ElIfNode.class);
+//        registTypeMap.put("ElseNode".toUpperCase(), ElseNode.class);
+//        registTypeMap.put("WorkSubNode".toUpperCase(), WorkSubNode.class);
+//        registTypeMap.put("PanicErrorNode".toUpperCase(), PanicErrorNode.class);
+//        registTypeMap.put("CatchErrorNode".toUpperCase(), CatchErrorNode.class);
+//        registTypeMap.put("SendMailNode".toUpperCase(), SendMailNode.class);
+//        registTypeMap.put("HttpRequestParserNode".toUpperCase(), HttpRequestParserNode.class);
+//        registTypeMap.put("CreateJwtNode".toUpperCase(), CreateJwtNode.class);
+//        registTypeMap.put("ParseJwtNode".toUpperCase(), ParseJwtNode.class);
+
+        Set<Class<?>> classSet = AnnotationUtil.scan("com.linkknown.iwork.core.node", AutoRegistry.class);
+        for (Class clazz : classSet) {
+            registTypeMap.put(clazz.getSimpleName().toUpperCase(), clazz);
+        }
+
+        logger.info(String.format("注册节点数量：%d", registTypeMap.size()));
     }
 
     public static Parser.IWorkStep getIworkStep (String workStepType) throws IllegalAccessException, InstantiationException {

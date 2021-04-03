@@ -3,20 +3,17 @@ package com.linkknown.iwork.controller;
 import com.github.pagehelper.PageInfo;
 import com.linkknown.iwork.adapter.PageAdapter;
 import com.linkknown.iwork.config.IworkConfig;
-import com.linkknown.iwork.entity.AppId;
 import com.linkknown.iwork.entity.GlobalVar;
 import com.linkknown.iwork.entity.Resource;
-import com.linkknown.iwork.service.AppIdService;
 import com.linkknown.iwork.service.GlobalVarService;
 import com.linkknown.iwork.service.ResourceService;
 import com.linkknown.iwork.util.DBUtil;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -57,10 +54,7 @@ public class ResourceController {
                                @RequestParam(defaultValue = "-1") int resource_id,
                                @RequestParam(defaultValue = "") String resource_name,
                                @RequestParam(defaultValue = "") String resource_type,
-                               @RequestParam(defaultValue = "") String resource_url,
-                               @RequestParam(defaultValue = "") String resource_dsn,
-                               @RequestParam(defaultValue = "") String resource_username,
-                               @RequestParam(defaultValue = "") String resource_password) {
+                               @RequestParam(defaultValue = "") String resource_link) {
         Map<String, Object> resultMap = new HashMap<>();
 
         Resource resource = new Resource();
@@ -68,10 +62,7 @@ public class ResourceController {
         resource.setAppId(app_id + "");
         resource.setResourceName(resource_name);
         resource.setResourceType(resource_type);
-        resource.setResourceUrl(resource_url);
-        resource.setResourceDsn(resource_dsn);
-        resource.setResourceUsername(resource_username);
-        resource.setResourcePassword(resource_password);
+        resource.setResourceLink(resource_link);
         resource.setCreatedBy("SYSTEM");
         resource.setCreatedTime(new Date());
         resource.setLastUpdatedBy("SYSTEM");
@@ -145,14 +136,17 @@ public class ResourceController {
 
         switch (resource.getResourceType()) {
             case "db":
-                String resourceDsn = resource.getResourceDsn();
-                if (GlobalVar.isGlobalVar(resourceDsn)) {
+                String[] resourceLinkArr = StringUtils.splitByWholeSeparator(resource.getResourceLink(), "|||");
+                String resourceUrl = resourceLinkArr[0];
+                String resourceUserName = resourceLinkArr[1];
+                String resourcePasswd = resourceLinkArr[2];
+                if (GlobalVar.isGlobalVar(resourceUrl)) {
                     GlobalVar globalVar =
-                            globalVarService.queryGlobalVarByName(app_id, GlobalVar.getGlobalVarName(resourceDsn), iworkConfig.getEnvOnUse());
-                    resourceDsn = globalVar.getValue();
+                            globalVarService.queryGlobalVarByName(app_id, GlobalVar.getGlobalVarName(resourceUrl), iworkConfig.getEnvOnUse());
+                    resourceUrl = globalVar.getValue();
                 }
 
-                DBUtil.PingResult pingResult = DBUtil.ping(resourceDsn, resource.getResourceUsername(), resource.getResourcePassword());
+                DBUtil.PingResult pingResult = DBUtil.ping(resourceUrl, resourceUserName, resourcePasswd);
                 if (!pingResult.isValid()) {
                     resultMap.put("status", "ERROR");
                     resultMap.put("errorMsg", "校验失败: " + pingResult.getErrorMsg());
