@@ -20,4 +20,7 @@ public class IworkConfig {
     @Value("${iwork.internal.errorMsg}")
     private String insensitiveErrorMsg;
 
+    @Value("${iwork.clean.runLog.second}")
+    private Long cleanRunLogSecond;
+
 }

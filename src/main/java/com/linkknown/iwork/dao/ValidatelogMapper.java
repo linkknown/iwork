@@ -12,4 +12,8 @@ public interface ValidatelogMapper {
     void insertValidatelogRecord(@Param("record") Validatelog.ValidatelogRecord record);
 
     List<Validatelog.ValidatelogDetail> queryLastValidatelogDetail(int workId);
+
+    long cleanValidatelogDetail(int keepCount);
+
+    long cleanValidatelogRecord(int keepCount);
 }

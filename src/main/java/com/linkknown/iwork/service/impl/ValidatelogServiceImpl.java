@@ -38,4 +38,14 @@ public class ValidatelogServiceImpl implements ValidatelogService {
     public List<Validatelog.ValidatelogDetail> queryLastValidatelogDetail(int workId) {
         return validatelogMapper.queryLastValidatelogDetail(workId);
     }
+
+    @Override
+    public long cleanValidatelogDetail(int keepCount) {
+        return validatelogMapper.cleanValidatelogDetail(keepCount);
+    }
+
+    @Override
+    public long cleanValidatelogRecord(int keepCount) {
+        return validatelogMapper.cleanValidatelogRecord(keepCount);
+    }
 }

@@ -65,4 +65,14 @@
         </foreach>
     </insert>
 
+    <delete id="cleanValidatelogRecord">
+        DELETE FROM validatelog_record WHERE id &lt; (SELECT id FROM (SELECT id FROM validatelog_record ORDER BY id DESC LIMIT #{keepCount},1) tt)
+    </delete>
+
+    <delete id="cleanValidatelogDetail">
+        DELETE FROM validatelog_detail WHERE id &lt; (SELECT id FROM (SELECT id FROM validatelog_detail ORDER BY id DESC LIMIT #{keepCount},1) tt)
+    </delete>
+
+
+
 </mapper>

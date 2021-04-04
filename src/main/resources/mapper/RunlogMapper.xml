@@ -75,4 +75,12 @@
             )
         </foreach>
     </insert>
+
+    <delete id="cleanRunlogRecord">
+        DELETE FROM runlog_record WHERE id &lt; (SELECT id FROM (SELECT id FROM runlog_record ORDER BY id DESC LIMIT #{keepCount},1) tt)
+    </delete>
+
+    <delete id="cleanRunlogDetail">
+        DELETE FROM runlog_detail WHERE id &lt; (SELECT id FROM (SELECT id FROM runlog_detail ORDER BY id DESC LIMIT #{keepCount},1) tt)
+    </delete>
 </mapper>

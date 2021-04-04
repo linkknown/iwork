@@ -14,4 +14,8 @@ public interface ValidatelogService {
     void insertValidatelogRecord(Validatelog.ValidatelogRecord record);
 
     List<Validatelog.ValidatelogDetail> queryLastValidatelogDetail(int workId);
+
+    long cleanValidatelogDetail(int keepCount);
+
+    long cleanValidatelogRecord(int keepCount);
 }

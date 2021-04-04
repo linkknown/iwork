@@ -22,4 +22,12 @@ public interface RunLogService {
     Runlog.RunlogRecord queryRunlogRecordWithTracking(String trackingId);
 
     List<Runlog.RunlogDetail> queryLastRunlogDetail(String trackingId);
+
+    /**
+     * 清理日志表
+     * @param keepCount 保留最近条数
+     */
+    long cleanRunlogDetail(int keepCount);
+
+    long cleanRunlogRecord(int keepCount);
 }

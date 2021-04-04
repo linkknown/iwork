@@ -90,4 +90,14 @@ public class RunLogServiceImpl implements RunLogService {
     public List<Runlog.RunlogDetail> queryLastRunlogDetail(String trackingId) {
         return runLogMapper.queryLastRunlogDetail(trackingId);
     }
+
+    @Override
+    public long cleanRunlogDetail(int keepCount) {
+        return runLogMapper.cleanRunlogDetail(keepCount);
+    }
+
+    @Override
+    public long cleanRunlogRecord(int keepCount) {
+        return runLogMapper.cleanRunlogRecord(keepCount);
+    }
 }

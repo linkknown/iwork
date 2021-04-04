@@ -20,4 +20,8 @@ public interface RunLogMapper {
     Runlog.RunlogRecord queryRunlogRecordWithTracking(String trackingId);
 
     List<Runlog.RunlogDetail> queryLastRunlogDetail(String trackingId);
+
+    long cleanRunlogDetail(int keepCount);
+
+    long cleanRunlogRecord(int keepCount);
 }
