@@ -68,10 +68,14 @@ public class ScheduledJobService {
         jobkeyList.addAll(
                 jobkeySet.stream()
                         .filter(jobKey -> {
-                            int appId = toJobKeyName(jobKey.getName()).getAppId();
-                            String workName = toJobKeyName(jobKey.getName()).getWorkName();
-                            // 搜索 workCache 无效的 work
-                            return Memory.getWorkCacheByNameFromMemory(appId, workName) == null;
+                            try {
+                                int appId = toJobKeyName(jobKey.getName()).getAppId();
+                                String workName = toJobKeyName(jobKey.getName()).getWorkName();
+                                // 搜索 workCache 无效的 work
+                                return Memory.getWorkCacheByNameFromMemory(appId, workName) == null;
+                            } catch (Exception e) {
+                                return true;
+                            }
                         })
                         .collect(Collectors.toList())
         );

@@ -21,7 +21,10 @@ public class Lexer {
     static {
         regexMap.put("^[a-zA-Z0-9]+\\(", "func(");
         regexMap.put("^\\)", ")");
-        regexMap.put("^`.*?`", "S");
+        regexMap.put("^`.*?`", "S");            // 反引号
+        regexMap.put("^'.*?'", "S");            // 单引号
+        regexMap.put("^\".*?\"", "S");          // 双引号
+        regexMap.put("^'''.*?'''", "S");        // 三引号都表示字符串
         regexMap.put("^(-)*[0-9]+", "N");
         regexMap.put("^\\$[a-zA-Z_0-9]+(\\.[a-zA-Z0-9\\-_]+)*", "V");
         regexMap.put("^,", ",");
