@@ -102,6 +102,8 @@ public class Regist {
 
         lst.add(new NodeMeta("text","template", "md-hammer"));
 
+        lst.add(new NodeMeta("zookeeper","zookeeper", "md-hammer"));
+
         lst.add(new NodeMeta("framework","work_start", "ios-arrow-dropright"));
         lst.add(new NodeMeta("framework","work_end", "ios-arrow-dropleft"));
         lst.add(new NodeMeta("framework","if", "md-code-working"));

@@ -3,7 +3,7 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.linkknown.iwork.dao.WorkMapper">
+<mapper namespace="com.linkknown.iwork.mapper.WorkMapper">
 
     <select id="queryWork" parameterType="map" resultType="com.linkknown.iwork.entity.Work">
         select distinct a.* from work a left join work_step b on a.id = b.work_id where a.app_id = #{map.app_id}
@@ -39,10 +39,11 @@
                 update work
                 set app_id = #{work.appId},
                 work_name = #{work.workName},
-                work_desc = #{work.WorkDesc},
-                work_type = #{work.WorkType},
-                module_name = #{work.ModuleName},
-                cache_result = #{work.CacheResult},
+                work_desc = #{work.workDesc},
+                work_type = #{work.workType},
+                work_cron = #{work.workCron},
+                module_name = #{work.moduleName},
+                cache_result = #{work.cacheResult},
                 created_by = #{work.createdBy}, created_time = #{work.createdTime},
                 last_updated_by = #{work.lastUpdatedBy}, last_updated_time = #{work.lastUpdatedTime}
                 where id = #{work.id}
@@ -53,6 +54,7 @@
                 work_name,
                 work_desc,
                 work_type,
+                work_cron,
                 module_name,
                 cache_result,
                 created_by,
@@ -62,10 +64,11 @@
                 ) values(
                 #{work.appId},
                 #{work.workName},
-                #{work.WorkDesc},
-                #{work.WorkType},
-                #{work.ModuleName},
-                #{work.CacheResult},
+                #{work.workDesc},
+                #{work.workType},
+                #{work.workCron},
+                #{work.moduleName},
+                #{work.cacheResult},
                 #{work.createdBy},
                 #{work.createdTime},
                 #{work.lastUpdatedBy},

@@ -2,7 +2,7 @@ package com.linkknown.iwork.core;
 
 import com.linkknown.iwork.Constants;
 import com.linkknown.iwork.core.exception.IWorkException;
-import com.linkknown.iwork.dao.WorkMapper;
+import com.linkknown.iwork.mapper.WorkMapper;
 import com.linkknown.iwork.entity.Work;
 import com.linkknown.iwork.entity.WorkStep;
 import com.linkknown.iwork.service.WorkService;

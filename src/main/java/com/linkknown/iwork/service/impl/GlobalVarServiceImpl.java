@@ -1,7 +1,7 @@
 package com.linkknown.iwork.service.impl;
 
 import com.linkknown.iwork.config.IworkConfig;
-import com.linkknown.iwork.dao.GlobalVarMapper;
+import com.linkknown.iwork.mapper.GlobalVarMapper;
 import com.linkknown.iwork.entity.GlobalVar;
 import com.linkknown.iwork.service.GlobalVarService;
 import org.springframework.beans.factory.annotation.Autowired;

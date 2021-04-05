@@ -3,7 +3,7 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.linkknown.iwork.dao.WorkStepMapper">
+<mapper namespace="com.linkknown.iwork.mapper.WorkStepMapper">
 
     <select id="queryWorkSteps" resultType="com.linkknown.iwork.entity.WorkStep">
         select * from work_step where work_id = #{workId}

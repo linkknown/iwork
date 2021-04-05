@@ -2,7 +2,7 @@ package com.linkknown.iwork.service.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.linkknown.iwork.dao.AppIdMapper;
+import com.linkknown.iwork.mapper.AppIdMapper;
 import com.linkknown.iwork.entity.AppId;
 import com.linkknown.iwork.service.AppIdService;
 import org.springframework.beans.factory.annotation.Autowired;

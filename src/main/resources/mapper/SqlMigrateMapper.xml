@@ -3,7 +3,7 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.linkknown.iwork.dao.SqlMigrateMapper">
+<mapper namespace="com.linkknown.iwork.mapper.SqlMigrateMapper">
     <select id="queryPageSqlMigrates" resultType="com.linkknown.iwork.entity.SqlMigrate">
         select * from sql_migrate where app_id = #{appId} order by migrate_name desc
     </select>

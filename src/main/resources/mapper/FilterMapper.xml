@@ -3,7 +3,7 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.linkknown.iwork.dao.FilterMapper">
+<mapper namespace="com.linkknown.iwork.mapper.FilterMapper">
 
     <select id="queryAllFilters" resultType="com.linkknown.iwork.entity.Filters">
         select * from filters

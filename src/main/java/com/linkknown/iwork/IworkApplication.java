@@ -18,7 +18,7 @@ import org.springframework.boot.web.servlet.ServletComponentScan;
 
 @SpringBootApplication
 @ServletComponentScan
-@MapperScan("com.linkknown.iwork.dao")
+@MapperScan("com.linkknown.iwork.mapper")
 public class IworkApplication {
 
     public static void main(String[] args) {

@@ -1,6 +1,5 @@
-package com.linkknown.iwork.dao;
+package com.linkknown.iwork.mapper;
 
-import com.linkknown.iwork.entity.AppId;
 import com.linkknown.iwork.entity.GlobalVar;
 import org.apache.ibatis.annotations.Param;
 

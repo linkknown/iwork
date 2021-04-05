@@ -1,4 +1,4 @@
-package com.linkknown.iwork.dao;
+package com.linkknown.iwork.mapper;
 
 import com.linkknown.iwork.entity.Work;
 import org.apache.ibatis.annotations.Param;

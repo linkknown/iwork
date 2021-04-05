@@ -15,15 +15,17 @@ public class Work {
     private String appId;
 
     @JsonProperty("work_name")
-    private String WorkName;
+    private String workName;
     @JsonProperty("work_desc")
-    private String WorkDesc;
+    private String workDesc;
     @JsonProperty("work_type")
-    private String WorkType;
+    private String workType;
     @JsonProperty("module_name")
-    private String ModuleName;
+    private String moduleName;
     @JsonProperty("cache_result")
-    private boolean CacheResult;
+    private boolean cacheResult;
+    @JsonProperty("work_cron")
+    private String workCron;
 
     @JsonProperty("created_by")
     private String createdBy;

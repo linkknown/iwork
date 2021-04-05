@@ -1,6 +1,6 @@
 package com.linkknown.iwork.service.impl;
 
-import com.linkknown.iwork.dao.FilterMapper;
+import com.linkknown.iwork.mapper.FilterMapper;
 import com.linkknown.iwork.entity.Filters;
 import com.linkknown.iwork.service.FilterService;
 import org.springframework.beans.factory.annotation.Autowired;

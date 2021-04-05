@@ -2,7 +2,7 @@ package com.linkknown.iwork.service.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.linkknown.iwork.dao.SqlMigrateMapper;
+import com.linkknown.iwork.mapper.SqlMigrateMapper;
 import com.linkknown.iwork.entity.SqlMigrate;
 import com.linkknown.iwork.service.SqlMigrateService;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -98,10 +98,11 @@ public class WorkController {
 
     @RequestMapping("/editWork")
     public Object editWork(@RequestParam(defaultValue = "-1") int app_id,
-                           @RequestParam(defaultValue = "-1") int work_id,
+                           @RequestParam(defaultValue = "-1") int id,
                            @RequestParam(defaultValue = "") String work_name,
                            @RequestParam(defaultValue = "") String work_desc,
                            @RequestParam(defaultValue = "") String work_type,
+                           @RequestParam(defaultValue = "") String work_cron,
                            @RequestParam(defaultValue = "") String module_name,
                            @RequestParam(defaultValue = "false") boolean cache_result) {
         Map<String, Object> resultMap = new HashMap<>();
@@ -114,10 +115,11 @@ public class WorkController {
 
         Work work = new Work();
         work.setAppId(app_id + "");
-        work.setId(work_id);
+        work.setId(id);
         work.setWorkName(work_name);
         work.setWorkDesc(work_desc);
         work.setWorkType(work_type);
+        work.setWorkCron(work_cron);
         work.setModuleName(module_name);
         work.setCacheResult(cache_result);
         work.setCreatedBy("SYSTEM");

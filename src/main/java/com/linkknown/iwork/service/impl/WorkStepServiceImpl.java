@@ -1,10 +1,9 @@
 package com.linkknown.iwork.service.impl;
 
 import com.linkknown.iwork.core.exception.IWorkException;
-import com.linkknown.iwork.dao.WorkStepMapper;
+import com.linkknown.iwork.mapper.WorkStepMapper;
 import com.linkknown.iwork.entity.WorkStep;
 import com.linkknown.iwork.service.WorkStepService;
-import com.linkknown.iwork.util.StringUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

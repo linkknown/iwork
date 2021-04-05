@@ -2,21 +2,16 @@ package com.linkknown.iwork.service.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.linkknown.iwork.dao.RunLogMapper;
+import com.linkknown.iwork.mapper.RunLogMapper;
 import com.linkknown.iwork.entity.Runlog;
 import com.linkknown.iwork.service.RunLogService;
-import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.io.File;
-import java.io.IOException;
-import java.nio.charset.Charset;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.*;
-import java.util.function.Consumer;
 
 @Service
 public class RunLogServiceImpl implements RunLogService {

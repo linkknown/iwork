@@ -2,12 +2,9 @@ package com.linkknown.iwork.service.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.linkknown.iwork.dao.AppIdMapper;
-import com.linkknown.iwork.dao.ResourceMapper;
-import com.linkknown.iwork.entity.AppId;
+import com.linkknown.iwork.mapper.ResourceMapper;
 import com.linkknown.iwork.entity.Resource;
 import com.linkknown.iwork.service.ResourceService;
-import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
