@@ -15,6 +15,8 @@ import org.quartz.JobExecutionException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.HashMap;
+
 public class ScheduledJobExecutor implements Job {
 
     private RunLogService runLogService = ApplicationContextUtil.getBean(RunLogService.class);
@@ -24,17 +26,18 @@ public class ScheduledJobExecutor implements Job {
     @Override
     public void execute(JobExecutionContext jobExecutionContext) throws JobExecutionException {
         JobDataMap jobDataMap = jobExecutionContext.getTrigger().getJobDataMap();
+        String appId = (String) jobDataMap.get("appId");
+        String workName = (String) jobDataMap.get("workName");
 
-        Work work = (Work) jobDataMap.get("work");
-        logger.info("定时执行任务[开始]：" + work.getWorkName());
+        WorkCache workCache = Memory.getWorkCacheByNameFromMemory(Integer.parseInt(appId), workName);
 
-        WorkCache workCache = Memory.getWorkCacheByNameFromMemory(Integer.valueOf(work.getAppId()), work.getWorkName());
+        logger.info("定时执行任务[开始]：" + workCache.getWork().getWorkName());
 
         Receiver receiver = new Runner()
                 .setRunlogRecordConsumer(runlogRecord -> runLogService.insertRunlogRecord(runlogRecord))
                 .setRunlogDetailConsumer(runlogDetails -> runLogService.insertMultiRunlogDetail(runlogDetails))
-                .runWork(workCache.getWork(), new Dispatcher().setTmpDataMap(null));
+                .runWork(workCache.getWork(), new Dispatcher().setTmpDataMap(new HashMap<>()));
 
-        logger.info("定时执行任务[结束]：" + work.getWorkName() + receiver.toString());
+        logger.info("定时执行任务[结束]：" + workCache.getWork().getWorkName() + receiver.toString());
     }
 }

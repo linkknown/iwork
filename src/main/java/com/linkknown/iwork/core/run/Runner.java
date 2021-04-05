@@ -139,9 +139,12 @@ public class Runner {
     private String getFilterTrackingIds(Dispatcher dispatcher) {
         if (dispatcher != null) {
             HttpServletRequest request = (HttpServletRequest) dispatcher.getTmpDataMap().get(Constants.HTTP_REQUEST_OBJECT);
-            String filterTrackingIds = request.getHeader(Constants.FILTER_TRACKING_ID_STACK);
-            if (StringUtils.isNotEmpty(filterTrackingIds)) {
-                return filterTrackingIds;
+            // 不一定由外部触发
+            if (request != null) {
+                String filterTrackingIds = request.getHeader(Constants.FILTER_TRACKING_ID_STACK);
+                if (StringUtils.isNotEmpty(filterTrackingIds)) {
+                    return filterTrackingIds;
+                }
             }
         }
         return "";

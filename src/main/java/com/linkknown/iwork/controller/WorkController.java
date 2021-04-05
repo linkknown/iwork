@@ -8,6 +8,7 @@ import com.linkknown.iwork.core.run.Runner;
 import com.linkknown.iwork.entity.Filters;
 import com.linkknown.iwork.entity.Module;
 import com.linkknown.iwork.entity.Work;
+import com.linkknown.iwork.quartz.ScheduledJobService;
 import com.linkknown.iwork.service.FilterService;
 import com.linkknown.iwork.service.ModuleService;
 import com.linkknown.iwork.service.RunLogService;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.annotation.Resource;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -37,6 +39,8 @@ public class WorkController {
     private ModuleService moduleService;
     @Autowired
     private FilterService filterService;
+    @Resource
+    private ScheduledJobService scheduledJobService;
 
     @RequestMapping("/filterPageWorks")
     public Object filterPageWorks(@RequestParam(defaultValue = "-1") int app_id,
@@ -129,6 +133,9 @@ public class WorkController {
 
         workService.editWork(work);
 
+        // workType 是 quartz 类型时触发定时任务
+        scheduledJobService.scheduleJobQuietly(work);
+
         resultMap.put("status", "SUCCESS");
         return resultMap;
     }
@@ -141,8 +148,12 @@ public class WorkController {
         Map<String, Object> resultMap = new HashMap<>();
 
         if (StringUtils.equals(operate, "copy")) {
+            scheduledJobService.scheduleJobQuietly(workService.queryWorkById(app_id, id));
+
             workService.copyWorkById(app_id, id);
         } else if (StringUtils.equals(operate, "delete")) {
+            scheduledJobService.deleteJobQuietly(workService.queryWorkById(app_id, id));
+
             workService.deleteWorkById(id);
         }
 
