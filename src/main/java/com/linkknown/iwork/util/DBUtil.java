@@ -1,6 +1,10 @@
 package com.linkknown.iwork.util;
 
+import com.linkknown.iwork.core.exception.IWorkException;
+import com.linkknown.iwork.core.executor.redis.RedisPoolFactory;
 import lombok.Data;
+import org.apache.commons.lang3.StringUtils;
+import redis.clients.jedis.JedisPool;
 
 import java.io.Closeable;
 import java.io.IOException;
@@ -19,19 +23,23 @@ public class DBUtil {
         private String errorMsg;
     }
 
-    public static PingResult ping(String url, String userName, String password) {
-        PingResult pingResult = new PingResult();
-
+    public static boolean pingQueitly (String url, String userName, String password) {
         try {
-            Connection connection = getConnection(url, userName, password);
-            pingResult.setValid(connection.isValid(10));
-
-        } catch (Exception e) {
-            e.printStackTrace();
-            pingResult.setErrorMsg(e.getMessage() + ":" + e.getCause().getMessage());
+            return ping(url, userName, password);
+        } catch (IWorkException|SQLException|ClassNotFoundException e) {
+            return false;
         }
-        return pingResult;
     }
+
+    public static boolean ping (String url, String userName, String password) throws IWorkException, SQLException, ClassNotFoundException {
+        Connection connection = getConnection(url, userName, password);
+        boolean valid = connection.isValid(10);
+        if (!valid) {
+            throw new IWorkException(String.format("DB 实例连接失败：url is %s, userName is %s, password is", url, userName, password));
+        }
+        return true;
+    }
+
 
     public static void closeAll(ResultSet rs, Statement stmt, Connection conn) {
         close(rs, stmt, conn);

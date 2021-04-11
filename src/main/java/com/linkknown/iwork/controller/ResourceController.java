@@ -3,12 +3,12 @@ package com.linkknown.iwork.controller;
 import com.github.pagehelper.PageInfo;
 import com.linkknown.iwork.adapter.PageAdapter;
 import com.linkknown.iwork.config.IworkConfig;
-import com.linkknown.iwork.entity.GlobalVar;
 import com.linkknown.iwork.entity.Resource;
+import com.linkknown.iwork.entity.ResourceLinkResolver;
 import com.linkknown.iwork.service.GlobalVarService;
 import com.linkknown.iwork.service.ResourceService;
 import com.linkknown.iwork.util.DBUtil;
-import org.apache.commons.lang3.StringUtils;
+import com.linkknown.iwork.util.RedisUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -134,25 +134,39 @@ public class ResourceController {
 
         resultMap.put("status", "SUCCESS");
 
-        switch (resource.getResourceType()) {
-            case "db":
-                String[] resourceLinkArr = StringUtils.splitByWholeSeparator(resource.getResourceLink(), "|||");
-                String resourceUrl = resourceLinkArr[0];
-                String resourceUserName = resourceLinkArr[1];
-                String resourcePasswd = resourceLinkArr[2];
+        ResourceLinkResolver resolver = ResourceLinkResolver.getResolver(app_id, resource.getResourceLink());
+        String[] resourceLinkPartArr = resolver.resolveAsPartFromGlobalVar();
 
-                resourceUrl = globalVarService.getGlobalValueForGlobalVariable(app_id, resourceUrl);
+        boolean result = true;
+        String errorMsg = "连接失败";
+        try {
+            switch (resource.getResourceType()) {
+                case "db":
+                    String resourceUrl = resourceLinkPartArr[0];
+                    String resourceUserName = resourceLinkPartArr[1];
+                    String resourcePasswd = resourceLinkPartArr[2];
 
-                DBUtil.PingResult pingResult = DBUtil.ping(resourceUrl, resourceUserName, resourcePasswd);
-                if (!pingResult.isValid()) {
-                    resultMap.put("status", "ERROR");
-                    resultMap.put("errorMsg", "校验失败: " + pingResult.getErrorMsg());
-                }
-            case "sftp":
-            case "ssh":
-                break;
-            default:
-                break;
+                    result = DBUtil.ping(resourceUrl, resourceUserName, resourcePasswd);
+                    break;
+                case "redis":
+                    String host = resourceLinkPartArr[0];
+                    String port = resourceLinkPartArr[1];
+
+                    result = RedisUtil.ping(host, Integer.valueOf(port));
+                    break;
+                case "sftp":
+                case "ssh":
+                    break;
+                default:
+                    break;
+            }
+        } catch (Exception e) {
+            result = false;
+            errorMsg = e.getMessage();
+        }
+        if (!result) {
+            resultMap.put("status", "ERROR");
+            resultMap.put("errorMsg", errorMsg);
         }
 
         return resultMap;
