@@ -2,6 +2,7 @@ package com.linkknown.iwork.core.func;
 
 import com.linkknown.iwork.core.FuncCaller;
 import com.linkknown.iwork.core.exception.IWorkException;
+import com.linkknown.iwork.core.func.lexerv2.DefaultExpressionParser;
 import com.linkknown.iwork.util.StringUtil;
 import lombok.Data;
 import lombok.experimental.Accessors;
@@ -34,6 +35,15 @@ public class Lexer {
 
     // 根据词法分析并根据 ; 进行多值分割
     public static List<String> splitWithLexerAnalysis(String expression) throws IWorkException {
+
+        try {
+            System.out.println(">>>>>>> expression <<<" + expression + "\n" +
+            new DefaultExpressionParser().parseToTreeNodeString(expression));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+
         List<String> multiExpressions = new ArrayList<>();
         AnalysisLexerResult analysisLexerResult = analysisLexer(expression);
         if (!StringUtils.contains(expression, ";")) { // 不包含 ; 表示单个值
