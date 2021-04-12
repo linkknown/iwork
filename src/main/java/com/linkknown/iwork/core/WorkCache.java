@@ -7,7 +7,7 @@ import com.linkknown.iwork.Constants;
 import com.linkknown.iwork.core.exception.IWorkException;
 import com.linkknown.iwork.core.expression.parser.Lexer;
 import com.linkknown.iwork.core.expression.function.FuncCaller;
-import com.linkknown.iwork.core.expression.function.IworkFunc;
+import com.linkknown.iwork.core.expression.function.FuncExecutor;
 import com.linkknown.iwork.core.run.DataStore;
 import com.linkknown.iwork.entity.Work;
 import com.linkknown.iwork.entity.WorkStep;
@@ -229,7 +229,7 @@ public class WorkCache {
 
     public void parseToFuncCallers(String paramValue) {
         // 对单个 paramVaule 进行特殊字符编码
-        paramValue = IworkFunc.encodeSpecialForParamVaule(paramValue);
+        paramValue = FuncExecutor.encodeSpecialForParamVaule(paramValue);
         try {
             List<FuncCaller> callers = Lexer.parseToFuncCallers(paramValue);
 
@@ -250,7 +250,7 @@ public class WorkCache {
     public void parseToMultiVals (String paramValue) {
         try {
             // 对转义字符 \, \; \( \) 等进行编码
-            paramValue = IworkFunc.encodeSpecialForParamVaule(paramValue);
+            paramValue = FuncExecutor.encodeSpecialForParamVaule(paramValue);
             // 进行词法分析,获取多个值
             List<String> multiVals = Lexer.splitWithLexerAnalysis(paramValue);
             synchronized (this) {

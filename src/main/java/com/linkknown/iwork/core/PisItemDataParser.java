@@ -2,7 +2,7 @@ package com.linkknown.iwork.core;
 
 import com.linkknown.iwork.core.exception.IWorkException;
 import com.linkknown.iwork.core.expression.function.FuncCaller;
-import com.linkknown.iwork.core.expression.function.IworkFunc;
+import com.linkknown.iwork.core.expression.function.FuncExecutor;
 import com.linkknown.iwork.core.run.DataStore;
 import com.linkknown.iwork.util.DatatypeUtil;
 import com.linkknown.iwork.util.IworkUtil;
@@ -137,7 +137,7 @@ public class PisItemDataParser {
         for (FuncCaller funcCaller : funcCallers) {
             List<Object> args = this.getCallerArgs(funcCaller, historyFuncResultMap, paramName, replaceMap);
             // 执行函数并记录结果,供下一个函数执行使用
-            Object result = IworkFunc.executeFuncCaller(funcCaller, args);
+            Object result = FuncExecutor.executeFuncCaller(funcCaller, args);
             historyFuncResultMap.put("$expression."+funcCaller.getFuncUUID(), result);
             lastFuncResult = result;
         }

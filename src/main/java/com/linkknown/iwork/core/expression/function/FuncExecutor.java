@@ -7,7 +7,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.List;
 
-public class IworkFunc {
+public class FuncExecutor {
     public static Object executeFuncCaller(FuncCaller funcCaller, List<Object> args) throws IWorkException {
         try {
             // 将 funcName 首字母变成大写
@@ -22,7 +22,7 @@ public class IworkFunc {
 
     // 执行函数
     private static Object invoke(String funcName, List<Object> args) throws InvocationTargetException, IllegalAccessException, NoSuchMethodException {
-        IWorkFuncProxy proxy = new IWorkFuncProxy();
+        FuncRegistry proxy = new FuncRegistry();
             funcName = adjust(funcName);
             // 调用可变参数方法
             Method method = proxy.getClass().getDeclaredMethod(funcName, Object[].class);

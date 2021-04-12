@@ -2,7 +2,7 @@ package com.linkknown.iwork.core;
 
 import com.linkknown.iwork.config.IworkConfig;
 import com.linkknown.iwork.core.exception.IWorkException;
-import com.linkknown.iwork.core.expression.function.IworkFunc;
+import com.linkknown.iwork.core.expression.function.FuncExecutor;
 import com.linkknown.iwork.core.run.DataStore;
 import com.linkknown.iwork.entity.GlobalVar;
 import com.linkknown.iwork.entity.Resource;
@@ -26,7 +26,7 @@ public class SimpleParser {
     // 是直接参数,不需要函数进行特殊处理
     public Object parseParamValue(Map<String, Object>... replaceMap) throws IWorkException {
         String appId = this.getDataStore().getWorkCache().getWork().getAppId();
-        this.setParamVaule(IworkFunc.dncodeSpecialForParamVaule(this.getParamVaule()));
+        this.setParamVaule(FuncExecutor.dncodeSpecialForParamVaule(this.getParamVaule()));
 
         // 变量
         if (StringUtils.startsWith(StringUtils.upperCase(this.getParamVaule()), "$GLOBAL.")) {

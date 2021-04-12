@@ -11,11 +11,11 @@ import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class IWorkFuncProxy {
+public class FuncRegistry {
 
 
 //    // 将 sql 查询的多条记录根据字段名转换成切片
-//    expression (t *IWorkFuncProxy) TransformSqlQueryRowsToSliceByKey(args []interface{}) interface{} {
+//    expression (t *FuncRegistry) TransformSqlQueryRowsToSliceByKey(args []interface{}) interface{} {
 //        result := make([]interface{}, 0)
 //        key := args[1].(string)
 //                rowDatas := args[0].([]map[string]interface{}) // 查询出来的数据
@@ -81,13 +81,13 @@ public class IWorkFuncProxy {
         throw new IWorkException("解密失败!");
     }
 
-//    expression (t *IWorkFuncProxy) BcryptGenerateFromPassword(args []interface{}) interface{} {
+//    expression (t *FuncRegistry) BcryptGenerateFromPassword(args []interface{}) interface{} {
 //        hashedPassword, err := chiperutil.BcryptGenerateFromPassword(args[0].(string))
 //        errorutil.CheckError(err)
 //        return hashedPassword
 //    }
 //
-//    expression (t *IWorkFuncProxy) BcryptCompareHashAndPassword(args []interface{}) interface{} {
+//    expression (t *FuncRegistry) BcryptCompareHashAndPassword(args []interface{}) interface{} {
 //        err := chiperutil.BcryptCompareHashAndPassword(args[0].(string), args[1].(string))
 //        return err == nil
 //    }
@@ -160,7 +160,7 @@ public class IWorkFuncProxy {
         return null;
     }
 
-//    expression (t *IWorkFuncProxy) GetRequestParameters(args []interface{}) interface{} {
+//    expression (t *FuncRegistry) GetRequestParameters(args []interface{}) interface{} {
 //        urlAddress := args[0].(string)
 //                paramName := args[1].(string)
 //                u, err := url.Parse(urlAddress)
@@ -240,7 +240,7 @@ public class IWorkFuncProxy {
     }
 
 //
-//    expression (t *IWorkFuncProxy) StringsJoin(args []interface{}) interface{} {
+//    expression (t *FuncRegistry) StringsJoin(args []interface{}) interface{} {
 //        sargs := make([]string, 0)
 //        for _, arg := range args {
 //            if arr, err := strconvToSlice(arg); err == nil {
