@@ -30,7 +30,7 @@ public class ParseJwtNode extends BaseNode {
     }
 
     @Override
-    public Param.ParamOutputSchema getRuntimeParamOutputSchema() throws IWorkException {
+    public Param.ParamOutputSchema getDynamicParamOutputSchema() throws IWorkException {
         Param.ParamOutputSchema paramOutputSchema = new Param.ParamOutputSchema();
         String claimsMap = (String) ParamHelper.getStaticParamValueWithStep(this.getAppId(), Constants.STRING_PREFIX + "claimsMap", this.getWorkStep());
         String[] claimArr = StringUtils.splitByWholeSeparator(claimsMap, ",");

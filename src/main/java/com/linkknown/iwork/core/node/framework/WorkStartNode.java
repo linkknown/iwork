@@ -15,13 +15,13 @@ import java.util.function.BiConsumer;
 public class WorkStartNode extends BaseNode {
 
     @Override
-    public Param.ParamInputSchema getRuntimeParamInputSchema() {
-        return this.getRuntimeParamInputSchemaForMapping();
+    public Param.ParamInputSchema getDynamicParamInputSchema() {
+        return this.getDynamicParamInputSchemaForMapping();
     }
 
     @Override
-    public Param.ParamOutputSchema getRuntimeParamOutputSchema() {
-        return this.getRuntimeParamOutputSchemaForMapping();
+    public Param.ParamOutputSchema getDynamicParamOutputSchema() {
+        return this.getDynamicParamOutputSchemaForMapping();
     }
 
     @Override

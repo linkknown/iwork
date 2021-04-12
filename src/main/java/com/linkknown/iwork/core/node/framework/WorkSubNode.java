@@ -31,7 +31,7 @@ public class WorkSubNode extends BaseNode {
 
     // 获取动态输入值
     @Override
-    public Param.ParamInputSchema getRuntimeParamInputSchema() {
+    public Param.ParamInputSchema getDynamicParamInputSchema() {
         Param.ParamInputSchema paramInputSchema = new Param.ParamInputSchema();
         // 获取子流程信息
         String workSubName = this.getWorkSubName();
@@ -64,7 +64,7 @@ public class WorkSubNode extends BaseNode {
     }
 
     @Override
-    public Param.ParamOutputSchema getRuntimeParamOutputSchema() throws IWorkException {
+    public Param.ParamOutputSchema getDynamicParamOutputSchema() throws IWorkException {
         Param.ParamOutputSchema paramOutputSchema = new Param.ParamOutputSchema();
         // 获取子流程信息
         String workSubName = this.getWorkSubName();

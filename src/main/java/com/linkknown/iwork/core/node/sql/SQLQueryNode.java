@@ -40,7 +40,7 @@ public class SQLQueryNode extends BaseNode {
     }
 
     @Override
-    public Param.ParamInputSchema getRuntimeParamInputSchema() {
+    public Param.ParamInputSchema getDynamicParamInputSchema() {
         return new Param.ParamInputSchema();
     }
 
@@ -54,7 +54,7 @@ public class SQLQueryNode extends BaseNode {
     }
 
     @Override
-    public Param.ParamOutputSchema getRuntimeParamOutputSchema() throws IWorkException {
+    public Param.ParamOutputSchema getDynamicParamOutputSchema() throws IWorkException {
         // 输出 metadata
         Param.ParamOutputSchema paramOutputSchema = this.getMetaDataQuietlyForQuery();
 

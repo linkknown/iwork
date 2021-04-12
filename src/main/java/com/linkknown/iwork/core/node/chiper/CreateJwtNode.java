@@ -27,7 +27,7 @@ public class CreateJwtNode extends BaseNode {
     }
 
     @Override
-    public Param.ParamInputSchema getRuntimeParamInputSchema() throws IWorkException {
+    public Param.ParamInputSchema getDynamicParamInputSchema() throws IWorkException {
         Param.ParamInputSchema paramInputSchema = new Param.ParamInputSchema();
         String claimsMap = (String) ParamHelper.getStaticParamValueWithStep(this.getAppId(), Constants.STRING_PREFIX + "claimsMap", this.getWorkStep());
         String[] claimArr = StringUtils.splitByWholeSeparator(claimsMap, ",");

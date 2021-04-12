@@ -37,7 +37,7 @@ public class HttpRequestParserNode extends BaseNode {
     }
 
     @Override
-    public Param.ParamOutputSchema getRuntimeParamOutputSchema() throws IWorkException {
+    public Param.ParamOutputSchema getDynamicParamOutputSchema() throws IWorkException {
         String headers = (String) ParamHelper.getStaticParamValueWithStep(this.getAppId(), Constants.STRING_PREFIX + "headers?", this.getWorkStep());
         String cookies = (String) ParamHelper.getStaticParamValueWithStep(this.getAppId(), Constants.STRING_PREFIX + "headers?", this.getWorkStep());
 

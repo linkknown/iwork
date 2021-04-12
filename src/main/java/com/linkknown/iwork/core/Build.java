@@ -28,7 +28,7 @@ public class Build {
         Parser.ParamSchemaParser parser = new Parser.ParamSchemaParser(workStep, _parser);
 
         Param.ParamOutputSchema defaultParamOutputSchema = parser.getDefaultParamOutputSchema();
-        Param.ParamOutputSchema runtimeParamOutputSchema = parser.getRuntimeParamOutputSchema();
+        Param.ParamOutputSchema runtimeParamOutputSchema = parser.getDynamicParamOutputSchema();
 
         // 合并默认数据和动态数据作为新数据
         List<Param.ParamOutputSchemaItem> newOutputSchemaItems = new LinkedList<>();
@@ -57,7 +57,7 @@ public class Build {
         // 获取默认数据
         Param.ParamInputSchema defaultParamInputSchema = parser.getDefaultParamInputSchema();
         // 获取动态数据
-        Param.ParamInputSchema runtimeParamInputSchema = parser.getRuntimeParamInputSchema();
+        Param.ParamInputSchema runtimeParamInputSchema = parser.getDynamicParamInputSchema();
         // 合并默认数据和动态数据作为新数据
         List<Param.ParamInputSchemaItem> newInputSchemaItems = new LinkedList<>();
         newInputSchemaItems.addAll(Optional.ofNullable(defaultParamInputSchema.getParamInputSchemaItems()).orElse(new LinkedList<>()));

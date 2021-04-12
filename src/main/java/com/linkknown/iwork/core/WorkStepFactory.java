@@ -136,8 +136,8 @@ public class WorkStepFactory implements Parser.IParamSchemaParser {
     }
 
     @Override
-    public Param.ParamInputSchema getRuntimeParamInputSchema() throws IWorkException {
-        Param.ParamInputSchema paramInputSchema = this.getProxy().getRuntimeParamInputSchema();
+    public Param.ParamInputSchema getDynamicParamInputSchema() throws IWorkException {
+        Param.ParamInputSchema paramInputSchema = this.getProxy().getDynamicParamInputSchema();
         return paramInputSchema != null ? paramInputSchema : new Param.ParamInputSchema();
     }
 
@@ -148,8 +148,8 @@ public class WorkStepFactory implements Parser.IParamSchemaParser {
     }
 
     @Override
-    public Param.ParamOutputSchema getRuntimeParamOutputSchema() throws IWorkException {
-        Param.ParamOutputSchema paramOutputSchema = this.getProxy().getRuntimeParamOutputSchema();
+    public Param.ParamOutputSchema getDynamicParamOutputSchema() throws IWorkException {
+        Param.ParamOutputSchema paramOutputSchema = this.getProxy().getDynamicParamOutputSchema();
         return paramOutputSchema != null ? paramOutputSchema : new Param.ParamOutputSchema();
     }
 

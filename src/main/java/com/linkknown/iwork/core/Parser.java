@@ -15,9 +15,9 @@ public class Parser {
     public static interface IParamSchemaParser {
 
         Param.ParamInputSchema getDefaultParamInputSchema();
-        Param.ParamInputSchema getRuntimeParamInputSchema() throws IWorkException;
+        Param.ParamInputSchema getDynamicParamInputSchema() throws IWorkException;
         Param.ParamOutputSchema getDefaultParamOutputSchema() throws IWorkException;
-        Param.ParamOutputSchema getRuntimeParamOutputSchema() throws IWorkException;
+        Param.ParamOutputSchema getDynamicParamOutputSchema() throws IWorkException;
         void buildParamNamingRelation(List<Param.ParamInputSchemaItem> items);
     }
 
@@ -56,8 +56,8 @@ public class Parser {
         }
 
         @Override
-        public Param.ParamInputSchema getRuntimeParamInputSchema() throws IWorkException {
-            return this.paramSchemaParser.getRuntimeParamInputSchema();
+        public Param.ParamInputSchema getDynamicParamInputSchema() throws IWorkException {
+            return this.paramSchemaParser.getDynamicParamInputSchema();
         }
 
         @Override
@@ -66,8 +66,8 @@ public class Parser {
         }
 
         @Override
-        public Param.ParamOutputSchema getRuntimeParamOutputSchema() throws IWorkException {
-            return this.paramSchemaParser.getRuntimeParamOutputSchema();
+        public Param.ParamOutputSchema getDynamicParamOutputSchema() throws IWorkException {
+            return this.paramSchemaParser.getDynamicParamOutputSchema();
         }
 
         @Override

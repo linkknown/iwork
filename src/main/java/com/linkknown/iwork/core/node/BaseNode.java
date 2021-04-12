@@ -94,8 +94,8 @@ public abstract class BaseNode implements Parser.IWorkStep {
     }
 
     @Override
-    public Param.ParamInputSchema getRuntimeParamInputSchema() throws IWorkException {
-        System.out.println("execute default getRuntimeParamInputSchema method...");
+    public Param.ParamInputSchema getDynamicParamInputSchema() throws IWorkException {
+        System.out.println("execute default getDynamicParamInputSchema method...");
         return new Param.ParamInputSchema();
     }
 
@@ -106,8 +106,8 @@ public abstract class BaseNode implements Parser.IWorkStep {
     }
 
     @Override
-    public Param.ParamOutputSchema getRuntimeParamOutputSchema() throws IWorkException {
-        System.out.println("execute default getRuntimeParamOutputSchema method...");
+    public Param.ParamOutputSchema getDynamicParamOutputSchema() throws IWorkException {
+        System.out.println("execute default getDynamicParamOutputSchema method...");
         return new Param.ParamOutputSchema();
     }
 
@@ -218,7 +218,7 @@ public abstract class BaseNode implements Parser.IWorkStep {
         this.setPureTextTmpDataMap(tmpDataMap);
     }
 
-    public Param.ParamInputSchema getRuntimeParamInputSchemaForMapping() {
+    public Param.ParamInputSchema getDynamicParamInputSchemaForMapping() {
         String workStepParamMapping = this.getWorkStep().getWorkStepParamMapping();
         List<Param.ParamMapping> paramMappings = Param.ParamMapping.parse(workStepParamMapping);
 
@@ -234,7 +234,7 @@ public abstract class BaseNode implements Parser.IWorkStep {
         return paramInputSchema;
     }
 
-    public Param.ParamOutputSchema getRuntimeParamOutputSchemaForMapping() {
+    public Param.ParamOutputSchema getDynamicParamOutputSchemaForMapping() {
         List<Param.ParamOutputSchemaItem> items = new LinkedList<>();
 
         Param.ParamInputSchema paramInputSchema = this.getParamSchemaCacheParser().getCacheParamInputSchema();
