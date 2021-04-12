@@ -1,6 +1,8 @@
 package com.linkknown.iwork.core;
 
 import com.linkknown.iwork.core.exception.IWorkException;
+import com.linkknown.iwork.core.expression.function.FuncCaller;
+import com.linkknown.iwork.core.expression.function.IworkFunc;
 import com.linkknown.iwork.core.run.DataStore;
 import com.linkknown.iwork.util.DatatypeUtil;
 import com.linkknown.iwork.util.IworkUtil;
@@ -120,7 +122,7 @@ public class PisItemDataParser {
                 return this.parseParamVauleWithCallers(callers, paramName, replaceMap);
             }
         } catch (IWorkException e) {
-            String errorMsg = String.format("<span style='color:red;'>execute func with expression is %s, error msg is :%s</span>",
+            String errorMsg = String.format("<span style='color:red;'>execute expression with expression is %s, error msg is :%s</span>",
                     paramValue, e.getMessage());
             throw IWorkException.wrapException(errorMsg, "", e);
         }
@@ -136,7 +138,7 @@ public class PisItemDataParser {
             List<Object> args = this.getCallerArgs(funcCaller, historyFuncResultMap, paramName, replaceMap);
             // 执行函数并记录结果,供下一个函数执行使用
             Object result = IworkFunc.executeFuncCaller(funcCaller, args);
-            historyFuncResultMap.put("$func."+funcCaller.getFuncUUID(), result);
+            historyFuncResultMap.put("$expression."+funcCaller.getFuncUUID(), result);
             lastFuncResult = result;
         }
         return lastFuncResult;

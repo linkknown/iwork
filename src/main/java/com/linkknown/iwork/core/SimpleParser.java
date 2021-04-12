@@ -2,6 +2,7 @@ package com.linkknown.iwork.core;
 
 import com.linkknown.iwork.config.IworkConfig;
 import com.linkknown.iwork.core.exception.IWorkException;
+import com.linkknown.iwork.core.expression.function.IworkFunc;
 import com.linkknown.iwork.core.run.DataStore;
 import com.linkknown.iwork.entity.GlobalVar;
 import com.linkknown.iwork.entity.Resource;

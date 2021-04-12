@@ -1,4 +1,4 @@
-package com.linkknown.iwork.core;
+package com.linkknown.iwork.core.expression.function;
 
 import com.linkknown.iwork.core.exception.IWorkException;
 import com.linkknown.iwork.util.DatatypeUtil;
@@ -15,7 +15,7 @@ public class IWorkFuncProxy {
 
 
 //    // 将 sql 查询的多条记录根据字段名转换成切片
-//    func (t *IWorkFuncProxy) TransformSqlQueryRowsToSliceByKey(args []interface{}) interface{} {
+//    expression (t *IWorkFuncProxy) TransformSqlQueryRowsToSliceByKey(args []interface{}) interface{} {
 //        result := make([]interface{}, 0)
 //        key := args[1].(string)
 //                rowDatas := args[0].([]map[string]interface{}) // 查询出来的数据
@@ -60,7 +60,7 @@ public class IWorkFuncProxy {
                 }
             }
         } else {
-            new IWorkException("generateMap func args length is mismatch!");
+            new IWorkException("generateMap expression args length is mismatch!");
         }
         return map;
     }
@@ -81,13 +81,13 @@ public class IWorkFuncProxy {
         throw new IWorkException("解密失败!");
     }
 
-//    func (t *IWorkFuncProxy) BcryptGenerateFromPassword(args []interface{}) interface{} {
+//    expression (t *IWorkFuncProxy) BcryptGenerateFromPassword(args []interface{}) interface{} {
 //        hashedPassword, err := chiperutil.BcryptGenerateFromPassword(args[0].(string))
 //        errorutil.CheckError(err)
 //        return hashedPassword
 //    }
 //
-//    func (t *IWorkFuncProxy) BcryptCompareHashAndPassword(args []interface{}) interface{} {
+//    expression (t *IWorkFuncProxy) BcryptCompareHashAndPassword(args []interface{}) interface{} {
 //        err := chiperutil.BcryptCompareHashAndPassword(args[0].(string), args[1].(string))
 //        return err == nil
 //    }
@@ -160,7 +160,7 @@ public class IWorkFuncProxy {
         return null;
     }
 
-//    func (t *IWorkFuncProxy) GetRequestParameters(args []interface{}) interface{} {
+//    expression (t *IWorkFuncProxy) GetRequestParameters(args []interface{}) interface{} {
 //        urlAddress := args[0].(string)
 //                paramName := args[1].(string)
 //                u, err := url.Parse(urlAddress)
@@ -182,7 +182,7 @@ public class IWorkFuncProxy {
         if (args.length > 1) {
             return Arrays.asList(args).stream().filter(obj -> StringUtils.equals(((String) args[0]), ((String) obj))).count() > 1;
         }
-        throw new IWorkException("stringsOneOf func args length is mismatch!");
+        throw new IWorkException("stringsOneOf expression args length is mismatch!");
     }
 
     public Object stringsTrimPrefix(Object... args) {
@@ -240,7 +240,7 @@ public class IWorkFuncProxy {
     }
 
 //
-//    func (t *IWorkFuncProxy) StringsJoin(args []interface{}) interface{} {
+//    expression (t *IWorkFuncProxy) StringsJoin(args []interface{}) interface{} {
 //        sargs := make([]string, 0)
 //        for _, arg := range args {
 //            if arr, err := strconvToSlice(arg); err == nil {
@@ -252,7 +252,7 @@ public class IWorkFuncProxy {
 //        return strings.Join(sargs, "")
 //    }
 //
-//    func strconvToSlice(s interface{}) ([]string, error) {
+//    expression strconvToSlice(s interface{}) ([]string, error) {
 //        result := make([]string, 0)
 //        if arr, ok := s.([]string); ok {
 //            for _, val := range arr {
@@ -268,35 +268,35 @@ public class IWorkFuncProxy {
 
     public Object int64Add(Object... args) throws IWorkException {
         if (args.length != 2) {
-            throw new IWorkException("int64Add func args length is mismatch!");
+            throw new IWorkException("int64Add expression args length is mismatch!");
         }
         return DatatypeUtil.objectToInt(args[0]) + DatatypeUtil.objectToInt(args[1]);
     }
 
     public Object int64Sub(Object... args) throws IWorkException {
         if (args.length != 2) {
-            throw new IWorkException("int64Sub func args length is mismatch!");
+            throw new IWorkException("int64Sub expression args length is mismatch!");
         }
         return DatatypeUtil.objectToInt(args[0]) - DatatypeUtil.objectToInt(args[1]);
     }
 
     public Object int64Gt(Object... args) throws IWorkException {
         if (args.length != 2) {
-            throw new IWorkException("int64Gt func args length is mismatch!");
+            throw new IWorkException("int64Gt expression args length is mismatch!");
         }
         return DatatypeUtil.objectToInt(args[0]) > DatatypeUtil.objectToInt(args[1]);
     }
 
     public Object int64Lt(Object... args) throws IWorkException {
         if (args.length != 2) {
-            throw new IWorkException("int64Lt func args length is mismatch!");
+            throw new IWorkException("int64Lt expression args length is mismatch!");
         }
         return DatatypeUtil.objectToInt(args[0]) < DatatypeUtil.objectToInt(args[1]);
     }
 
     public Object int64Eq(Object... args) throws IWorkException {
         if (args.length != 2) {
-            throw new IWorkException("int64Eq func args length is mismatch!");
+            throw new IWorkException("int64Eq expression args length is mismatch!");
         }
         return DatatypeUtil.objectToInt(args[0]) == DatatypeUtil.objectToInt(args[1]);
     }
@@ -307,7 +307,7 @@ public class IWorkFuncProxy {
 
     public Object int64Multi(Object... args) throws IWorkException {
         if (args.length != 2) {
-            throw new IWorkException("int64Multi func args length is mismatch!");
+            throw new IWorkException("int64Multi expression args length is mismatch!");
         }
         return DatatypeUtil.objectToInt(args[0]) * DatatypeUtil.objectToInt(args[1]);
     }
@@ -355,7 +355,7 @@ public class IWorkFuncProxy {
 
     public Object ifThenElse(Object... args) throws IWorkException {
         if (args == null || args.length < 3) {
-            throw new IWorkException("ifThenElse func args length is mismatch!");
+            throw new IWorkException("ifThenElse expression args length is mismatch!");
         }
         // 参数为空条件为假
         if (args[0] == null) {
@@ -373,7 +373,7 @@ public class IWorkFuncProxy {
 
     public Object switchCase(Object... args) throws IWorkException {
         if (args == null || args.length % 2 != 0) {
-            throw new IWorkException("switchCase func args length is mismatch!");
+            throw new IWorkException("switchCase expression args length is mismatch!");
         }
         for (int index = 0; index < args.length; index++) {
             if (index % 2 == 0) {

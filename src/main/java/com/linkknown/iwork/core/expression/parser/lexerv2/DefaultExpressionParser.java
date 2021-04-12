@@ -1,4 +1,4 @@
-package com.linkknown.iwork.core.func.lexerv2;
+package com.linkknown.iwork.core.expression.parser.lexerv2;
 
 import com.linkknown.iwork.core.exception.IWorkException;
 import org.apache.commons.lang3.StringUtils;
@@ -16,9 +16,9 @@ import java.util.*;
  * 3、变量类型
  *  $node.value,$node.value1.value,$value.value1.value2.value,$value.value[0] 等
  * 4、函数类型
- * func($value1),func(1,$value,`abc`)
+ * expression($value1),expression(1,$value,`abc`)
  * 5、复杂类型
- * func(func(func($value1)),$value,`abc`)
+ * expression(expression(expression($value1)),$value,`abc`)
  *
  * MORE SEE: https://blog.csdn.net/mhxy199288/article/details/38025319
  */

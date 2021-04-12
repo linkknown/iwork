@@ -1,8 +1,8 @@
-package com.linkknown.iwork.core.func;
+package com.linkknown.iwork.core.expression.parser;
 
-import com.linkknown.iwork.core.FuncCaller;
+import com.linkknown.iwork.core.expression.function.FuncCaller;
 import com.linkknown.iwork.core.exception.IWorkException;
-import com.linkknown.iwork.core.func.lexerv2.DefaultExpressionParser;
+import com.linkknown.iwork.core.expression.parser.lexerv2.DefaultExpressionParser;
 import com.linkknown.iwork.util.StringUtil;
 import lombok.Data;
 import lombok.experimental.Accessors;
@@ -20,7 +20,7 @@ public class Lexer {
     public static Map<String, String> regexMap = new HashMap<>();
 
     static {
-        regexMap.put("^[a-zA-Z0-9]+\\(", "func(");
+        regexMap.put("^[a-zA-Z0-9]+\\(", "expression(");
         regexMap.put("^\\)", ")");
         regexMap.put("^`.*?`", "S");            // 反引号
         regexMap.put("^'.*?'", "S");            // 单引号
@@ -107,18 +107,18 @@ public class Lexer {
             AnalysisLexerResult analysisLexerResult = analysisLexer(expression);
             List<String> metas = analysisLexerResult.getMetas();
             List<String> lexers = analysisLexerResult.getLexers();
-            // 提取优先级最高的 func
+            // 提取优先级最高的 expression
             FuncCaller caller = getPriorityFuncCaller(StringUtils.join(metas, ""), StringUtils.join(lexers, ""));
 //            if err != nil { // 提取失败
 //                return callers, err
 //            }
-            if (caller == null) { // 未提取到 func
+            if (caller == null) { // 未提取到 expression
                 if (!isStringNumberOrVar(expression)) {
                     throw new IWorkException(String.format("%s 词法解析失败,格式不正确!", expression));
                 }
                 return null;
             }
-            // 填充 func 额外参数
+            // 填充 expression 额外参数
             String _expression = fillFuncCallerExtra(metas, lexers, caller, expression);
             callers.add(caller);
             expression = _expression;
@@ -126,7 +126,7 @@ public class Lexer {
         return callers;
     }
 
-    // 填充 func 额外参数
+    // 填充 expression 额外参数
     private static String fillFuncCallerExtra(List<String> metas, List<String> lexers, FuncCaller caller, String expression) throws IWorkException {
         // 函数左边部分
         List<String> funcLeft = metas.subList(0, lexerAt(lexers, caller.getFuncLeftIndex()));
@@ -134,8 +134,8 @@ public class Lexer {
         List<String> funcRight = metas.subList(lexerAt(lexers, caller.getFuncRightIndex())+1, metas.size());
         // 函数部分
         List<String> funcArea = metas.subList(lexerAt(lexers, caller.getFuncLeftIndex()), lexerAt(lexers, caller.getFuncRightIndex())+1);
-        // 将 caller 函数替换成 $func.uuid,以便下一轮提取 func 使用
-        expression = StringUtils.join(funcLeft, "") + "$func." + caller.getFuncUUID() + StringUtils.join(funcRight, "");
+        // 将 caller 函数替换成 $expression.uuid,以便下一轮提取 expression 使用
+        expression = StringUtils.join(funcLeft, "") + "$expression." + caller.getFuncUUID() + StringUtils.join(funcRight, "");
         // 去除函数名中的 (
         caller.setFuncName(StringUtils.replace(funcArea.get(0), "(", "", -1));
         // 参数需要过滤掉 ,
@@ -164,9 +164,9 @@ public class Lexer {
     }
 
     // 获取优先级最高的函数执行体
-    // 含有 func( 必然有优先函数执行体
+    // 含有 expression( 必然有优先函数执行体
     private static FuncCaller getPriorityFuncCaller(String metasExpression, String lexersExpression) throws IWorkException {
-        if (!StringUtils.contains(lexersExpression, "func(") && !StringUtils.contains(lexersExpression, ")")) {
+        if (!StringUtils.contains(lexersExpression, "expression(") && !StringUtils.contains(lexersExpression, ")")) {
             // 非函数类型表达式值
             return null;
         }
@@ -177,7 +177,7 @@ public class Lexer {
             if (rightBracketIndex > 0) {
                 return new FuncCaller()
                         .setFuncUUID(UUID.randomUUID().toString())
-                        .setFuncLeftIndex(leftBracketIndex - "func".length())
+                        .setFuncLeftIndex(leftBracketIndex - "expression".length())
                         .setFuncRightIndex(rightBracketIndex);
             }
         }
@@ -218,7 +218,7 @@ public class Lexer {
     }
 
     private static boolean isUUIDFuncVar(String expression) {
-        if (!StringUtils.startsWith(expression, "$func.")) {
+        if (!StringUtils.startsWith(expression, "$expression.")) {
             return false;
         }
         return StringUtil.getNoRepeatSubStringWithRegexp(expression, "^\\$[a-zA-Z_0-9]+\\.[a-zA-Z0-9\\-]+$").size() == 1;
