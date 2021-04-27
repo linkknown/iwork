@@ -9,6 +9,9 @@
         <module>iwork-executor</module>
         <module>iwork-function</module>
         <module>iwork-nodes</module>
+        <module>iwork-health</module>
+        <module>iwork-util</module>
+        <module>iwork-monitor</module>
     </modules>
 
     <parent>
