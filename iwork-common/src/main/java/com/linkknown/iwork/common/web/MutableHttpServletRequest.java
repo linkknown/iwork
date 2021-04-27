@@ -1,4 +1,4 @@
-package com.linkknown.iwork.filter;
+package com.linkknown.iwork.common.web;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletRequestWrapper;
@@ -10,7 +10,7 @@ public class MutableHttpServletRequest extends HttpServletRequestWrapper {
 
     public MutableHttpServletRequest(HttpServletRequest request) {
         super(request);
-        this.customHeaders = new HashMap<String, String>();
+        this.customHeaders = new HashMap<>();
     }
 
     public void putHeader(String name, String value) {

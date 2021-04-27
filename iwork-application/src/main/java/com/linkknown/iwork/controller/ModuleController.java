@@ -1,11 +1,8 @@
 package com.linkknown.iwork.controller;
 
 import com.github.pagehelper.PageInfo;
-import com.linkknown.iwork.adapter.PageAdapter;
-import com.linkknown.iwork.config.IworkConfig;
-import com.linkknown.iwork.entity.GlobalVar;
+import com.linkknown.iwork.common.adapter.PageAdapter;
 import com.linkknown.iwork.entity.Module;
-import com.linkknown.iwork.service.GlobalVarService;
 import com.linkknown.iwork.service.ModuleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,7 +13,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/iwork")

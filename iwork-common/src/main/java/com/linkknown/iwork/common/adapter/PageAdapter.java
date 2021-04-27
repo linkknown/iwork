@@ -1,4 +1,4 @@
-package com.linkknown.iwork.adapter;
+package com.linkknown.iwork.common.adapter;
 
 import com.github.pagehelper.PageInfo;
 import lombok.Data;

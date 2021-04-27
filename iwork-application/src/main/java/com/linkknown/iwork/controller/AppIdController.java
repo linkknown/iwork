@@ -1,7 +1,7 @@
 package com.linkknown.iwork.controller;
 
 import com.github.pagehelper.PageInfo;
-import com.linkknown.iwork.adapter.PageAdapter;
+import com.linkknown.iwork.common.adapter.PageAdapter;
 import com.linkknown.iwork.entity.AppId;
 import com.linkknown.iwork.service.AppIdService;
 import org.springframework.beans.factory.annotation.Autowired;

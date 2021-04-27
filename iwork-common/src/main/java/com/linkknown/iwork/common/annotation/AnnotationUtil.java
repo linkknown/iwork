@@ -1,4 +1,4 @@
-package com.linkknown.iwork.annotation;
+package com.linkknown.iwork.common.annotation;
 
 import org.reflections.Reflections;
 import org.reflections.scanners.SubTypesScanner;

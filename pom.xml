@@ -12,6 +12,7 @@
         <module>iwork-health</module>
         <module>iwork-util</module>
         <module>iwork-monitor</module>
+        <module>iwork-common</module>
     </modules>
 
     <parent>

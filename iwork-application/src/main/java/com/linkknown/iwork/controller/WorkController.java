@@ -2,7 +2,7 @@ package com.linkknown.iwork.controller;
 
 import com.github.pagehelper.PageInfo;
 import com.linkknown.iwork.Constants;
-import com.linkknown.iwork.adapter.PageAdapter;
+import com.linkknown.iwork.common.adapter.PageAdapter;
 import com.linkknown.iwork.core.Regist;
 import com.linkknown.iwork.core.run.Runner;
 import com.linkknown.iwork.entity.Filters;

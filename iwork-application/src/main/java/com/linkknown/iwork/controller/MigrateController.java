@@ -1,9 +1,8 @@
 package com.linkknown.iwork.controller;
 
 import com.github.pagehelper.PageInfo;
-import com.linkknown.iwork.adapter.PageAdapter;
+import com.linkknown.iwork.common.adapter.PageAdapter;
 import com.linkknown.iwork.config.IworkConfig;
-import com.linkknown.iwork.entity.GlobalVar;
 import com.linkknown.iwork.entity.Resource;
 import com.linkknown.iwork.entity.SqlMigrate;
 import com.linkknown.iwork.service.GlobalVarService;

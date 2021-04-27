@@ -1,10 +1,7 @@
 package com.linkknown.iwork.controller;
 
 
-import com.github.pagehelper.PageInfo;
-import com.linkknown.iwork.adapter.PageAdapter;
 import com.linkknown.iwork.config.IworkConfig;
-import com.linkknown.iwork.entity.AppId;
 import com.linkknown.iwork.util.SqlFormatterUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;

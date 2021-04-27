@@ -1,8 +1,7 @@
 package com.linkknown.iwork.controller;
 
 import com.github.pagehelper.PageInfo;
-import com.linkknown.iwork.adapter.PageAdapter;
-import com.linkknown.iwork.entity.Resource;
+import com.linkknown.iwork.common.adapter.PageAdapter;
 import com.linkknown.iwork.entity.Runlog;
 import com.linkknown.iwork.service.RunLogService;
 import com.linkknown.iwork.util.HightLightUtil;
@@ -14,7 +13,6 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.function.Consumer;
 
 @RestController
 @RequestMapping("/api/iwork")

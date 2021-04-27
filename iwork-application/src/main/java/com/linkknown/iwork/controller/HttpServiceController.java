@@ -1,8 +1,8 @@
 package com.linkknown.iwork.controller;
 
 import com.linkknown.iwork.Constants;
-import com.linkknown.iwork.annotation.HelpAssistantMethodAnnotation;
-import com.linkknown.iwork.annotation.HelpAssistantMethodEnum;
+import com.linkknown.iwork.common.annotation.HelpAssistantMethodAnnotation;
+import com.linkknown.iwork.common.annotation.HelpAssistantMethodEnum;
 import com.linkknown.iwork.core.Memory;
 import com.linkknown.iwork.core.Param;
 import com.linkknown.iwork.core.WorkCache;

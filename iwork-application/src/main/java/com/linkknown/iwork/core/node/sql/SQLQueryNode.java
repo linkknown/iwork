@@ -1,15 +1,13 @@
 package com.linkknown.iwork.core.node.sql;
 
 import com.linkknown.iwork.Constants;
-import com.linkknown.iwork.adapter.PageAdapter;
+import com.linkknown.iwork.common.adapter.PageAdapter;
 import com.linkknown.iwork.core.Param;
 import com.linkknown.iwork.core.ParamHelper;
 import com.linkknown.iwork.core.exception.IWorkException;
 import com.linkknown.iwork.core.node.AutoRegistry;
 import com.linkknown.iwork.core.node.BaseNode;
-import com.linkknown.iwork.core.run.Receiver;
 import com.linkknown.iwork.entity.Resource;
-import com.linkknown.iwork.entity.WorkStep;
 import com.linkknown.iwork.util.DBUtil;
 import com.linkknown.iwork.util.DatatypeUtil;
 import com.linkknown.iwork.util.PageUtil;
@@ -21,7 +19,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.*;
 import java.util.function.Consumer;
-import java.util.function.Function;
 
 @AutoRegistry
 public class SQLQueryNode extends BaseNode {

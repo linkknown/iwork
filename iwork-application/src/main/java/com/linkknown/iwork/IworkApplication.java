@@ -1,7 +1,7 @@
 package com.linkknown.iwork;
 
-import com.linkknown.iwork.annotation.HelpAssistantAnnotation;
-import com.linkknown.iwork.annotation.HelpAssistantMethodEnum;
+import com.linkknown.iwork.common.annotation.HelpAssistantAnnotation;
+import com.linkknown.iwork.common.annotation.HelpAssistantMethodEnum;
 import com.linkknown.iwork.controller.HttpServiceController;
 import com.linkknown.iwork.core.Regist;
 import com.linkknown.iwork.health.LogCleanTask;

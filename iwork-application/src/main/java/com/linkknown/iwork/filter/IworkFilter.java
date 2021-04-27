@@ -1,6 +1,7 @@
 package com.linkknown.iwork.filter;
 
 import com.linkknown.iwork.Constants;
+import com.linkknown.iwork.common.web.MutableHttpServletRequest;
 import com.linkknown.iwork.core.Memory;
 import com.linkknown.iwork.core.Param;
 import com.linkknown.iwork.core.WorkCache;
@@ -21,10 +22,8 @@ import org.springframework.util.Assert;
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletRequestWrapper;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
