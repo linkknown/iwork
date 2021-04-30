@@ -1,4 +1,4 @@
-package com.linkknown.iwork.core.expression.function;
+package com.linkknown.iwork.expression.function;
 
 import lombok.Data;
 import lombok.experimental.Accessors;

@@ -1,6 +1,6 @@
 package com.linkknown.iwork.util;
 
-import com.linkknown.iwork.core.exception.IWorkException;
+import com.linkknown.iwork.common.exception.IWorkException;
 import com.linkknown.iwork.core.executor.redis.RedisPoolFactory;
 import org.apache.commons.lang3.StringUtils;
 import redis.clients.jedis.JedisPool;

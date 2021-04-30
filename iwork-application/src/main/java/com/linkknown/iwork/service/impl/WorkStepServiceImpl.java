@@ -1,6 +1,6 @@
 package com.linkknown.iwork.service.impl;
 
-import com.linkknown.iwork.core.exception.IWorkException;
+import com.linkknown.iwork.common.exception.IWorkException;
 import com.linkknown.iwork.mapper.WorkStepMapper;
 import com.linkknown.iwork.entity.WorkStep;
 import com.linkknown.iwork.service.WorkStepService;

@@ -1,4 +1,4 @@
-package com.linkknown.iwork.core.exception;
+package com.linkknown.iwork.common.exception;
 
 import lombok.Data;
 import lombok.experimental.Accessors;

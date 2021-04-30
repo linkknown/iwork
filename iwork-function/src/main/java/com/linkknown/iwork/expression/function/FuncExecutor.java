@@ -1,6 +1,6 @@
-package com.linkknown.iwork.core.expression.function;
+package com.linkknown.iwork.expression.function;
 
-import com.linkknown.iwork.core.exception.IWorkException;
+import com.linkknown.iwork.common.exception.IWorkException;
 import org.apache.commons.lang3.StringUtils;
 
 import java.lang.reflect.InvocationTargetException;

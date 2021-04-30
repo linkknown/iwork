@@ -1,8 +1,8 @@
 package com.linkknown.iwork.core;
 
-import com.linkknown.iwork.core.exception.IWorkException;
-import com.linkknown.iwork.core.expression.function.FuncCaller;
-import com.linkknown.iwork.core.expression.function.FuncExecutor;
+import com.linkknown.iwork.common.exception.IWorkException;
+import com.linkknown.iwork.expression.function.FuncCaller;
+import com.linkknown.iwork.expression.function.FuncExecutor;
 import com.linkknown.iwork.core.run.DataStore;
 import com.linkknown.iwork.util.DatatypeUtil;
 import com.linkknown.iwork.util.IworkUtil;

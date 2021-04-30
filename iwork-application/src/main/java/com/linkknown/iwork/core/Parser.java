@@ -1,9 +1,8 @@
 package com.linkknown.iwork.core;
 
-import com.linkknown.iwork.core.exception.IWorkException;
+import com.linkknown.iwork.common.exception.IWorkException;
 import com.linkknown.iwork.core.run.Receiver;
 import com.linkknown.iwork.entity.WorkStep;
-import com.linkknown.iwork.util.StringUtil;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.apache.commons.lang3.StringUtils;

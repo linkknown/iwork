@@ -1,6 +1,6 @@
 package com.linkknown.iwork.util;
 
-import com.linkknown.iwork.core.exception.IWorkException;
+import com.linkknown.iwork.common.exception.IWorkException;
 import com.linkknown.iwork.entity.Resource;
 import com.linkknown.iwork.entity.SqlMigrate;
 import lombok.Data;

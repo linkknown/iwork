@@ -1,7 +1,7 @@
 package com.linkknown.iwork.core;
 
 import com.linkknown.iwork.config.IworkConfig;
-import com.linkknown.iwork.core.exception.IWorkException;
+import com.linkknown.iwork.common.exception.IWorkException;
 import com.linkknown.iwork.entity.GlobalVar;
 import com.linkknown.iwork.entity.Resource;
 import com.linkknown.iwork.entity.WorkStep;

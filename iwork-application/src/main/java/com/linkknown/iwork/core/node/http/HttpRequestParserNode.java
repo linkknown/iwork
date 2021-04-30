@@ -3,15 +3,12 @@ package com.linkknown.iwork.core.node.http;
 import com.linkknown.iwork.Constants;
 import com.linkknown.iwork.core.Param;
 import com.linkknown.iwork.core.ParamHelper;
-import com.linkknown.iwork.core.exception.IWorkException;
+import com.linkknown.iwork.common.exception.IWorkException;
 import com.linkknown.iwork.core.node.AutoRegistry;
 import com.linkknown.iwork.core.node.BaseNode;
-import com.linkknown.iwork.entity.WorkStep;
 import com.linkknown.iwork.util.HttpUtil;
-import com.linkknown.iwork.util.StringUtil;
 import org.apache.commons.lang3.StringUtils;
 
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.LinkedList;

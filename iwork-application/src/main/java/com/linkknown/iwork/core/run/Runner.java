@@ -3,7 +3,7 @@ package com.linkknown.iwork.core.run;
 import com.linkknown.iwork.Constants;
 import com.linkknown.iwork.core.WorkCache;
 import com.linkknown.iwork.core.WorkStepFactory;
-import com.linkknown.iwork.core.exception.IWorkException;
+import com.linkknown.iwork.common.exception.IWorkException;
 import com.linkknown.iwork.entity.Runlog;
 import com.linkknown.iwork.entity.Work;
 import lombok.Data;
@@ -15,7 +15,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 import java.util.function.Consumer;
-import java.util.function.Function;
 
 @Data
 @Accessors(chain = true)

@@ -1,13 +1,8 @@
 package com.linkknown.iwork.util;
 
-import com.linkknown.iwork.core.exception.IWorkException;
-import com.linkknown.iwork.core.executor.redis.RedisPoolFactory;
+import com.linkknown.iwork.common.exception.IWorkException;
 import lombok.Data;
-import org.apache.commons.lang3.StringUtils;
-import redis.clients.jedis.JedisPool;
 
-import java.io.Closeable;
-import java.io.IOException;
 import java.sql.*;
 
 public class DBUtil {

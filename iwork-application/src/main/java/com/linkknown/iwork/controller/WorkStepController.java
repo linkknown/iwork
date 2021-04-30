@@ -8,7 +8,7 @@ import com.linkknown.iwork.core.BlockParser;
 import com.linkknown.iwork.core.Build;
 import com.linkknown.iwork.core.Param;
 import com.linkknown.iwork.core.WorkStepFactory;
-import com.linkknown.iwork.core.exception.IWorkException;
+import com.linkknown.iwork.common.exception.IWorkException;
 import com.linkknown.iwork.entity.GlobalVar;
 import com.linkknown.iwork.entity.Resource;
 import com.linkknown.iwork.entity.Work;
@@ -21,11 +21,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.*;
-import java.util.function.Function;
-import java.util.function.Predicate;
 import java.util.stream.Collectors;
-
-import static java.lang.System.err;
 
 @RestController
 @RequestMapping("/api/iwork")

@@ -1,4 +1,4 @@
-package com.linkknown.iwork.core.expression.parser.lexerv2;
+package com.linkknown.iwork.expression.parser.lexerv2;
 
 public enum TokenEnum {
 

@@ -1,8 +1,8 @@
-package com.linkknown.iwork.core.expression.parser;
+package com.linkknown.iwork.expression.parser;
 
-import com.linkknown.iwork.core.expression.function.FuncCaller;
-import com.linkknown.iwork.core.exception.IWorkException;
-import com.linkknown.iwork.core.expression.parser.lexerv2.DefaultExpressionParser;
+import com.linkknown.iwork.common.exception.IWorkException;
+import com.linkknown.iwork.expression.function.FuncCaller;
+import com.linkknown.iwork.expression.parser.lexerv2.DefaultExpressionParser;
 import com.linkknown.iwork.util.StringUtil;
 import lombok.Data;
 import lombok.experimental.Accessors;

@@ -1,6 +1,6 @@
-package com.linkknown.iwork.core.expression.parser.lexerv2;
+package com.linkknown.iwork.expression.parser.lexerv2;
 
-import com.linkknown.iwork.core.exception.IWorkException;
+import com.linkknown.iwork.common.exception.IWorkException;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.util.CollectionUtils;
 

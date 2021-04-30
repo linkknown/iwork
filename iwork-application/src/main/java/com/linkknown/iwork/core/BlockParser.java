@@ -1,6 +1,6 @@
 package com.linkknown.iwork.core;
 
-import com.linkknown.iwork.core.exception.IWorkException;
+import com.linkknown.iwork.common.exception.IWorkException;
 import com.linkknown.iwork.entity.Work;
 import com.linkknown.iwork.entity.WorkStep;
 import lombok.Data;
@@ -8,7 +8,6 @@ import org.apache.commons.lang3.StringUtils;
 
 import java.util.LinkedList;
 import java.util.List;
-import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 @Data

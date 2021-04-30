@@ -3,7 +3,7 @@ package com.linkknown.iwork.core.node.chiper;
 import com.linkknown.iwork.Constants;
 import com.linkknown.iwork.core.Param;
 import com.linkknown.iwork.core.ParamHelper;
-import com.linkknown.iwork.core.exception.IWorkException;
+import com.linkknown.iwork.common.exception.IWorkException;
 import com.linkknown.iwork.core.node.AutoRegistry;
 import com.linkknown.iwork.core.node.BaseNode;
 import com.linkknown.iwork.util.JwtUtil;
