@@ -29,4 +29,59 @@
     <name>iwork</name>
     <description>iwork 低代码开发平台</description>
 
+    <properties>
+        <java.version>1.8</java.version>
+        <iwork.version>0.0.1-SNAPSHOT</iwork.version>
+    </properties>
+
+
+    <!--
+        父工程统一管理依赖 jar 包的版本,各个子模块工程继承父模块
+        配置依赖的管理，此时并没有真正引用
+    -->
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>com.linkknown</groupId>
+                <artifactId>iwork-application</artifactId>
+                <version>${iwork.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.linkknown</groupId>
+                <artifactId>iwork-executor</artifactId>
+                <version>${iwork.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.linkknown</groupId>
+                <artifactId>iwork-function</artifactId>
+                <version>${iwork.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.linkknown</groupId>
+                <artifactId>iwork-nodes</artifactId>
+                <version>${iwork.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.linkknown</groupId>
+                <artifactId>iwork-health</artifactId>
+                <version>${iwork.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.linkknown</groupId>
+                <artifactId>iwork-util</artifactId>
+                <version>${iwork.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.linkknown</groupId>
+                <artifactId>iwork-monitor</artifactId>
+                <version>${iwork.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.linkknown</groupId>
+                <artifactId>iwork-common</artifactId>
+                <version>${iwork.version}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
 </project>
