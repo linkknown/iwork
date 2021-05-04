@@ -2,6 +2,7 @@ package com.linkknown.iwork.controller;
 
 import com.github.pagehelper.PageInfo;
 import com.linkknown.iwork.Constants;
+import com.linkknown.iwork.aspect.OperateLog;
 import com.linkknown.iwork.common.adapter.PageAdapter;
 import com.linkknown.iwork.core.Regist;
 import com.linkknown.iwork.core.run.Runner;
@@ -100,6 +101,7 @@ public class WorkController {
         return resultMap;
     }
 
+    @OperateLog(log = "编辑流程")
     @RequestMapping("/editWork")
     public Object editWork(@RequestParam(defaultValue = "-1") int app_id,
                            @RequestParam(defaultValue = "-1") int id,
@@ -140,7 +142,7 @@ public class WorkController {
         return resultMap;
     }
 
-
+    @OperateLog(log = "删除/复制流程")
     @RequestMapping("/deleteOrCopyWorkById")
     public Object deleteOrCopyWorkById(@RequestParam(defaultValue = "-1") int app_id,
                                        @RequestParam(defaultValue = "-1") int id,
@@ -191,6 +193,7 @@ public class WorkController {
         return resultMap;
     }
 
+    @OperateLog(log = "运行流程")
     @RequestMapping("/runWork")
     public Object runWork(@RequestParam(defaultValue = "-1") int app_id,
                           @RequestParam(defaultValue = "-1") int work_id) {

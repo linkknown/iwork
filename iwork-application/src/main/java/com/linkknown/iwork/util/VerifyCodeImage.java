@@ -1,4 +1,4 @@
-package com.linkknown.iwork.controller;
+package com.linkknown.iwork.util;
 
 import org.apache.commons.io.IOUtils;
 import sun.misc.BASE64Encoder;

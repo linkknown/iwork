@@ -1,5 +1,6 @@
 package com.linkknown.iwork.controller;
 
+import com.linkknown.iwork.util.VerifyCodeImage;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -8,7 +9,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.awt.image.BufferedImage;
 import java.util.HashMap;
 import java.util.Map;
@@ -46,6 +46,9 @@ public class LoginController {
             resultMap.put("status", "SUCCESS");
             resultMap.put("tokenString", "tokenString");
             resultMap.put("loginExpiredSecond", expiredSecond);
+
+            //将验证码的文本存在 session 中
+            request.getSession().setAttribute("userName", userName);
         } else {
             resultMap.put("status", "ERROR");
             resultMap.put("errorMsg", "登陆失败，请检查用户名和密码是否正确!");

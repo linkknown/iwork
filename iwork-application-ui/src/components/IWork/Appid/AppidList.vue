@@ -30,7 +30,7 @@
         appids: [],
         columns1: [
           {
-            title: 'AppID 名称查看常用 dsn 链接串示例',
+            title: 'AppID 名称',
             key: 'app_name',
             width: 230,
           },
