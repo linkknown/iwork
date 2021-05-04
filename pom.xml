@@ -32,6 +32,11 @@
     <properties>
         <java.version>1.8</java.version>
         <iwork.version>0.0.1-SNAPSHOT</iwork.version>
+        <mybatis.version>3.4.4</mybatis.version>
+        <mybatis-spring.version>2.0.3</mybatis-spring.version>
+        <mybatis-spring-boot-starter.version>1.3.2</mybatis-spring-boot-starter.version>
+        <pagehelper-spring-boot-starter.version>1.2.5</pagehelper-spring-boot-starter.version>
+        <lombok.version>1.16.10</lombok.version>
     </properties>
 
 
@@ -41,6 +46,37 @@
     -->
     <dependencyManagement>
         <dependencies>
+            <!-- mybatis 相关依赖 -->
+            <dependency>
+                <groupId>org.mybatis</groupId>
+                <artifactId>mybatis</artifactId>
+                <version>${mybatis.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.mybatis</groupId>
+                <artifactId>mybatis-spring</artifactId>
+                <version>${mybatis-spring.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.mybatis.spring.boot</groupId>
+                <artifactId>mybatis-spring-boot-starter</artifactId>
+                <version>${mybatis-spring-boot-starter.version}</version>
+            </dependency>
+            <!-- 分页插件 -->
+            <dependency>
+                <groupId>com.github.pagehelper</groupId>
+                <artifactId>pagehelper-spring-boot-starter</artifactId>
+                <version>${pagehelper-spring-boot-starter.version}</version>
+            </dependency>
+
+            <!-- lombok 插件 -->
+            <dependency>
+                <groupId>org.projectlombok</groupId>
+                <artifactId>lombok</artifactId>
+                <version>${lombok.version}</version>
+            </dependency>
+
+            <!-- iwork 框架相关依赖 -->
             <dependency>
                 <groupId>com.linkknown</groupId>
                 <artifactId>iwork-application</artifactId>
