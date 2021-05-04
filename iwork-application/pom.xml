@@ -140,6 +140,11 @@
             <artifactId>iwork-function</artifactId>
             <scope>compile</scope>
         </dependency>
+        <dependency>
+            <groupId>com.linkknown</groupId>
+            <artifactId>iwork-entity</artifactId>
+            <scope>compile</scope>
+        </dependency>
     </dependencies>
 
     <build>

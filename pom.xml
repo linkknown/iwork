@@ -13,6 +13,7 @@
         <module>iwork-util</module>
         <module>iwork-monitor</module>
         <module>iwork-common</module>
+        <module>iwork-entity</module>
     </modules>
 
     <parent>
@@ -159,6 +160,11 @@
             <dependency>
                 <groupId>com.linkknown</groupId>
                 <artifactId>iwork-common</artifactId>
+                <version>${iwork.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.linkknown</groupId>
+                <artifactId>iwork-entity</artifactId>
                 <version>${iwork.version}</version>
             </dependency>
         </dependencies>

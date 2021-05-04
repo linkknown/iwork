@@ -1,8 +1,7 @@
-package com.linkknown.iwork.entity;
+package com.linkknown.iwork.resolver;
 
 import com.linkknown.iwork.service.GlobalVarService;
 import com.linkknown.iwork.util.ApplicationContextUtil;
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.apache.commons.lang3.StringUtils;
 

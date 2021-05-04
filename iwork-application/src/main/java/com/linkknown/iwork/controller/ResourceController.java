@@ -4,7 +4,7 @@ import com.github.pagehelper.PageInfo;
 import com.linkknown.iwork.common.adapter.PageAdapter;
 import com.linkknown.iwork.config.IworkConfig;
 import com.linkknown.iwork.entity.Resource;
-import com.linkknown.iwork.entity.ResourceLinkResolver;
+import com.linkknown.iwork.resolver.ResourceLinkResolver;
 import com.linkknown.iwork.service.GlobalVarService;
 import com.linkknown.iwork.service.ResourceService;
 import com.linkknown.iwork.util.DBUtil;
