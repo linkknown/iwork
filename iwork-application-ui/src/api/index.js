@@ -141,4 +141,7 @@ export const LoadDBMonitorData = (params) => ajax(BASE_URL + '/iwork/loadDBMonit
 
 export const LoadRecordParamData = (params) => ajax(BASE_URL + '/iwork/loadRecordParamData', params, 'POST');
 
+// 登陆接口
 export const Login = (params) => ajax(BASE_URL + '/iwork/login', params, 'POST');
+// 获取验证码接口
+export const GenVerifyCode = (params) => ajax(BASE_URL + '/iwork/genVerifyCode', params, 'POST');
