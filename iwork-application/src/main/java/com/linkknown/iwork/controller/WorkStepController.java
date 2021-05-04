@@ -5,7 +5,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.linkknown.iwork.Constants;
 import com.linkknown.iwork.core.BlockParser;
-import com.linkknown.iwork.core.Build;
+import com.linkknown.iwork.build.Build;
 import com.linkknown.iwork.core.Param;
 import com.linkknown.iwork.core.WorkStepFactory;
 import com.linkknown.iwork.common.exception.IWorkException;
