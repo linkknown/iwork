@@ -1,28 +1,31 @@
 <template>
-  <div>
-    <Select v-model="current_filter_id" style="width:400px" @on-change="chooseFilter">
-      <Option v-for="filterWork in filterWorks" :value="filterWork.id" :key="filterWork.work_name">
+  <div style="display: flex;">
+    <div style="padding-top: 10px;">
+      <div class="filterWorkItem" v-for="filterWork in filterWorks" :class="[current_filter_id === filterWork.id ? 'active': '']"
+           @click="chooseFilter(filterWork.id)">
         {{filterWork.work_name}}
-      </Option>
-    </Select>
-
-    <div v-for="module in modules" style="list-style: none;margin-top: 20px;">
-      <Row style="border-bottom: 1px solid rgba(0,34,232,0.16);">
-        <Col span="4">
-          <Button type="success" size="small" @click="handleCheckAll(module.module_name)">全选</Button>
-          <Tag><span>{{module.module_name}}</span></Tag>
-        </Col>
-        <Col span="20">
-          <CheckboxGroup v-model="choosedWorkNames">
-            <Checkbox :label="moduleWork.work_name" v-for="moduleWork in filterWorksWithModule(module.module_name)"></Checkbox>
-          </CheckboxGroup>
-        </Col>
-      </Row>
+      </div>
     </div>
 
-    <Input v-model.trim="complexWorkName" type="textarea" :rows="4" placeholder="复杂过滤器配置"></Input>
+    <div style="flex-grow: 1;margin-left: 20px;">
+      <div v-for="module in modules" style="list-style: none;margin-top: 20px;">
+        <Row style="border-bottom: 1px solid rgba(0,34,232,0.16);">
+          <Col span="4">
+            <Button type="success" size="small" @click="handleCheckAll(module.module_name)">全选</Button>
+            <Tag><span>{{module.module_name}}</span></Tag>
+          </Col>
+          <Col span="20">
+            <CheckboxGroup v-model="choosedWorkNames">
+              <Checkbox :label="moduleWork.work_name" v-for="moduleWork in filterWorksWithModule(module.module_name)"></Checkbox>
+            </CheckboxGroup>
+          </Col>
+        </Row>
+      </div>
 
-    <Button type="success" size="small" @click="saveFilters" style="margin-top: 20px;">保存</Button>
+      <Input v-model.trim="complexWorkName" type="textarea" :rows="4" placeholder="复杂过滤器配置"></Input>
+
+      <Button type="success" size="small" @click="saveFilters" style="margin-top: 20px;">保存</Button>
+    </div>
   </div>
 </template>
 
@@ -91,9 +94,11 @@
           }
         }
       },
-      chooseFilter:function () {
+      chooseFilter:function (current_filter_id) {
         // 切换了有效的过滤器
-        if (this.current_filter_id > 0){
+        if (current_filter_id > 0){
+          this.current_filter_id = current_filter_id;
+
           var current_filters = this.filters.filter(filter => filter.filter_work_id == this.current_filter_id);
           var _choosedWorkNames = current_filters.filter(filter => !checkEmpty(filter.work_name)).map(filter => filter.work_name);
           this.choosedWorkNames = _choosedWorkNames != null && _choosedWorkNames.length > 0 ? _choosedWorkNames[0].split(",") : [];
@@ -110,5 +115,14 @@
 </script>
 
 <style scoped>
-
+  .filterWorkItem {
+    background-color: #eeeeee;
+    padding: 10px 25px;
+    margin: 10px 0;
+    cursor: pointer;
+  }
+  .filterWorkItem.active {
+    background-color: darkorange;
+    color: white;
+  }
 </style>
