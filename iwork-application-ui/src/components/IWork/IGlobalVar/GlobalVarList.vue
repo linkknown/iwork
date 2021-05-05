@@ -5,7 +5,6 @@
       <!-- left 插槽部分 -->
       <span slot="left">
         <Button type="success" size="small" @click="addGlobalVar">新增</Button>
-        <Button type="warning" size="small" @click="viewPattern = !viewPattern">大纲</Button>
         <span style="margin-left: 200px;color: #eb7d37;font-size: 14px;">
           当前正在使用的环境:<b style="margin-left: 10px;color: #cc0000">{{onuse}}</b>
         </span>
@@ -15,20 +14,32 @@
       <ISimpleSearch slot="right" @handleSimpleSearch="handleSearch"/>
     </ISimpleLeftRightRow>
 
-    <table v-if="viewPattern" cellspacing="0">
-      <tr>
-        <th>变量名称</th>
-        <th v-for="(env_name, index) in env_names">{{env_name}}</th>
-      </tr>
-      <tr v-for="(name, index) in names">
-        <td>{{name}}</td>
-        <td v-for="(env_name, index2) in env_names">
-          <span v-html="renderShowText(name, env_name)"></span>
-        </td>
-      </tr>
-    </table>
+    <Tabs :value="viewPattern">
 
-    <Table v-else border :columns="columns1" :data="globalVars" size="small"></Table>
+      <TabPane label="默认视图" name="viewPattern01">
+        <Table border :columns="columns1" :data="globalVars" size="small"></Table>
+      </TabPane>
+
+      <TabPane label="大纲视图" name="viewPattern02">
+        <table class="tableBox" cellspacing="0">
+          <tr>
+            <th>变量名称 （Y 已设置，N 未设置）</th>
+            <th v-for="(env_name, index) in env_names">{{env_name}}</th>
+          </tr>
+          <tr v-for="(name, index) in names">
+            <td>{{name}}</td>
+            <td v-for="(env_name, index2) in env_names">
+              <span v-html="renderShowText(name, env_name)"></span>
+            </td>
+          </tr>
+        </table>
+      </TabPane>
+
+    </Tabs>
+
+
+
+
   </div>
 </template>
 
@@ -119,7 +130,7 @@
         ],
         names: [],
         env_names: [],
-        viewPattern: false,
+        viewPattern: 'viewPattern01',
       }
     },
     methods:{
@@ -161,7 +172,7 @@
         this.env_names = env_names;
       },
       renderShowText: function (name, env_name) {
-        return this.globalVars.filter(gv => gv.name === name && gv.env_name === env_name).length > 0 ? "Y" : "N";
+        return this.globalVars.filter(gv => gv.name === name && gv.env_name === env_name).length > 0 ? "<span style='color: green;font-weight: bold;'>Y</span>" : "N";
       }
     },
     mounted: function () {
@@ -174,5 +185,25 @@
 <style scoped>
   td {
     padding: 10px 20px;
+  }
+
+  .tableBox th {
+    border-top: 1px solid #e8eaec;
+    border-right: 1px solid #e8eaec;
+    border-bottom: 1px solid #e8eaec;
+    padding: 8px 20px;
+    background-color: #f8f8f9;
+  }
+  .tableBox td {
+    border-right: 1px solid #e8eaec;
+    border-bottom: 1px solid #e8eaec;
+    padding: 8px 20px;
+    background-color: #ffffff;
+  }
+  .tableBox tr th:first-child {
+    border-left: 1px solid #e8eaec;
+  }
+  .tableBox tr td:first-child {
+    border-left: 1px solid #e8eaec;
   }
 </style>
