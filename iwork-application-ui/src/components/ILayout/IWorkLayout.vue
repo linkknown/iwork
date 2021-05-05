@@ -3,15 +3,19 @@
     <Layout>
       <Header>
         <Menu mode="horizontal" theme="dark" active-name="1">
-          <div class="layout-iwork">
+          <div class="layout-logo">
             <Row>
               <Col>
                 <div>
-                   <img src="../../assets/images/linkknown.jpg" class="linkknownlogo" @click="tolinkknown" title="API Market 低代码开发平台"/>
+                  <img src="../../assets/images/linkknown.jpg" class="linkknownlogo" @click="tolinkknown" title="API Market 低代码开发平台"/>
                 </div>
               </Col>
               <Col>
-                <div style="margin-left: 10px;">IWork {{version}}</div>
+                <div style="margin-left: 10px;">IWork {{version}} ---
+                  <span @click="$router.push({path: '/security/login'})" title="切换账号">
+                    Welcome 【<span style="color: darkorange;">{{loginUserName}}</span>】
+                  </span>
+                </div>
               </Col>
             </Row>
           </div>
@@ -87,9 +91,12 @@
                 日志管理
               </template>
               <MenuItem name="4-1">
-                <router-link to="/iwork/runLogList">日志列表</router-link>
+                <router-link to="/iwork/runLogList">执行日志</router-link>
               </MenuItem>
               <MenuItem name="4-2">
+                <router-link to="/iwork/operateLogList">操作日志</router-link>
+              </MenuItem>
+              <MenuItem name="4-3">
                 <router-link to="/iwork/dashboard">统计仪表盘</router-link>
               </MenuItem>
             </Submenu>
@@ -123,6 +130,7 @@
       return {
         appId: null,
         version: '1.0.4',
+        loginUserName: '',
       }
     },
     methods:{
@@ -152,6 +160,8 @@
         this.appId = JSON.parse(appId);
         this.$Message.success("已选择 AppID " + this.appId.app_name);
       }
+
+      this.loginUserName = localStorage.getItem("iwork_userName");
     }
   }
 </script>
@@ -165,13 +175,14 @@
     overflow: hidden;
   }
 
-  .layout-iwork {
-    width: 100px;
+  .layout-logo {
+    width: 400px;
     height: 30px;
     color: white;
     cursor: pointer;
     font-size: 14px;
     line-height: 65px;
+    position: relative;
     float: left;
   }
   .layout-nav{

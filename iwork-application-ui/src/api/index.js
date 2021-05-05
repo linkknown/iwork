@@ -72,9 +72,6 @@ export const CopyWorkStepByWorkStepId = (work_id, work_step_id) => ajax(BASE_URL
 // 交换 workstep 顺序
 export const ChangeWorkStepOrder = (work_id,work_step_id,type) => ajax(BASE_URL+"/iwork/changeWorkStepOrder", {work_id,work_step_id,type},'POST');
 
-// 分页查询运行记录
-export const FilterPageLogRecord = (work_id,logLevel,offset,current_page) => ajax(BASE_URL+"/iwork/filterPageLogRecord", {work_id,logLevel,offset,current_page},'POST');
-
 // 获取最后一次运行日志详情
 export const GetLastRunlogDetail = (tracking_id) => ajax(BASE_URL + "/iwork/getLastRunlogDetail", {tracking_id}, 'POST');
 
@@ -140,6 +137,11 @@ export const GetDBMonitorMeta = (params) => ajax(BASE_URL + '/iwork/getDBMonitor
 export const LoadDBMonitorData = (params) => ajax(BASE_URL + '/iwork/loadDBMonitorData', params, 'POST');
 
 export const LoadRecordParamData = (params) => ajax(BASE_URL + '/iwork/loadRecordParamData', params, 'POST');
+
+// 分页查询运行记录
+export const FilterPageLogRecord = (work_id,logLevel,offset,current_page) => ajax(BASE_URL+"/iwork/filterPageLogRecord", {work_id,logLevel,offset,current_page},'POST');
+// 分页查询操作日志
+export const FilterPageOperateLog = (params) => ajax(BASE_URL + '/iwork/filterPageOperateLog', params, 'POST');
 
 // 登陆接口
 export const Login = (params) => ajax(BASE_URL + '/iwork/login', params, 'POST');

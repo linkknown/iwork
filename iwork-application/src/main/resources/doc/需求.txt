@@ -1,11 +1,13 @@
+IWork 1.0.44【已完成】、点击 RunLogDetail 中的日志，支持绑定点击事件，实现链接跳转
+6【已完成】、快捷 sql 界面支持 sql 格式化
+7【已完成】、iwork 框架平台使用 flyway 管理 sql 迁移
+
 1【未完成】、字符串表示法支持  '(不能包含特殊字符')  "(不能包含特殊字符")   `(不能包含特殊字符`)   '''(不能包含特殊字符''')
 2【未完成】、运行日志 RunLogRecord 表 LogLevel 字段需要写入 ERROR 状态
 3【未完成】、Param.ParamOutputSchema getCacheParamOutputSchema() 支持 WorkStep... replaceStep 参数
-4【已完成】、点击 RunLogDetail 中的日志，支持绑定点击事件，实现链接跳转
 5【未完成】、过滤器配置展示优化，左侧部分以列表形式展示所有过滤器，支持移动排序
-6【已完成】、快捷 sql 界面支持 sql 格式化
-7【已完成】、iwork 框架平台使用 flyway 管理 sql 迁移
 8【未完成】、iwork 框架支持各模块接口调用次数统计趋势图
 9【未完成】、iwork 框架支持简单节点，复杂节点转为系统函数来实现（让框架简单易上手）
 10【未完成】、iwork 框架支持流程图，参考 https://gitee.com/yjblogs/VFD
 11【未完成】、iwork 框架删除业务表中的日期和修改人字段，改为审计日志表
+12【未完成】、iwork 框架支持免费版本和付费版本（支持加密等功能）

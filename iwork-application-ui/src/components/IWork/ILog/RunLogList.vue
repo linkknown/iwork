@@ -89,7 +89,7 @@
       },
       refreshRunlogRecordList: async function () {
         const result = await FilterPageLogRecord(this.getWorkId(),this.logLevel,this.offset,this.current_page);
-        if(result.status=="SUCCESS"){
+        if(result.status === "SUCCESS"){
           this.runLogRecords = result.runLogRecords;
           this.total = result.paginator.totalcount;
         }

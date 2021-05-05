@@ -5,6 +5,13 @@
 
 <mapper namespace="com.linkknown.iwork.mapper.OperateLogMapper">
 
+    <select id="queryPageOperateLogList" parameterType="map" resultType="com.linkknown.iwork.entity.OperateLog">
+        select * from operate_log
+        <if test="map.search != ''">
+            where user_name like concat('%',#{map.search},'%')
+            or resource_type like concat('%',#{map.search},'%')
+        </if>
+    </select>
 
 
     <insert id="insertOperateLog" parameterType="com.linkknown.iwork.entity.OperateLog">

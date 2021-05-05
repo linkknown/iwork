@@ -84,7 +84,7 @@
   import WorkStepComponent from "./WorkStepComponent"
   import WorkDashboard from "./DashBoard/WorkDashboard"
   import WorkStepPoptip from "./WorkStepPoptip"
-  import RunLogList from "../IRunLog/RunLogList"
+  import RunLogList from "../ILog/RunLogList"
 
   export default {
     name: "WorkStepList",

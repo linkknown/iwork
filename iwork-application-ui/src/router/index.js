@@ -4,8 +4,9 @@ import Router from 'vue-router'
 // es6 import 异步语法,使用异步组件加载机制减少耗时操作
 const WorkList = () => import("@/components/IWork/IWork/WorkList");
 const WorkStepList = () => import("@/components/IWork/IWorkStep/WorkStepList");
-const RunLogList = () => import("@/components/IWork/IRunLog/RunLogList");
-const RunlogDetail = () => import("@/components/IWork/IRunLog/RunlogDetail");
+const RunLogList = () => import("@/components/IWork/ILog/RunLogList");
+const OperateLogList = () => import("@/components/IWork/ILog/OperateLogList");
+const RunlogDetail = () => import("@/components/IWork/ILog/RunlogDetail");
 const IWorkLayout = () => import("@/components/ILayout/IWorkLayout");
 const ILayout = () => import("@/components/ILayout/ILayout");
 const AppidList = () => import("@/components/IWork/Appid/AppidList");
@@ -42,6 +43,7 @@ const IWorkRouter = [
       {path: 'editMigrate',component: EditMigrate},
       {path: 'quickSql',component: QuickSql},
       {path: 'globalVarList',component: GlobalVarList},
+      {path: 'operateLogList',component: OperateLogList},
       {path: 'dashboard',component: DashBoard},
     ]
   },
