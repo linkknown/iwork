@@ -77,9 +77,6 @@ public class GlobalVarController {
         globalVar.setValue(value);
         globalVar.setEncryptFlag(encrypt_flag);
         globalVar.setDesc("");
-        globalVar.setCreatedBy("SYSTEM");
-        globalVar.setCreatedTime(new Date());
-        globalVar.setLastUpdatedBy("SYSTEM");
         globalVar.setLastUpdatedTime(new Date());
 
         globalVarService.insertOrUpdateGlobalVar(globalVar);

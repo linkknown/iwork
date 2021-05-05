@@ -51,9 +51,6 @@ public class AppIdController {
         appId.setId(id);
         appId.setAppName(app_name);
         appId.setAppDesc(app_desc);
-        appId.setCreatedBy("SYSTEM");
-        appId.setCreatedTime(new Date());
-        appId.setLastUpdatedBy("SYSTEM");
         appId.setLastUpdatedTime(new Date());
 
         appIdService.insertOrUpdateAppId(appId);

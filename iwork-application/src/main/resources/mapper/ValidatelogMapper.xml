@@ -16,17 +16,11 @@
         insert into validatelog_record (
         tracking_id,
         work_id,
-        created_by,
-        created_time,
-        last_updated_by,
         last_updated_time
         )
         values (
             #{record.trackingId},
             #{record.workId},
-            #{record.createdBy},
-            #{record.createdTime},
-            #{record.lastUpdatedBy},
             #{record.lastUpdatedTime}
             )
     </insert>
@@ -41,9 +35,6 @@
             param_name,
             success_flag,
             detail,
-            created_by,
-            created_time,
-            last_updated_by,
             last_updated_time
         )
         values
@@ -57,9 +48,6 @@
                 #{detail.paramName},
                 #{detail.successFlag},
                 #{detail.detail},
-                #{detail.createdBy},
-                #{detail.createdTime},
-                #{detail.lastUpdatedBy},
                 #{detail.lastUpdatedTime}
             )
         </foreach>

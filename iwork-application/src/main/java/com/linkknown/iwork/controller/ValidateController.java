@@ -244,9 +244,6 @@ public class ValidateController {
         Validatelog.ValidatelogRecord validatelogRecord = new Validatelog.ValidatelogRecord();
         validatelogRecord.setTrackingId(trackingId);
         validatelogRecord.setWorkId(workId);
-        validatelogRecord.setCreatedBy("SYSTEM");
-        validatelogRecord.setCreatedTime(new Date());
-        validatelogRecord.setLastUpdatedBy("SYSTEM");
         validatelogRecord.setLastUpdatedTime(new Date());
 
         validatelogService.insertValidatelogRecord(validatelogRecord);

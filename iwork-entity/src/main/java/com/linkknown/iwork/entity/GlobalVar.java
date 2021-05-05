@@ -26,12 +26,6 @@ public class GlobalVar {
     @JsonProperty("desc")
     private String desc;
 
-    @JsonProperty("created_by")
-    private String createdBy;
-    @JsonProperty("created_time")
-    private Date createdTime;
-    @JsonProperty("last_updated_by")
-    private String lastUpdatedBy;
     @JsonProperty("last_updated_time")
     private Date lastUpdatedTime;
 

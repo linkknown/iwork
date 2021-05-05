@@ -155,9 +155,6 @@ public class Runner {
         runlogRecord.setTrackingId(trackingId);
         runlogRecord.setWorkId(work.getId());
         runlogRecord.setWorkName(work.getWorkName());
-        runlogRecord.setCreatedBy("SYSTEM");
-        runlogRecord.setCreatedTime(new Date());
-        runlogRecord.setLastUpdatedBy("SYSTEM");
         runlogRecord.setLogLevel("");
         runlogRecord.setLastUpdatedTime(new Date());
 

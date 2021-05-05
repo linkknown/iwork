@@ -39,12 +39,6 @@ public class WorkStep {
     @JsonProperty("work_step_param_mapping_xml")
     private String workStepParamMappingXml;
 
-    @JsonProperty("created_by")
-    private String createdBy;
-    @JsonProperty("lastUpdatedBy")
-    private Date createdTime;
-    @JsonProperty("last_updated_by")
-    private String lastUpdatedBy;
     @JsonProperty("last_updated_time")
     private Date lastUpdatedTime;
 }

@@ -33,8 +33,7 @@
                 work_step_output = #{workStep.workStepOutput},
                 is_defer = #{workStep.isDefer},
                 work_step_param_mapping = #{workStep.workStepParamMapping},
-                created_by = #{workStep.createdBy}, created_time = #{workStep.createdTime},
-                last_updated_by = #{workStep.lastUpdatedBy}, last_updated_time = #{workStep.lastUpdatedTime}
+                last_updated_time = #{workStep.lastUpdatedTime}
                 where id = #{workStep.id}
             </when>
             <otherwise>
@@ -50,9 +49,6 @@
                 work_step_output,
                 is_defer,
                 work_step_param_mapping,
-                created_by,
-                created_time,
-                last_updated_by,
                 last_updated_time
                 ) values(
                 #{workStep.workId},
@@ -66,9 +62,6 @@
                 #{workStep.workStepOutput},
                 #{workStep.isDefer},
                 #{workStep.workStepParamMapping},
-                #{workStep.createdBy},
-                #{workStep.createdTime},
-                #{workStep.lastUpdatedBy},
                 #{workStep.lastUpdatedTime}
                 )
             </otherwise>

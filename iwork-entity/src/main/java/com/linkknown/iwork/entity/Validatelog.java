@@ -14,12 +14,6 @@ public class Validatelog {
         private String trackingId;
         @JsonProperty("work_id")
         private int workId;
-        @JsonProperty("created_by")
-        private String createdBy;
-        @JsonProperty("lastUpdatedBy")
-        private Date createdTime;
-        @JsonProperty("last_updated_by")
-        private String lastUpdatedBy;
         @JsonProperty("last_updated_time")
         private Date lastUpdatedTime;
     }
@@ -44,12 +38,6 @@ public class Validatelog {
         @JsonProperty("detail")
         private String detail = "";
 
-        @JsonProperty("created_by")
-        private String createdBy = "SYSTEM";
-        @JsonProperty("lastUpdatedBy")
-        private Date createdTime = new Date();
-        @JsonProperty("last_updated_by")
-        private String lastUpdatedBy = "SYSTEM";
         @JsonProperty("last_updated_time")
         private Date lastUpdatedTime = new Date();
 
@@ -62,9 +50,6 @@ public class Validatelog {
             validatelogDetail.setParamName("");
             validatelogDetail.setSuccessFlag(true);
             validatelogDetail.setDetail(detail);
-            validatelogDetail.setCreatedBy("SYSTEM");
-            validatelogDetail.setCreatedTime(new Date());
-            validatelogDetail.setLastUpdatedBy("SYSTEM");
             validatelogDetail.setLastUpdatedTime(new Date());
 
             return validatelogDetail;

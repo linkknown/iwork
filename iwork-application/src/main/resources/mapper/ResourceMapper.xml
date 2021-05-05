@@ -49,8 +49,7 @@
             resource_name = #{resource.resourceName},
             resource_type = #{resource.resourceType},
             resource_link = #{resource.resourceLink},
-            created_by = #{resource.createdBy}, created_time = #{resource.createdTime},
-            last_updated_by = #{resource.lastUpdatedBy}, last_updated_time = #{resource.lastUpdatedTime}
+            last_updated_time = #{resource.lastUpdatedTime}
             where id = #{resource.id}
         </if>
         <if test="count==0">
@@ -59,18 +58,12 @@
             resource_name,
             resource_type,
             resource_link,
-            created_by,
-            created_time,
-            last_updated_by,
             last_updated_time
             ) values(
             #{resource.appId},
             #{resource.resourceName},
             #{resource.resourceType},
             #{resource.resourceLink},
-            #{resource.createdBy},
-            #{resource.createdTime},
-            #{resource.lastUpdatedBy},
             #{resource.lastUpdatedTime}
             )
         </if>

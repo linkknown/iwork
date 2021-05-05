@@ -22,9 +22,6 @@
                 filter_work_name = #{filter.filterWorkName},
                 work_name = #{filter.workName},
                 complex_work_name = #{filter.complexWorkName},
-                created_by = #{filter.createdBy},
-                created_time = #{filter.createdTime},
-                last_updated_by = #{filter.lastUpdatedBy},
                 last_updated_time = #{filter.lastUpdatedTime}
                 where filter_work_id = #{filter.filterWorkId}
             </when>
@@ -35,9 +32,6 @@
                 filter_work_name,
                 work_name,
                 complex_work_name,
-                created_by,
-                created_time,
-                last_updated_by,
                 last_updated_time
                 ) values(
                 #{filter.appId},
@@ -45,9 +39,6 @@
                 #{filter.filterWorkName},
                 #{filter.workName},
                 #{filter.complexWorkName},
-                #{filter.createdBy},
-                #{filter.createdTime},
-                #{filter.lastUpdatedBy},
                 #{filter.lastUpdatedTime}
                 )
             </otherwise>

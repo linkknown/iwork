@@ -63,9 +63,6 @@ public class ResourceController {
         resource.setResourceName(resource_name);
         resource.setResourceType(resource_type);
         resource.setResourceLink(resource_link);
-        resource.setCreatedBy("SYSTEM");
-        resource.setCreatedTime(new Date());
-        resource.setLastUpdatedBy("SYSTEM");
         resource.setLastUpdatedTime(new Date());
 
         resourceService.insertOrUpdateResource(resource);

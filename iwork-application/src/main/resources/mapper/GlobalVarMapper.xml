@@ -52,8 +52,7 @@
             encrypt_flag = #{globalVar.encryptFlag},
             type = #{globalVar.type},
             `desc` = #{globalVar.desc},
-            created_by = #{globalVar.createdBy}, created_time = #{globalVar.createdTime},
-            last_updated_by = #{globalVar.lastUpdatedBy}, last_updated_time = #{globalVar.lastUpdatedTime}
+            last_updated_time = #{globalVar.lastUpdatedTime}
             where id = #{globalVar.id}
         </if>
         <if test="count==0">
@@ -65,9 +64,6 @@
             encrypt_flag,
             type,
             `desc`,
-            created_by,
-            created_time,
-            last_updated_by,
             last_updated_time
             ) values(
             #{globalVar.appId},
@@ -77,9 +73,6 @@
             #{globalVar.encryptFlag},
             #{globalVar.type},
             #{globalVar.desc},
-            #{globalVar.createdBy},
-            #{globalVar.createdTime},
-            #{globalVar.lastUpdatedBy},
             #{globalVar.lastUpdatedTime}
             )
         </if>

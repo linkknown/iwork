@@ -31,25 +31,17 @@
         </selectKey>
         <if test="count > 0">
             update app_id
-            set app_name = #{appId.appName}, app_desc = #{appId.appDesc},
-            created_by = #{appId.createdBy}, created_time = #{appId.createdTime},
-            last_updated_by = #{appId.lastUpdatedBy}, last_updated_time = #{appId.lastUpdatedTime}
+            set app_name = #{appId.appName}, app_desc = #{appId.appDesc},last_updated_time = #{appId.lastUpdatedTime}
             where id = #{appId.id}
         </if>
         <if test="count==0">
             insert into app_id (
                 app_name,
                 app_desc,
-                created_by,
-                created_time,
-                last_updated_by,
                 last_updated_time
             ) values(
                 #{appId.appName},
                 #{appId.appDesc},
-                #{appId.createdBy},
-                #{appId.createdTime},
-                #{appId.lastUpdatedBy},
                 #{appId.lastUpdatedTime}
             )
         </if>

@@ -39,9 +39,6 @@
             work_id,
             work_name,
             log_level,
-            created_by,
-            created_time,
-            last_updated_by,
             last_updated_time
         ) values(
             #{runlogRecord.appId},
@@ -49,9 +46,6 @@
             #{runlogRecord.workId},
             #{runlogRecord.workName},
             #{runlogRecord.logLevel},
-            #{runlogRecord.createdBy},
-            #{runlogRecord.createdTime},
-            #{runlogRecord.lastUpdatedBy},
             #{runlogRecord.lastUpdatedTime}
         )
     </insert>

@@ -33,8 +33,7 @@
             set app_id = #{module.appId},
             module_name = #{module.moduleName},
             module_desc = #{module.moduleDesc},
-            created_by = #{module.createdBy}, created_time = #{module.createdTime},
-            last_updated_by = #{module.lastUpdatedBy}, last_updated_time = #{module.lastUpdatedTime}
+            last_updated_time = #{module.lastUpdatedTime}
             where id = #{module.id}
         </if>
         <if test="count==0">
@@ -42,17 +41,11 @@
             app_id,
             module_name,
             module_desc,
-            created_by,
-            created_time,
-            last_updated_by,
             last_updated_time
             ) values(
             #{module.appId},
             #{module.moduleName},
             #{module.moduleDesc},
-            #{module.createdBy},
-            #{module.createdTime},
-            #{module.lastUpdatedBy},
             #{module.lastUpdatedTime}
             )
         </if>

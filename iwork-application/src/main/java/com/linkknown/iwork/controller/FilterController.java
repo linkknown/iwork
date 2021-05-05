@@ -37,9 +37,6 @@ public class FilterController {
         filter.setFilterWorkName(filterWork.getWorkName());
         filter.setWorkName(workNames);
         filter.setComplexWorkName(complexWorkName);
-        filter.setCreatedBy("SYSTEM");
-        filter.setCreatedTime(new Date());
-        filter.setLastUpdatedBy("SYSTEM");
         filter.setLastUpdatedTime(new Date());
 
         filterService.insertOrUpdateFilter(filter);

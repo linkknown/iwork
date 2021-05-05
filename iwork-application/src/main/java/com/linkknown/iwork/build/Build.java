@@ -145,9 +145,6 @@ public class Build {
                     .setAppId(String.valueOf(appId))
                     .setWorkName(workName)
                     .setWorkDesc(String.format("自动创建子流程:%s", workName))
-                    .setCreatedBy("SYSTEM")
-                    .setCreatedTime(new Date())
-                    .setLastUpdatedBy("SYSTEM")
                     .setLastUpdatedTime(new Date());
             // 插入或者更新 work 信息
             workMapper.insertOrUpdateWork(work);

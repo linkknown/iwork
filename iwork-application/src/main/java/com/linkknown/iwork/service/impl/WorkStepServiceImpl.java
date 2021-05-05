@@ -39,9 +39,6 @@ public class WorkStepServiceImpl implements WorkStepService {
         workStep.setWorkStepInput("");
         workStep.setWorkStepOutput("");
         workStep.setWorkStepParamMapping("");
-        workStep.setCreatedBy("SYSTEM");
-        workStep.setCreatedTime(new Date());
-        workStep.setLastUpdatedBy("SYSTEM");
         workStep.setLastUpdatedTime(new Date());
         workStepMapper.insertOrUpdateWorkStep(workStep);
 
@@ -55,9 +52,6 @@ public class WorkStepServiceImpl implements WorkStepService {
         workStep.setWorkStepInput("");
         workStep.setWorkStepOutput("");
         workStep.setWorkStepParamMapping("");
-        workStep.setCreatedBy("SYSTEM");
-        workStep.setCreatedTime(new Date());
-        workStep.setLastUpdatedBy("SYSTEM");
         workStep.setLastUpdatedTime(new Date());
         workStepMapper.insertOrUpdateWorkStep(workStep);
 

@@ -44,8 +44,7 @@
                 work_cron = #{work.workCron},
                 module_name = #{work.moduleName},
                 cache_result = #{work.cacheResult},
-                created_by = #{work.createdBy}, created_time = #{work.createdTime},
-                last_updated_by = #{work.lastUpdatedBy}, last_updated_time = #{work.lastUpdatedTime}
+                last_updated_time = #{work.lastUpdatedTime}
                 where id = #{work.id}
             </when>
             <otherwise>
@@ -57,9 +56,6 @@
                 work_cron,
                 module_name,
                 cache_result,
-                created_by,
-                created_time,
-                last_updated_by,
                 last_updated_time
                 ) values(
                 #{work.appId},
@@ -69,9 +65,6 @@
                 #{work.workCron},
                 #{work.moduleName},
                 #{work.cacheResult},
-                #{work.createdBy},
-                #{work.createdTime},
-                #{work.lastUpdatedBy},
                 #{work.lastUpdatedTime}
                 )
             </otherwise>

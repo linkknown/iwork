@@ -14,6 +14,7 @@ public class OperateLog {
     private String ipAddr;
     @JsonProperty("log")
     private String log;
+
     @JsonProperty("created_time")
     private Date createdTime;
 }

@@ -158,8 +158,6 @@ public class MigrateController {
         if (id > 0) {
             migrate = sqlMigrateService.queryMigrateById(app_id, id);
         } else {
-            migrate.setCreatedBy("SYSTEM");
-            migrate.setCreatedTime(new Date());
             migrate.setEffective(true);
         }
 
@@ -167,7 +165,6 @@ public class MigrateController {
         migrate.setMigrateName(migrate_name);
         migrate.setMigrateSql(migrate_sql);
         migrate.setMigrateHash(migrate_hash);
-        migrate.setLastUpdatedBy("SYSTEM");
         migrate.setLastUpdatedTime(new Date());
 
         sqlMigrateService.insertOrUpdateSqlMigrate(migrate);

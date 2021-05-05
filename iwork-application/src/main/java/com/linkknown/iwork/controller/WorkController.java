@@ -128,9 +128,6 @@ public class WorkController {
         work.setWorkCron(work_cron);
         work.setModuleName(module_name);
         work.setCacheResult(cache_result);
-        work.setCreatedBy("SYSTEM");
-        work.setCreatedTime(new Date());
-        work.setLastUpdatedBy("SYSTEM");
         work.setLastUpdatedTime(new Date());
 
         workService.editWork(work);

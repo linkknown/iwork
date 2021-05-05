@@ -25,9 +25,6 @@
                 migrate_sql=#{migrate.migrateSql},
                 migrate_hash=#{migrate.migrateHash},
                 effective=#{migrate.effective},
-                created_by=#{migrate.createdBy},
-                created_time=#{migrate.createdTime},
-                last_updated_by=#{migrate.lastUpdatedBy},
                 last_updated_time=#{migrate.lastUpdatedTime}
                 where id = #{migrate.id}
             </when>
@@ -38,9 +35,6 @@
                     migrate_sql,
                     migrate_hash,
                     effective,
-                    created_by,
-                    created_time,
-                    last_updated_by,
                     last_updated_time
                 ) values(
                     #{migrate.appId},
@@ -48,9 +42,6 @@
                     #{migrate.migrateSql},
                     #{migrate.migrateHash},
                     #{migrate.effective},
-                    #{migrate.createdBy},
-                    #{migrate.createdTime},
-                    #{migrate.lastUpdatedBy},
                     #{migrate.lastUpdatedTime}
                 )
             </otherwise>

@@ -81,9 +81,6 @@ public class WorkStepController {
             step.setIsDefer("false");   // 默认不延迟执行
             step.setWorkStepIndent(0);   // 默认缩进级别为 0
             step.setWorkStepId(work_step_id + 1);
-            step.setCreatedBy("SYSTEM");
-            step.setCreatedTime(new Date());
-            step.setLastUpdatedBy("SYSTEM");
             step.setLastUpdatedTime(new Date());
 
             workStepService.insertWorkStepAfter(work_id, work_step_id, step);
@@ -101,9 +98,6 @@ public class WorkStepController {
             step.setIsDefer("false");   // 默认不延迟执行
             step.setWorkStepIndent(0);   // 默认缩进级别为 0
             step.setWorkStepId(work_step_id + 1);
-            step.setCreatedBy("SYSTEM");
-            step.setCreatedTime(new Date());
-            step.setLastUpdatedBy("SYSTEM");
             step.setLastUpdatedTime(new Date());
 
 //            step := models.WorkStep{
@@ -232,9 +226,6 @@ public class WorkStepController {
         Param.ParamInputSchema paramInputSchema = Param.ParamInputSchema.parseToParamInputSchema(paramInputSchemaStr);
         workStep.setWorkStepInput(paramInputSchema.renderToJson());
         workStep.setWorkStepParamMapping(paramMappingsStr);
-        workStep.setCreatedBy("SYSTEM");
-        workStep.setCreatedTime(new Date());
-        workStep.setLastUpdatedBy("SYSTEM");
         workStep.setLastUpdatedTime(new Date());
         // 先保存
         workStepService.insertOrUpdateWorkStep(workStep);

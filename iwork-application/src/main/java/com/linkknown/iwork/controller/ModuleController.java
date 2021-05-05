@@ -51,9 +51,6 @@ public class ModuleController {
         module.setId(module_id);
         module.setModuleName(module_name);
         module.setModuleDesc(module_desc);
-        module.setCreatedBy("SYSTEM");
-        module.setCreatedTime(new Date());
-        module.setLastUpdatedBy("SYSTEM");
         module.setLastUpdatedTime(new Date());
 
         moduleService.insertOrUpdateModule(module);

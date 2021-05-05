@@ -16,12 +16,6 @@ public class AppId {
     private String appName;
     @JsonProperty("app_desc")
     private String appDesc;
-    @JsonProperty("created_by")
-    private String createdBy;
-    @JsonProperty("created_time")
-    private Date createdTime;
-    @JsonProperty("last_updated_by")
-    private String lastUpdatedBy;
     @JsonProperty("last_updated_time")
     private Date lastUpdatedTime;
 

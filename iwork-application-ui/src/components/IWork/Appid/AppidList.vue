@@ -39,11 +39,6 @@
             key: 'app_desc',
           },
           {
-            title: '修改人',
-            key: 'last_updated_by',
-            width: 150,
-          },
-          {
             title: '修改时间',
             key: 'last_updated_time',
             width: 150,

@@ -20,12 +20,6 @@ public class Resource {
     @JsonProperty("resource_link")
     private String resourceLink;
 
-    @JsonProperty("created_by")
-    private String createdBy;
-    @JsonProperty("lastUpdatedBy")
-    private Date createdTime;
-    @JsonProperty("last_updated_by")
-    private String lastUpdatedBy;
     @JsonProperty("last_updated_time")
     private Date lastUpdatedTime;
 }
